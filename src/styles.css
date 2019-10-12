@@ -1,1 +1,19 @@
 /* You can add global styles to this file, and also import other style files */
+@import "assets/css/open-iconic-bootstrap.min.css";
+@import "assets/css/animate.css";
+
+@import "assets/css/owl.carousel.min.css";
+@import "assets/css/owl.theme.default.min.css";
+@import "assets/css/magnific-popup.css";
+
+@import "assets/css/aos.css";
+
+@import "assets/css/ionicons.min.css";
+
+@import "assets/css/flaticon.css";
+@import "assets/css/icomoon.css";
+@import "assets/css/style.css";
+
+.ftco-animate {
+  opacity: 0;
+  visibility: hidden; }

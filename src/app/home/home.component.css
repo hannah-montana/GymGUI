@@ -1,0 +1,64 @@
+.subheading {
+    color: #fe9191;
+    font-weight: 600;
+    font-size: 14px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+}
+
+.ftco-animate {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.owl-carousel2{
+
+}
+.owl-carousel2, .owl-carousel2 .owl-item {
+    -webkit-tap-highlight-color: transparent;
+    position: relative;
+}
+
+.owl-carousel2.owl-drag .owl-item {
+
+    user-select: none;
+}
+
+.owl-font {
+    font-weight: 900;
+}
+
+.pclass {
+    color: rgba(0, 0, 0, 0.8);
+    font-weight: 400;
+}
+
+.verticalText {
+    writing-mode: vertical-lr;
+    text-align: center;
+    text-orientation: sideways;
+    margin: 0rem;
+    position: absolute;
+    top: 0;
+    left: -76px;
+    height: 100%;
+    text-transform: uppercase;
+    font-weight: 900;
+    letter-spacing: 0px;
+    font-size: 100px;
+    z-index: 1;
+    color: #fff;
+    -webkit-text-fill-color: transparent;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+}
+
+.photoClass {
+    width: 50%;
+    position: relative;
+    z-index: -1;
+    background-position: top center;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
