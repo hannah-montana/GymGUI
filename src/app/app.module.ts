@@ -26,6 +26,10 @@ import { AuthenticationService } from './authentication.service';
 import { CustomerComponent } from './customer/customer.component';
 import { CoachComponent } from './coach/coach.component';
 import { GuestComponent } from './guest/guest.component';
+import { UserProfileComponent } from './user-profile/user-profile.component';
+import { CustomerDashboardComponent } from './customer-dashboard/customer-dashboard.component';
+import { TestComponent } from './test/test.component';
+import { Test2Component } from './test2/test2.component';
 
 @NgModule({
   declarations: [
@@ -47,7 +51,11 @@ import { GuestComponent } from './guest/guest.component';
     SignUpComponent,
     CustomerComponent,
     CoachComponent,
-    GuestComponent
+    GuestComponent,
+    UserProfileComponent,
+    CustomerDashboardComponent,
+    TestComponent,
+    Test2Component
   ],
   imports: [
     BrowserModule,

@@ -7,7 +7,10 @@ import { CoachComponent } from './coach/coach.component';
 import { CustomerComponent } from './customer/customer.component';
 import { GuestComponent } from './guest/guest.component';
 import { ContactComponent} from './contact/contact.component';
-import {GalleryComponent} from './gallery/gallery.component';
+import { UserProfileComponent } from './user-profile/user-profile.component';
+import { CustomerDashboardComponent } from './customer-dashboard/customer-dashboard.component';
+import { TestComponent } from './test/test.component';
+import { Test2Component } from './test2/test2.component';
 
 export const appRoutes: Routes = [
   { path : 'home', component : HomeComponent },
@@ -21,6 +24,18 @@ export const appRoutes: Routes = [
   },
   { path : '', redirectTo: '/login', pathMatch : 'full'},
   { path : 'coach/:id', component : CoachComponent },
-  { path : 'customer', component : CustomerComponent },
+
+  //{ path : 'customer', component : CustomerComponent },
+  {
+    path : 'customer', component : CustomerDashboardComponent,
+    children : [{ path : '', component: CustomerComponent}]
+  },
+  {
+      path : 'test2', component : CustomerDashboardComponent,
+      children : [{ path : '', component: Test2Component}]
+    },
+  { path : 'customer-dashboard', redirectTo: '/customer', pathMatch : 'full'},
+
+  { path : 'user-profile', component : UserProfileComponent },
   { path : 'guest', component : GuestComponent }
 ];
