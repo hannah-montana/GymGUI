@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -17,7 +18,14 @@ import { FooterComponent } from './footer/footer.component';
 import { ProgramComponent } from './program/program.component';
 import { DataService } from './data.service';
 import { HttpClientModule } from '@angular/common/http';
-import { ExcerciseComponent } from './excercise/excercise.component';
+import { UserComponent } from './user/user.component';
+import { SignInComponent } from './signin/signin.component';
+import { appRoutes } from './routes';
+import { SignUpComponent } from './signup/signup.component';
+import { AuthenticationService } from './authentication.service';
+import { CustomerComponent } from './customer/customer.component';
+import { CoachComponent } from './coach/coach.component';
+import { GuestComponent } from './guest/guest.component';
 
 @NgModule({
   declarations: [
@@ -34,12 +42,18 @@ import { ExcerciseComponent } from './excercise/excercise.component';
     GalleryComponent,
     FooterComponent,
     ProgramComponent,
-    ExcerciseComponent
+    UserComponent,
+    SignInComponent,
+    SignUpComponent,
+    CustomerComponent,
+    CoachComponent,
+    GuestComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    RouterModule.forRoot(appRoutes)
   ],
   providers: [],
   bootstrap: [AppComponent]

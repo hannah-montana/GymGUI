@@ -1,0 +1,38 @@
+<div *ngIf="isLoginError" class="red-text center error-message">
+  <i class="material-icons">error</i> Incorrect username or password
+</div>
+
+<section class="bg-light ftco-counter img ftco-section ftco-no-pt ftco-no-pb" id="login-section">
+  <div class="container">
+    <div class="">
+      <div class="order-md-last">
+        <!--form class="bg-light p-4 p-md-5 contact-form"-->
+        <div class=" p-4 p-md-5 contact-form">
+          <span class="subheading">LOGIN</span>
+          <div class="form-group input-group-prepend">
+            <span class="input-group-text"> <i class="fa fa-user"></i> </span>
+            <input type="text" class="form-control " placeholder="User Name" #userName ngModel name="userName" required value="bb">
+          </div>
+
+          <div class="form-group input-group-prepend">
+            <span class="input-group-text"> <i class="fa fa-key"></i> </span>
+            <input type="password" class="form-control" placeholder="Password" #password ngModel name="password" required value="bb">
+          </div>
+          <div class="form-group">
+            <button class="btn btn-primary py-2 px-3" (click)="checkLogin(userName.value, password.value)">
+              Login
+            </button>
+            &nbsp;&nbsp;&nbsp;
+            <!--button class="btn btn-default py-2 px-3" (click)="gotoGuestPage()">
+              GUEST
+            </button-->
+          </div>
+
+        </div>
+        <!--/form-->
+      </div>
+    </div>
+  </div>
+</section>
+
+<router-outlet></router-outlet>
