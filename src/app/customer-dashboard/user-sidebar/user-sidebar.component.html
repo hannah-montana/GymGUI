@@ -1,0 +1,62 @@
+<div class="sidebar" data-color="purple" data-background-color="white" data-image="assets/img/sidebar-1.jpg">
+
+  <div class="logo">
+      <span class="simple-text logo-normal">
+        <img src="assets/images/logo.png" class="w-25">
+        FEATHER
+      </span>
+  </div>
+  <div class="sidebar-wrapper">
+    <ul class="nav">
+      <li class="nav-item active">
+        <a class="nav-link" routerLink='/customer' routerLinkActive='active'>
+          <i class="material-icons">dashboard</i>
+          <p>Customer</p>
+        </a>
+      </li>
+      <li class="nav-item " (click)="select('Profile')" [ngClass]="{active: isActive('Profile')}" ngName="cusProfile">
+        <a class="nav-link" routerLink='/profile' routerLinkActive='active'  >
+          <i class="material-icons">person</i>
+          <p>Profile</p>
+        </a>
+      </li>
+      <li class="nav-item" (click)="select('Program')" [ngClass]="{active: isActive('Program')}">
+        <a class="nav-link" routerLink='/program' routerLinkActive='active'>
+          <i class="material-icons">content_paste</i>
+          <p>Program</p>
+        </a>
+      </li>
+
+      <li class="nav-item ">
+        <a class="nav-link" routerLink='/map' routerLinkActive='active'>
+          <i class="material-icons">location_ons</i>
+          <p>Maps</p>
+        </a>
+
+      </li>
+      <li class="nav-item " >
+        <a class="nav-link" routerLink='/notify' routerLinkActive='active'>
+          <i class="material-icons">notifications</i>
+          <p>Notifications</p>
+        </a>
+      </li>
+
+      <li class="nav-item " >
+        <a class="nav-link" routerLink='/login' routerLinkActive='active'>
+          <i class="material-icons">power_settings_new</i>
+          <p>Log Out</p>
+        </a>
+      </li>
+      <!--li *ngFor="let n of list" (click)="select(n)" [ngClass]="{active: isActive(n)}">
+        <a>{{n}}</a>
+      </li-->
+
+      <li class="nav-item active-pro ">
+        <a class="nav-link" href="/customer">
+          <i class="material-icons">bubble_chart</i>
+          <p>feather team</p>
+        </a>
+      </li>
+    </ul>
+  </div>
+</div>

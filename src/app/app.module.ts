@@ -6,7 +6,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { NavigationComponent } from './navigation/navigation.component';
-import { FirstComponent } from './first/first.component';
 import { ServicesComponent } from './services/services.component';
 import { ScheduleComponent } from './schedule/schedule.component';
 import { AboutComponent } from './about/about.component';
@@ -23,20 +22,23 @@ import { SignInComponent } from './signin/signin.component';
 import { appRoutes } from './routes';
 import { SignUpComponent } from './signup/signup.component';
 import { AuthenticationService } from './authentication.service';
-import { CustomerComponent } from './customer/customer.component';
+import { CustomerComponent } from './customer-dashboard/customer/customer.component';
 import { CoachComponent } from './coach/coach.component';
 import { GuestComponent } from './guest/guest.component';
-import { UserProfileComponent } from './user-profile/user-profile.component';
 import { CustomerDashboardComponent } from './customer-dashboard/customer-dashboard.component';
-import { TestComponent } from './test/test.component';
-import { Test2Component } from './test2/test2.component';
+import { MapComponent } from './customer-dashboard/map/map.component';
+import { ProfileComponent } from './customer-dashboard/profile/profile.component';
+import { NotifyComponent } from './customer-dashboard/notify/notify.component';
+import { UserProgramComponent } from './customer-dashboard/user-program/user-program.component';
+import { UserFooterComponent } from './customer-dashboard/user-footer/user-footer.component';
+import { UserNavComponent } from './customer-dashboard/user-nav/user-nav.component';
+import { UserSidebarComponent } from './customer-dashboard/user-sidebar/user-sidebar.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     NavigationComponent,
-    FirstComponent,
     ServicesComponent,
     ScheduleComponent,
     AboutComponent,
@@ -52,10 +54,14 @@ import { Test2Component } from './test2/test2.component';
     CustomerComponent,
     CoachComponent,
     GuestComponent,
-    UserProfileComponent,
     CustomerDashboardComponent,
-    TestComponent,
-    Test2Component
+    MapComponent,
+    ProfileComponent,
+    NotifyComponent,
+    UserProgramComponent,
+    UserFooterComponent,
+    UserNavComponent,
+    UserSidebarComponent
   ],
   imports: [
     BrowserModule,

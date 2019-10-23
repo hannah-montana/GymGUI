@@ -1,12 +1,27 @@
-<div *ngIf="isLoginError" class="red-text center error-message">
+<!--div *ngIf="isLoginError" class="red-text center error-message">
   <i class="material-icons">error</i> Incorrect username or password
 </div>
 
-<section class="bg-light ftco-counter img ftco-section ftco-no-pt ftco-no-pb" id="login-section">
+<section class=" ftco-counter img ftco-section ftco-no-pt ftco-no-pb" id="login-section" style="background-color: lightgrey">
   <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-5">
+        <div class="form-group input-group-prepend">
+          <img src="../assets/images/logo.png" class="w-25">
+          <div>
+            <span class="display-4 subheading">GYM Fitness</span>
+            <br>
+            <span class="display-6">&nbsp;FEATHER</span>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
     <div class="">
       <div class="order-md-last">
-        <!--form class="bg-light p-4 p-md-5 contact-form"-->
+
         <div class=" p-4 p-md-5 contact-form">
           <span class="subheading">LOGIN</span>
           <div class="form-group input-group-prepend">
@@ -23,16 +38,76 @@
               Login
             </button>
             &nbsp;&nbsp;&nbsp;
-            <!--button class="btn btn-default py-2 px-3" (click)="gotoGuestPage()">
-              GUEST
-            </button-->
+
           </div>
 
         </div>
-        <!--/form-->
+
       </div>
     </div>
+
+
   </div>
+
+
 </section>
 
-<router-outlet></router-outlet>
+<router-outlet></router-outlet-->
+
+<!--button class="btn btn-default py-2 px-3" (click)="gotoGuestPage()">
+              GUEST
+            </button-->
+
+
+
+
+<div class="limiter">
+  <div class="container-login100" style="background-image: url('assets/images/bg.jpg');">
+    <div class="wrap-login100">
+      <!--form class="login100-form validate-form"-->
+					<span class="login100-form-logo">
+            <img src="assets/images/logo.png" class="w-75">
+
+					</span>
+
+        <span class="login100-form-title p-b-34 p-t-27">
+						Log in
+					</span>
+
+        <div class="wrap-input100 validate-input" data-validate = "Enter username">
+          <input type="text" class="input100 " placeholder="User Name" #userName ngModel name="userName" required value="bb">
+          <span class="focus-input100" data-placeholder="&#xf207;"></span>
+        </div>
+
+        <div class="wrap-input100 validate-input" data-validate="Enter password">
+          <input type="password" class="input100" placeholder="Password" #password ngModel name="password" required value="bb">
+          <span class="focus-input100" data-placeholder="&#xf191;"></span>
+        </div>
+
+        <div class="contact100-form-checkbox">
+          <input class="input-checkbox100" id="ckb1" type="checkbox" name="remember-me">
+          <label class="label-checkbox100" for="ckb1">
+            Remember me
+          </label>
+        </div>
+
+        <div class="container-login100-form-btn">
+          <button class="login100-form-btn" (click)="checkLogin(userName.value, password.value)">
+            Login
+          </button>
+
+        </div>
+
+        <div class="text-center p-t-90" style="color:#fff">
+          Create an account?
+          <a href="/signup" style="color: pink">
+            SIGN UP
+          </a>
+        </div>
+      <!--/form-->
+    </div>
+  </div>
+</div>
+
+<!--div id="dropDownSelect1"></div-->
+

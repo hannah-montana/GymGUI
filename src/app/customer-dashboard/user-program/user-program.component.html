@@ -1,0 +1,318 @@
+<div class="col-md-12">
+  <div class="card card-plain">
+    <div class="card-header card-header-primary">
+      <h4 class="card-title mt-0"> FITNESS PROGRAM</h4>
+      <p class="card-category"> 4 Months </p>
+    </div>
+    <div class="card-body">
+      <div class="table-responsive">
+        <table class="table table-hover">
+          <thead class="">
+            <th>ID</th>
+            <th>Session name</th>
+            <th>Description</th>
+            <th>Duration</th>
+            <th>Focus Session</th>
+          </thead>
+          <tbody>
+          <tr class="accordion-toggle">
+            <td data-toggle="collapse" data-target="#collapseTwo">1</td>
+            <td data-toggle="collapse" data-target="#collapseTwo">Focus Session</td>
+            <td data-toggle="collapse" data-target="#collapseTwo">To validate the capacity</td>
+            <td data-toggle="collapse" data-target="#collapseTwo">1 Week</td>
+            <td>
+              <a data-target="#excerciseModal" (click)="showModal()">
+                <i class="material-icons">notifications</i>
+              </a>
+            </td>
+          </tr>
+          <tr>
+            <td></td>
+            <td colspan="4">
+              <div id="collapseTwo" class="collapse in">
+                <table class="table table-bordered">
+                  <thead>
+                  <tr>
+                  <tr class="bg-success text-white">
+                    <th> Id</th>
+                    <th class="w-25"> Name <!--i class="fa fa-sort"></i--></th>
+                    <th class="w-25"> Instruction</th>
+                    <th> Level </th>
+                    <th class="w-25"> Image </th>
+                  </tr>
+                  </thead>
+                  <tr>
+                    <td> 1</td>
+                    <td> Squats</td>
+                    <td> Do 50 squats in one week</td>
+                    <td> Medium</td>
+                    <td><img src="../assets/images/squats.jpg" class="w-50"></td>
+                  </tr>
+                  <tr>
+                    <td> 2</td>
+                    <td> Streching</td>
+                    <td> Do 30 left and right strechs in one week</td>
+                    <td> Medium</td>
+                    <td><img src="../assets/images/stretch.PNG" class="w-50"></td>
+                  </tr>
+                  <tr>
+                    <td> 3</td>
+                    <td> Pushup</td>
+                    <td> Do 25 Pushups in one week</td>
+                    <td> Medium</td>
+                    <td><img src="../assets/images/push-up_1.jpg" class="w-50"></td>
+                  </tr>
+                </table>
+              </div>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+  <button type="button" class="btn btn-info" data-toggle="modal" data-target="#excerciseViewModal" (click)="showViewModal()">
+    Show Further Sessions
+  </button>
+
+  <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#excerciseReportModal" (click)="showReportModal()">
+    Report to your coach
+  </button>
+</div>
+
+
+
+<!-- Add report  Modal -->
+<div class="modal fade" id="excerciseReportModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">FeedBack to Coach</h4>
+        <button type="button" class="close" (click)="hideReportModal()">&times;</button>
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body">
+        <div class="col-md-12">
+          <div class="card card-plain">
+            <div class="card-body">
+              <div class="table-responsive">
+                <table class="table table-hover">
+                  <tr>
+                    <td class="w-50">1. Are you able to complete weekely deadlines?</td>
+                    <td>
+                      <label><input type="radio" name="q1" id="q1-y" value="yes" checked/>&nbsp; Yes</label><br>
+                      <label><input type="radio" name="q1" id="q1-n" value="no"/>&nbsp; No</label></td>
+                  </tr>
+                  <tr>
+                    <td>2. What do you think about session?</td>
+                    <td>
+                      <select class="browser-default custom-select">
+                        <option value="1" selected>Easy</option>
+                        <option value="2">Medium</option>
+                        <option value="3">Difficult</option>
+                      </select>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>3. Are you ready to go to next session?</td>
+                    <td>
+                      <label><input type="radio" name="a1" id="a1-c" value="Can't wait to go!" checked/>&nbsp; Can't wait to go!</label>
+                      <br>
+                      <label><input type="radio" name="a1" id="a1-d" value="I need to re-think"/>&nbsp; I need to re-think</label>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Any Comments:</td>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <td colspan="2">
+                      <textarea class="form-control" rows="5" id="comment"></textarea>
+                    </td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-success" (click)="sendReportModal()">Send</button>
+        <button type="button" class="btn btn-danger" (click)="hideReportModal()">Close</button>
+
+        <!-- this button is hidden, used to close from typescript -->
+        <button type="button" id="close-modalReport" data-dismiss="modal" style="display: none">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Add validation Modal -->
+<div class="modal fade" id="excerciseModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">Notification</h4>
+        <button type="button" class="close" (click)="hideModal()">&times;</button>
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body">
+        <div class="col-md-8">
+          <p><b>Are you sure to validate your focus session?</b></p>
+        </div>
+      </div>
+
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-success" (click)="sendModal()">Yes</button>
+        <button type="button" class="btn btn-danger" (click)="hideModal()">No</button>
+
+        <!-- this button is hidden, used to close from typescript -->
+        <button type="button" id="close-modal" data-dismiss="modal" style="display: none">Close</button>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<!-- Add further session  Modal -->
+<div class="modal fade" id="excerciseViewModal" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog" display="table" style="min-width:70%">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <h4 class="modal-title"><strong>Session Details</strong></h4>
+        <button type="button" class="close" (click)="hideViewModal()">&times;</button>
+      </div>
+
+      <div class="modal-body">
+        <div class="col-md-12">
+          <div class="card card-plain">
+            <div class="card-body">
+              <div class="table-responsive">
+                <table class="table table-hover">
+                  <thead class="">
+                    <th>ID</th>
+                    <th>Session name</th>
+                    <th>Description</th>
+                    <th>Duration</th>
+                  </thead>
+                  <tbody>
+                  <tr class="accordion-toggle">
+                    <td data-toggle="collapse" data-target="#collapseTwoo">1</td>
+                    <td data-toggle="collapse" data-target="#collapseTwoo">Session 1</td>
+                    <td data-toggle="collapse" data-target="#collapseTwoo">To validate the capacity</td>
+                    <td data-toggle="collapse" data-target="#collapseTwoo">2 Weeks</td>
+                  </tr>
+                  <tr>
+                    <td></td>
+                    <td colspan="3">
+                      <div id="collapseTwoo" class="collapse in">
+                        <table class="table table-bordered">
+                          <thead>
+                          <tr>
+                          <tr class="bg-success text-white">
+                            <th>Id</th>
+                            <th class="w-25">Name </th>
+                            <th class="w-25">Instruction</th>
+                            <th>Level</th>
+                            <th class="w-25">Image</th>
+                          </tr>
+                          </thead>
+                          <tr>
+                            <td> 1</td>
+                            <td> Lunges</td>
+                            <td> Do 50 Lunges in one week</td>
+                            <td> Medium</td>
+                            <td><img src="../assets/images/lunges.jpg" class="w-50"></td>
+                          </tr>
+                          <tr>
+                            <td> 2</td>
+                            <td> Crunches</td>
+                            <td> Do 30 Crunches in one week</td>
+                            <td> Medium</td>
+                            <td><img src="../assets/images/Crunches.jpg" class="w-50"></td>
+                          </tr>
+                          <tr>
+                            <td> 3</td>
+                            <td> Leg Press</td>
+                            <td> Do 45 Legpress in one week</td>
+                            <td> Medium</td>
+                            <td><img src="../assets/images/Legpress.png" class="w-50"></td>
+                          </tr>
+                        </table>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr class="accordion-toggle">
+                    <td data-toggle="collapse" data-target="#collapseThree">2</td>
+                    <td data-toggle="collapse" data-target="#collapseThree">Session 2</td>
+                    <td data-toggle="collapse" data-target="#collapseThree">To Workout</td>
+                    <td data-toggle="collapse" data-target="#collapseThree">2 Weeks</td>
+                  </tr>
+                  <tr>
+                    <td></td>
+                    <td colspan="3">
+                      <div id="collapseThree" class="collapse in">
+                        <table class="table table-bordered">
+                          <thead>
+                          <tr>
+                          <tr class="bg-success text-white">
+                            <th> Id</th>
+                            <th class="w-25"> Name </th>
+                            <th class="w-25"> Instruction</th>
+                            <th> Level </th>
+                            <th class="w-25">Image</th>
+                          </tr>
+                          </thead>
+                          <tr>
+                            <td> 1</td>
+                            <td> Deadlift</td>
+                            <td> Do Deadlift twice a week</td>
+                            <td> Medium</td>
+                            <td><img src="../assets/images/deadlift.jpg" class="w-50"></td>
+                          </tr>
+                          <tr>
+                            <td> 2</td>
+                            <td> Wall Sit</td>
+                            <td> Do 30 Sets of Wall Sit in one week</td>
+                            <td> Medium</td>
+                            <td><img src="../assets/images/Wall.jpg" class="w-50"></td>
+                          </tr>
+                          <tr>
+                            <td> 3</td>
+                            <td> Bench Press</td>
+                            <td> Do Bench Press 3-4 times in one week</td>
+                            <td> Medium</td>
+                            <td><img src="../assets/images/Bench.jpg" class="w-50"></td>
+                          </tr>
+                        </table>
+                      </div>
+                    </td>
+                  </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" (click)="hideViewModal()">Close</button>
+        <button type="button" id="close-modalView" data-dismiss="modal" style="display: none">Close</button>
+      </div>
+
+    </div>
+
+  </div>
+</div>
