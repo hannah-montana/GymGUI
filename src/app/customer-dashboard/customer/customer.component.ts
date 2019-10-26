@@ -103,7 +103,7 @@ export class CustomerComponent implements OnInit {
     piechart.render();
 
     //View health status
-    this.percentHealth = 91;
+    this.percentHealth = 98;
     this.fillHealthStatus(this.percentHealth);
 
   }

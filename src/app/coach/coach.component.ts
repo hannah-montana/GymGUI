@@ -19,9 +19,9 @@ export class CoachComponent implements OnInit {
     //       this.data = +params['data'];
     //this.myParam = new User();
 
-    this.activeRoute.params.subscribe((params) => this.userId = params['id']);
+    //this.activeRoute.params.subscribe((params) => this.userId = params['id']);
 
-    console.log(this.userId);
+    //console.log(this.userId);
   }
 
   getUserById(id){

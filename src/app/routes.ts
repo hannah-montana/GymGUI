@@ -1,30 +1,21 @@
 import { Routes } from '@angular/router';
-import { HomeComponent } from './home/home.component';
 import { UserComponent } from './user/user.component';
 import { SignInComponent } from './signin/signin.component';
 import { SignUpComponent } from './signup/signup.component';
-import { CoachComponent } from './coach/coach.component';
 import { CustomerComponent } from './customer-dashboard/customer/customer.component';
-import { GuestComponent } from './guest/guest.component';
-import { ContactComponent} from './contact/contact.component';
 import { CustomerDashboardComponent } from './customer-dashboard/customer-dashboard.component';
 import { MapComponent } from './customer-dashboard/map/map.component';
 import { ProfileComponent } from './customer-dashboard/profile/profile.component';
 import { UserProgramComponent } from './customer-dashboard/user-program/user-program.component';
 import { NotifyComponent } from './customer-dashboard/notify/notify.component';
+import { CoachComponent } from './coach/coach.component';
+import { CoachDashboardComponent } from './coach/coach-dashboard/coach-dashboard.component';
+import { CoachExerciseComponent } from './coach/coach-exercise/coach-exercise.component';
+import { CoachSessionComponent } from './coach/coach-session/coach-session.component';
+import { CoachProgramComponent } from './coach/coach-program/coach-program.component';
 
 export const appRoutes: Routes = [
-  { path : 'home', component : HomeComponent },
-  /*{
-    path : 'login', component : UserComponent,
-    children : [{ path : '', component: SignInComponent}]
-  },
-  {
-    path : 'signup', component : UserComponent,
-    children : [{ path : '', component: SignUpComponent}]
-  },
-  { path : '', redirectTo: '/login', pathMatch : 'full'},*/
-  { path : 'coach/:id', component : CoachComponent },
+  { path : 'coach', component : CoachComponent },
   { path : '', component : SignInComponent },
   { path : 'login', component : SignInComponent },
   { path : 'signup', component : SignUpComponent },
@@ -50,5 +41,21 @@ export const appRoutes: Routes = [
   },
   { path : 'customer-dashboard', redirectTo: '/customer', pathMatch : 'full'},
 
-  { path : 'guest', component : GuestComponent }
+  { path : 'coach', redirectTo: '/coach-dashboard', pathMatch : 'full'},
+  {
+    path : 'coach-dashboard', component : CoachComponent,
+    children : [{ path : '', component: CoachDashboardComponent}]
+  },
+  {
+    path : 'coach-exercise', component : CoachComponent,
+    children : [{ path : '', component: CoachExerciseComponent}]
+  },
+  {
+    path : 'coach-session', component : CoachComponent,
+    children : [{ path : '', component: CoachSessionComponent}]
+  },
+  {
+    path : 'coach-program', component : CoachComponent,
+    children : [{ path : '', component: CoachProgramComponent}]
+  }
 ];

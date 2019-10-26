@@ -1,86 +1,34 @@
-<!--div *ngIf="isLoginError" class="red-text center error-message">
-  <i class="material-icons">error</i> Incorrect username or password
-</div>
 
-<section class=" ftco-counter img ftco-section ftco-no-pt ftco-no-pb" id="login-section" style="background-color: lightgrey">
-  <div class="container">
-    <div class="row justify-content-center">
-      <div class="col-md-5">
-        <div class="form-group input-group-prepend">
-          <img src="../assets/images/logo.png" class="w-25">
-          <div>
-            <span class="display-4 subheading">GYM Fitness</span>
-            <br>
-            <span class="display-6">&nbsp;FEATHER</span>
-          </div>
-
-        </div>
-      </div>
-
-    </div>
-
-    <div class="">
-      <div class="order-md-last">
-
-        <div class=" p-4 p-md-5 contact-form">
-          <span class="subheading">LOGIN</span>
-          <div class="form-group input-group-prepend">
-            <span class="input-group-text"> <i class="fa fa-user"></i> </span>
-            <input type="text" class="form-control " placeholder="User Name" #userName ngModel name="userName" required value="bb">
-          </div>
-
-          <div class="form-group input-group-prepend">
-            <span class="input-group-text"> <i class="fa fa-key"></i> </span>
-            <input type="password" class="form-control" placeholder="Password" #password ngModel name="password" required value="bb">
-          </div>
-          <div class="form-group">
-            <button class="btn btn-primary py-2 px-3" (click)="checkLogin(userName.value, password.value)">
-              Login
-            </button>
-            &nbsp;&nbsp;&nbsp;
-
-          </div>
-
-        </div>
-
-      </div>
-    </div>
-
-
-  </div>
-
-
-</section>
-
-<router-outlet></router-outlet-->
-
-<!--button class="btn btn-default py-2 px-3" (click)="gotoGuestPage()">
-              GUEST
-            </button-->
 
 
 
 
 <div class="limiter">
-  <div class="container-login100" style="background-image: url('assets/images/bg.jpg');">
+
+  <div class="container-login100" style="background-image: url('assets/images/bg2.jpg');">
+    <!--div class="login100-form-describe">
+      <span class="login100-form-title2">Welcome to FEATHER</span>
+    </div-->
+
+
     <div class="wrap-login100">
       <!--form class="login100-form validate-form"-->
-					<span class="login100-form-logo">
-            <img src="assets/images/logo.png" class="w-75">
+        <span class="login100-form-logo">
+          <img src="assets/images/logo.png" class="w-75">
 
-					</span>
+        </span>
 
         <span class="login100-form-title p-b-34 p-t-27">
 						Log in
 					</span>
 
         <div class="wrap-input100 validate-input" data-validate = "Enter username">
-          <input type="text" class="input100 " placeholder="User Name" #userName ngModel name="userName" required value="bb">
+          <input type="text" class="input100 " placeholder="User Name" #userName ngModel name="userName" required value="">
           <span class="focus-input100" data-placeholder="&#xf207;"></span>
         </div>
 
         <div class="wrap-input100 validate-input" data-validate="Enter password">
-          <input type="password" class="input100" placeholder="Password" #password ngModel name="password" required value="bb">
+          <input type="password" class="input100" placeholder="Password" #password ngModel name="password" required value="">
           <span class="focus-input100" data-placeholder="&#xf191;"></span>
         </div>
 

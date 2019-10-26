@@ -1,33 +1,33 @@
-<div class="sidebar" data-color="purple" data-background-color="white" data-image="assets/img/sidebar-1.jpg">
+<div class="sidebar" data-color="purple" data-background-color="white">
 
   <div class="logo">
       <span class="simple-text logo-normal">
         <img src="assets/images/logo.png" class="w-25">
-        FEATHER
+        FEATHERS
       </span>
   </div>
   <div class="sidebar-wrapper">
     <ul class="nav">
-      <li class="nav-item active">
-        <a class="nav-link" routerLink='/customer' routerLinkActive='active'>
-          <i class="material-icons">dashboard</i>
-          <p>Customer</p>
-        </a>
-      </li>
-      <li class="nav-item " (click)="select('Profile')" [ngClass]="{active: isActive('Profile')}" ngName="cusProfile">
+      <li class="nav-item " routerLink='/profile'> <!--(click)="select('Profile')" [ngClass]="{active: isActive('Profile')}" ngName="cusProfile"-->
         <a class="nav-link" routerLink='/profile' routerLinkActive='active'  >
           <i class="material-icons">person</i>
           <p>Profile</p>
         </a>
       </li>
-      <li class="nav-item" (click)="select('Program')" [ngClass]="{active: isActive('Program')}">
+      <li class="nav-item ">
+        <a class="nav-link" routerLink='/customer' routerLinkActive='active'>
+          <i class="material-icons">dashboard</i>
+          <p>My Dashboard</p>
+        </a>
+      </li>
+      <li class="nav-item " > <!--(click)="select('Program')" [ngClass]="{active: isActive('Program')}"-->
         <a class="nav-link" routerLink='/program' routerLinkActive='active'>
           <i class="material-icons">content_paste</i>
           <p>Program</p>
         </a>
       </li>
 
-      <li class="nav-item ">
+      <li class="nav-item active">
         <a class="nav-link" routerLink='/map' routerLinkActive='active'>
           <i class="material-icons">location_ons</i>
           <p>Maps</p>
@@ -37,7 +37,8 @@
       <li class="nav-item " >
         <a class="nav-link" routerLink='/notify' routerLinkActive='active'>
           <i class="material-icons">notifications</i>
-          <p>Notifications</p>
+          <p>Notifications <!--img src="assets\images\1.png " style="width: 20px"--></p>
+
         </a>
       </li>
 

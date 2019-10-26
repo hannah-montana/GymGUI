@@ -40,7 +40,7 @@ export class SignInComponent implements OnInit {
           if (data.role == 1)
             this.router.navigate(['/coach', data.id]);
           else if (data.role == 2)
-            this.router.navigate(['/customer']);
+            this.router.navigate(['/profile']);
         },
         error  => {
           console.log("Error", error);
