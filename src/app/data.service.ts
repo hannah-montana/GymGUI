@@ -18,6 +18,7 @@ export class DataService {
 
   registerUser(user: User) {
       this.body = new User();
+      this.body.id = "0";
       this.body.userName = user.userName;
       this.body.password = user.password;
 

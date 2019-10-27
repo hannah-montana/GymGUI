@@ -38,7 +38,8 @@ export class SignInComponent implements OnInit {
         data  => {
           console.log("POST Request is successful ", data);
           if (data.role == 1)
-            this.router.navigate(['/coach', data.id]);
+            this.router.navigate(['/coach']);
+            //this.router.navigate(['/coach', data.id]);
           else if (data.role == 2)
             this.router.navigate(['/profile']);
         },
