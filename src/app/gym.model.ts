@@ -11,3 +11,20 @@ export class User {
     level: number;
     status: string;
 }
+
+export class Session {
+  id: string;
+  name: string;
+  description: string;
+  duration: number;
+  level: string;
+  focusSession: number;
+  validated: number;
+  sendReported: number;
+}
+
+export interface Person {
+  id: string;
+  firstName: string;
+  lastName: string;
+};

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders} from '@angular/common/http';
-import { User } from './gym.model'
+import { User } from './gym.model';
 import { Response } from "@angular/http";
 import { Observable } from 'rxjs';
 //import 'rxjs/add/operator/map';

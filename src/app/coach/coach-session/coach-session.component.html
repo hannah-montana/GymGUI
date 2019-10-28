@@ -1,1 +1,51 @@
-<p>coach-session works!</p>
+<div class="col-md-12">
+  <div class="card">
+    <div class="card-header card-header-warning">
+      <h4 class="card-title ">List Sessions</h4>
+      <p class="card-category"> </p>
+    </div>
+    <div class="card-body">
+
+      <div style=" text-align:center; padding:12px 0; margin-bottom:24px"
+        [formGroup]="myGroup">
+        <input formControlName="nameFC" type="text" class="form-control" placeholder="Session Name Filter" />
+      </div>
+
+      <cdk-virtual-scroll-viewport itemSize="0" style="height: 500px;">
+        <table class="table table-hover">
+          <thead class="">
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Duration</th>
+            <th>Level</th>
+            <th>Focus Session</th>
+          </tr>
+          </thead>
+          <tbody>
+          <ng-container *cdkVirtualFor="let row of rows">
+            <tr>
+              <td>{{row.id}}</td>
+              <td>{{row.name}}</td>
+              <td>{{row.duration}}</td>
+              <td> {{ row.level }}</td>
+              <td> {{ row.focusSession }} </td>
+            </tr>
+          </ng-container>
+          </tbody>
+        </table>
+      </cdk-virtual-scroll-viewport>
+
+    </div>
+  </div>
+
+</div>
+
+
+
+
+
+
+
+
+

@@ -3,7 +3,9 @@ import { Router } from '@angular/router';
 import { AuthenticationService } from '../authentication.service'
 //import { DataService } from './../../data.service';
 import { DataService } from '../data.service';
-import { User } from '../gym.model'
+import { User } from '../gym.model';
+
+
 
 @Component({
   selector: 'app-signin',
@@ -17,6 +19,7 @@ export class SignInComponent implements OnInit {
   invalidLogin = false;
   user: User;
   userBody: User;
+
 
   constructor(private router: Router,
               //private loginservice: AuthenticationService,

@@ -27,6 +27,8 @@ import { CoachSessionComponent } from './coach/coach-session/coach-session.compo
 import { CoachProgramComponent } from './coach/coach-program/coach-program.component';
 import { CoachExerciseComponent } from './coach/coach-exercise/coach-exercise.component';
 
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ScrollDispatchModule } from '@angular/cdk/scrolling';
 
 @NgModule({
   declarations: [
@@ -54,7 +56,10 @@ import { CoachExerciseComponent } from './coach/coach-exercise/coach-exercise.co
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    RouterModule.forRoot(appRoutes)
+    RouterModule.forRoot(appRoutes),
+    ReactiveFormsModule,
+    FormsModule,
+    ScrollDispatchModule
   ],
   providers: [],
   bootstrap: [AppComponent]
