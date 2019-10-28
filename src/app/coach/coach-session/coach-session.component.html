@@ -8,7 +8,7 @@
 
       <div style=" text-align:center; padding:12px 0; margin-bottom:24px"
         [formGroup]="myGroup">
-        <input formControlName="nameFC" type="text" class="form-control" placeholder="Session Name Filter" />
+        <input formControlName="nameFC" type="text" class="form-control" placeholder="Search Session..." />
       </div>
 
       <cdk-virtual-scroll-viewport itemSize="0" style="height: 500px;">
@@ -20,16 +20,37 @@
             <th>Duration</th>
             <th>Level</th>
             <th>Focus Session</th>
+            <th>View</th>
+            <th>Edit</th>
+            <th>Delete</th>
           </tr>
           </thead>
           <tbody>
           <ng-container *cdkVirtualFor="let row of rows">
             <tr>
-              <td>{{row.id}}</td>
-              <td>{{row.name}}</td>
-              <td>{{row.duration}}</td>
-              <td> {{ row.level }}</td>
-              <td> {{ row.focusSession }} </td>
+              <td> {{ row.id }} </td>
+              <td> {{ row.name }} </td>
+              <td> {{ row.duration }} </td>
+              <td> {{ row.level }} </td>
+              <td class="text-justify">
+                {{ row.focusSession == 1 ? 'Yes' : '-' }}
+                <!--i class="material-icons">check</i-->
+              </td>
+              <td>
+                <a (click)="view(row)">
+                  <i class="material-icons text-center text-primary">visibility</i>
+                </a>
+              </td>
+              <td>
+                <a (click)="edit(row)">
+                  <i class="material-icons text-center text-success">edit</i>
+                </a>
+              </td>
+              <td>
+                <a (click)="delete(row)">
+                  <i class="material-icons text-center text-warning">delete</i>
+                </a>
+              </td>
             </tr>
           </ng-container>
           </tbody>
@@ -39,6 +60,116 @@
     </div>
   </div>
 
+</div>
+
+<!--View dialog-->
+<div class="modal fade" id="viewModal">
+  <div class="modal-dialog" style="min-width:70%">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">Session Detail</h4>
+        <button type="button" class="close" (click)="hideView()">&times;</button>
+      </div>
+
+
+      <!-- Modal body -->
+      <div class="modal-body w-100">
+        <div class="col-md-12">
+
+          <table style="width: 100%">
+            <tr>
+              <td style="width: 20%">Name: &nbsp;</td>
+              <td>
+                <input type="text" placeholder="" class="form-control" value="{{sess.name}}" name="">
+              </td>
+            </tr>
+            <tr>
+              <td>Description:</td>
+              <td>
+                <input type="text" placeholder="" class="form-control" value="{{sess.description}}" name="">
+              </td>
+            </tr>
+            <tr>
+              <td>Duration:</td>
+              <td>
+                <input type="text" placeholder="" class="form-control" value="{{sess.duration}}" name="">
+              </td>
+            </tr>
+            <tr>
+              <td>Level:</td>
+              <td>
+                <input type="text" placeholder="" class="form-control" value="{{sess.level}}" name="">
+              </td>
+            </tr>
+            <tr>
+              <td>Focus session:</td>
+              <td>
+                {{ sess.focusSession }}
+                <!--input class="form-check-input" type="checkbox" value="" {{sFocusSession == 1 ? checked : null}}-->
+              </td>
+            </tr>
+          </table>
+
+          <!--exercise table-->
+          <div style=" text-align:center; padding:12px 0; margin-bottom:24px"
+               [formGroup]="groupExercise">
+            <input formControlName="exNameFC" type="text" class="form-control" placeholder="Search Exercise..." />
+          </div>
+
+          <cdk-virtual-scroll-viewport itemSize="0" style="height: 300px;">
+          <table class="table table-hover">
+            <thead class="">
+            <tr>
+              <th>ID</th>
+              <!--th>Chose</th-->
+              <th>Name</th>
+              <th>Duration</th>
+              <th>Level</th>
+              <th>Type</th>
+              <th>Photo</th>
+              <th>Point</th>
+              <th>Target</th>
+
+            </tr>
+            </thead>
+            <ng-container *cdkVirtualFor="let exrow of exrows">
+            <tbody>
+              <tr> <!-- *ngFor="let ex of listExercise"-->
+                <td>{{exrow.id}}</td>
+                <!--td style="text-align: center">
+                  <input class="form-check-input" type="checkbox" value="">
+                </td-->
+                <td>{{exrow.name}}</td>
+                <td>{{exrow.duration}}</td>
+                <td>{{exrow.level}}</td>
+                <td>{{exrow.type}}</td>
+                <td>{{exrow.photo}}</td>
+                <td>{{exrow.point}}</td>
+                <td>{{exrow.target}}</td>
+
+              </tr>
+            </tbody>
+            </ng-container>
+          </table>
+          </cdk-virtual-scroll-viewport>
+          <!--end exercise table-->
+
+        </div>
+      </div>
+
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <!--button type="button" class="btn btn-success" (click)="sendModal()">Yes</button-->
+        <button type="button" class="btn btn-danger" (click)="hideView()">Close</button>
+
+        <!-- this button is hidden, used to close from typescript -->
+        <button type="button" id="close-modal" data-dismiss="modal" style="display: none">Close</button>
+      </div>
+
+    </div>
+  </div>
 </div>
 
 

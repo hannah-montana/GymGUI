@@ -23,8 +23,15 @@ export class Session {
   sendReported: number;
 }
 
-export interface Person {
+export class Exercise {
   id: string;
-  firstName: string;
-  lastName: string;
-};
+  name: string;
+  description: string;
+  instruction: string;
+  duration: string;
+  level: string;
+  type: string;
+  calories: string;
+  photo: string;
+  point: string;
+}
