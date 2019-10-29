@@ -6,10 +6,31 @@
     </div>
     <div class="card-body">
 
-      <div style=" text-align:center; padding:12px 0; margin-bottom:24px"
-        [formGroup]="myGroup">
-        <input formControlName="nameFC" type="text" class="form-control" placeholder="Search Session..." />
+      <div class="container">
+        <div class="row">
+
+          <div class="col-sm">
+            <a (click)="add()">
+              <h5 class="text-success">
+                <i class="material-icons text-center text-success">add</i>
+                <b>Add new</b>
+              </h5>
+            </a>
+
+          </div>
+
+          <div class="col-sm">
+            <form class="form-inline w-75">
+              <i class="material-icons text-center text-primary">search</i>
+              <div [formGroup]="myGroup" style="width: 90%">
+                <input formControlName="nameFC" style="width: 100%" type="text" class="form-control" placeholder="Search Session..." />
+              </div>
+            </form>
+          </div>
+        </div>
+
       </div>
+
 
       <cdk-virtual-scroll-viewport itemSize="0" style="height: 500px;">
         <table class="table table-hover">
@@ -82,42 +103,51 @@
             <tr>
               <td style="width: 20%">Name: &nbsp;</td>
               <td>
-                <input type="text" placeholder="" class="form-control" value="{{sess.name}}" name="">
+                <input type="text" placeholder="" class="form-control" value="{{sess ? sess.name : ''}}" name="">
               </td>
             </tr>
             <tr>
               <td>Description:</td>
               <td>
-                <input type="text" placeholder="" class="form-control" value="{{sess.description}}" name="">
+                <input type="text" placeholder="" class="form-control" value="{{sess ? sess.description : ''}}" name="">
               </td>
             </tr>
             <tr>
               <td>Duration:</td>
               <td>
-                <input type="text" placeholder="" class="form-control" value="{{sess.duration}}" name="">
+                <input type="text" placeholder="" class="form-control" value="{{sess ? sess.duration : ''}}" name="">
               </td>
             </tr>
             <tr>
               <td>Level:</td>
               <td>
-                <input type="text" placeholder="" class="form-control" value="{{sess.level}}" name="">
+                <input type="text" placeholder="" class="form-control" value="{{sess ? sess.level : ''}}" name="">
               </td>
             </tr>
             <tr>
               <td>Focus session:</td>
               <td>
-                {{ sess.focusSession }}
+                {{ sess ? sess.focusSession : '' }}
                 <!--input class="form-check-input" type="checkbox" value="" {{sFocusSession == 1 ? checked : null}}-->
               </td>
             </tr>
+            <tr>
+              <td></td>
+              <td>
+                <div>
+                  <form class="form-inline w-100">
+                    <i class="material-icons text-center text-primary">search</i>
+                    <div [formGroup]="groupExercise" style="width: 90%">
+                      <input formControlName="exNameFC" style="width: 50%" type="text" class="form-control" placeholder="Search Exercise..." />
+                    </div>
+                  </form>
+                </div>
+              </td>
+            </tr>
+
           </table>
 
           <!--exercise table-->
-          <div style=" text-align:center; padding:12px 0; margin-bottom:24px"
-               [formGroup]="groupExercise">
-            <input formControlName="exNameFC" type="text" class="form-control" placeholder="Search Exercise..." />
-          </div>
-
           <cdk-virtual-scroll-viewport itemSize="0" style="height: 300px;">
           <table class="table table-hover">
             <thead class="">
@@ -134,24 +164,26 @@
 
             </tr>
             </thead>
-            <ng-container *cdkVirtualFor="let exrow of exrows">
-            <tbody>
-              <tr> <!-- *ngFor="let ex of listExercise"-->
-                <td>{{exrow.id}}</td>
-                <!--td style="text-align: center">
-                  <input class="form-check-input" type="checkbox" value="">
-                </td-->
-                <td>{{exrow.name}}</td>
-                <td>{{exrow.duration}}</td>
-                <td>{{exrow.level}}</td>
-                <td>{{exrow.type}}</td>
-                <td>{{exrow.photo}}</td>
-                <td>{{exrow.point}}</td>
-                <td>{{exrow.target}}</td>
 
-              </tr>
+            <tbody>
+              <ng-container *cdkVirtualFor="let exrow of exrows">
+                <tr> <!-- *ngFor="let ex of listExercise"-->
+                  <td>{{exrow.id}}</td>
+                  <!--td style="text-align: center">
+                    <input class="form-check-input" type="checkbox" value="">
+                  </td-->
+                  <td>{{exrow.name}}</td>
+                  <td>{{exrow.duration}}</td>
+                  <td>{{exrow.level}}</td>
+                  <td>{{exrow.type}}</td>
+                  <td>{{exrow.photo}}</td>
+                  <td>{{exrow.point}}</td>
+                  <td>{{exrow.target}}</td>
+
+                </tr>
+              </ng-container>
             </tbody>
-            </ng-container>
+
           </table>
           </cdk-virtual-scroll-viewport>
           <!--end exercise table-->
@@ -171,9 +203,179 @@
     </div>
   </div>
 </div>
+<!-- end View dialog -->
+
+<!-- Add dialog -->
+<div class="modal fade" id="addModal">
+  <div class="modal-dialog" style="min-width:70%">
+    <div class="modal-content">
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">Add new session</h4>
+        <button type="button" class="close" (click)="hideAdd()">&times;</button>
+      </div>
+
+      <form (ngSubmit)="onSubmit(addForm.value)" #addForm="ngForm">
+
+      <!-- Modal body -->
+      <div class="modal-body w-100">
+        <div class="col-md-12">
+
+            <table style="width: 100%">
+              <tr>
+                <td style="width: 20%">Name:</td>
+                <td>
+                  <input type="text" placeholder="" class="form-control w-75" ngModel name="name" required>
+                </td>
+              </tr>
+              <tr>
+                <td>Description:</td>
+                <td>
+                  <textarea type="text" placeholder="" class="form-control w-75" ngModel name="description" rows="3"></textarea>
+                </td>
+              </tr>
+              <tr>
+                <td>Duration:</td>
+                <td>
+                  <input type="number" placeholder="" class="form-control w-25" ngModel name="duration">
+                </td>
+              </tr>
+              <tr style="margin-top: 3px;">
+                <td>Level:</td>
+                <td>
+                  <select class="browser-default custom-select w-25" ngModel name="level" style="margin-top: 10px;">
+                    <option value="1" selected>Easy</option>
+                    <option value="2">Medium</option>
+                    <option value="3">Difficult</option>
+                  </select>
+                  <!--input type="text" placeholder="" class="form-control" value="" name=""-->
+                </td>
+              </tr>
+              <tr>
+                <td>Focus session:</td>
+                <td>
+                  <input type="checkbox" ngModel name="focusSession">
+                  <!--input class="form-check-input" type="checkbox" value="" {{sFocusSession == 1 ? checked : null}}-->
+                </td>
+              </tr>
+              <tr>
+                <td></td>
+                <td>
+                  <div>
+                    <form class="form-inline w-100">
+                      <i class="material-icons text-center text-primary">search</i>
+                      <div [formGroup]="groupAllExercise" style="width: 90%">
+                        <input formControlName="exAllNameFC" style="width: 50%" type="text" class="form-control" placeholder="Search Exercise..." />
+                      </div>
+                    </form>
+                  </div>
+                </td>
+              </tr>
+            </table>
+
+            <!--exercise table-->
+            <cdk-virtual-scroll-viewport itemSize="0" style="height: 300px; width: 100%">
+              <table class="table table-hover">
+                <thead class="">
+                <tr>
+                  <th>ID</th>
+                  <th>Choose</th>
+                  <th>Name</th>
+                  <th>Duration</th>
+                  <th>Level</th>
+                  <th>Type</th>
+                  <th>Photo</th>
+                  <th>Point</th>
+                  <th>Target</th>
+
+                </tr>
+                </thead>
+
+                <tbody>
+                <ng-container *cdkVirtualFor="let ex of exAllrows" >
+                  <tr>
+                    <td>{{ex.id}}</td>
+                    <td style="text-align: center">
+                      <input class="form-check-input" type="checkbox" (change)="onSelect($event, ex.id)">
+                    </td>
+                    <td>{{ex.name}}</td>
+                    <td>{{ex.duration}}</td>
+                    <td>{{ex.level}}</td>
+                    <td>{{ex.type}}</td>
+                    <td>{{ex.photo}}</td>
+                    <td>{{ex.point}}</td>
+                    <td>{{ex.target}}</td>
+
+                  </tr>
+                </ng-container>
+                </tbody>
+
+              </table>
+            </cdk-virtual-scroll-viewport>
+            <!--end exercise table-->
 
 
 
+
+        </div>
+      </div>
+
+
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-success" >Save</button>
+        <button type="button" class="btn btn-info">Reset</button>
+        <!--button type="button" class="btn btn-success" (click)="sendModal()">Yes</button-->
+        <button type="button" class="btn btn-warning" (click)="hideAdd()">Close</button>
+
+        <!-- this button is hidden, used to close from typescript -->
+        <button type="button" id="close-modal-add" data-dismiss="modal" style="display: none">Close</button>
+      </div>
+
+      </form>
+    </div>
+  </div>
+</div>
+<!-- end Add dialog -->
+
+
+
+
+
+<!--Alert dialog-->
+<div class="modal fade" id="alertModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+
+        <h4 class="modal-title">
+          <i class="material-icons text-center text-warning" style="vertical-align: middle">warning</i>
+          Warning</h4>
+        <button type="button" class="close" (click)="hideAlert()">&times;</button>
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body w-100">
+        <div class="col-md-12">
+
+          <h4> {{ alertContent }}</h4>
+        </div>
+      </div>
+
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <!--button type="button" class="btn btn-success" (click)="sendModal()">Yes</button-->
+        <button type="button" class="btn btn-danger" (click)="hideAlert()">Close</button>
+
+        <!-- this button is hidden, used to close from typescript -->
+        <button type="button" id="close-alert" data-dismiss="modal" style="display: none">Close</button>
+      </div>
+
+    </div>
+  </div>
+</div>
 
 
 

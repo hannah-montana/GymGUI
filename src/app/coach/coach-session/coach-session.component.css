@@ -6,3 +6,7 @@
 a {
   cursor: pointer;
 }
+
+.cdk-virtual-scroll-content-wrapper{
+  width: 100%;
+}
