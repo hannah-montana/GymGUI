@@ -13,6 +13,7 @@ import { CoachDashboardComponent } from './coach/coach-dashboard/coach-dashboard
 import { CoachExerciseComponent } from './coach/coach-exercise/coach-exercise.component';
 import { CoachSessionComponent } from './coach/coach-session/coach-session.component';
 import { CoachProgramComponent } from './coach/coach-program/coach-program.component';
+import { CoachCustomerComponent } from './coach/coach-customer/coach-customer.component';
 
 export const appRoutes: Routes = [
   { path : 'coach', component : CoachComponent },
@@ -57,5 +58,9 @@ export const appRoutes: Routes = [
   {
     path : 'coach-program', component : CoachComponent,
     children : [{ path : '', component: CoachProgramComponent}]
+  },
+  {
+    path : 'coach-customer', component : CoachComponent,
+    children : [{ path : '', component: CoachCustomerComponent}]
   }
 ];

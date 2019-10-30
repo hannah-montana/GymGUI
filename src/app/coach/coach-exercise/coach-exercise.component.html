@@ -1,1 +1,247 @@
-<p>coach-exercise works!</p>
+<div class="col-md-12">
+  <div class="card">
+    <div class="card-header card-header-warning">
+      <h4 class="card-title ">List Exercises</h4>
+      <p class="card-category"> </p>
+    </div>
+    <div class="card-body">
+
+      <div class="container">
+        <div class="row">
+
+          <div class="col-sm">
+            <a (click)="add()">
+              <h5 class="text-success">
+                <i class="material-icons text-center text-success">add</i>
+                <b>Add new</b>
+              </h5>
+            </a>
+          </div>
+
+          <div class="col-sm">
+            <form class="form-inline w-75">
+              <i class="material-icons text-center text-primary">search</i>
+
+              <div [formGroup]="myGroup" style="width: 90%">
+                <input formControlName="nameFC" style="width: 100%" type="text" class="form-control" placeholder="Search exercise..." />
+              </div>
+            </form>
+          </div>
+        </div>
+
+      </div>
+
+
+      <cdk-virtual-scroll-viewport itemSize="0" style="height: 500px;">
+        <table class="table table-hover">
+          <thead class="">
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Level</th>
+            <th>Type</th>
+            <th>View</th>
+            <th>Edit</th>
+            <th>Delete</th>
+          </tr>
+          </thead>
+          <tbody>
+          <ng-container *cdkVirtualFor="let row of rows">
+            <tr>
+              <td> {{ row.id }}</td>
+              <td> {{ row.name }}</td>
+              <td> {{ row.description }}</td>
+              <td> {{ row.level }}</td>
+              <td> {{ row.type }} </td>
+              <td>
+                <a (click)="view(row)">
+                  <i class="material-icons text-center text-primary">visibility</i>
+                </a>
+              </td>
+              <td>
+                <a (click)="edit(row)">
+                  <i class="material-icons text-center text-success">edit</i>
+                </a>
+              </td>
+              <td>
+                <a (click)="delete(row)">
+                  <i class="material-icons text-center text-warning">delete</i>
+                </a>
+              </td>
+            </tr>
+          </ng-container>
+          </tbody>
+        </table>
+      </cdk-virtual-scroll-viewport>
+
+    </div>
+  </div>
+</div>
+
+<!--View modal-->
+<div class="modal fade" id="viewModal">
+  <div class="modal-dialog" style="min-width:70%">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">Session Detail</h4>
+        <button type="button" class="close" (click)="hideView()">&times;</button>
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body w-100">
+        <div class="col-md-12">
+
+          <table style="width: 100%">
+            <tr>
+              <td rowspan="10" class="w-50">
+                <img src="{{exe ? exe.photo : ''}}" style="width: 90%">
+              </td>
+              <td style="width: 10%">Name: &nbsp;</td>
+              <td>
+                <input type="text" placeholder="" class="form-control" value="{{exe ? exe.name : ''}}" name="" disabled>
+              </td>
+            </tr>
+            <tr>
+              <td>Target:</td>
+              <td>
+                <input type="text" placeholder="" class="form-control" value="{{exe ? exe.target : ''}}" name="" disabled>
+              </td>
+            </tr>
+            <tr>
+              <td>Description:</td>
+              <td>
+                <input type="text" placeholder="" class="form-control" value="{{exe ? exe.description : ''}}" name="" disabled>
+              </td>
+            </tr>
+            <tr>
+              <td>Duration:</td>
+              <td>
+                <input type="text" placeholder="" class="form-control" value="{{exe ? exe.duration : ''}}" name="" disabled>
+              </td>
+            </tr>
+            <tr>
+              <td>Level:</td>
+              <td>
+                <input type="text" placeholder="" class="form-control" value="{{exe ? exe.level : ''}}" name="" disabled>
+              </td>
+            </tr>
+            <tr>
+              <td>Type:</td>
+              <td>
+                <input type="text" placeholder="" class="form-control" value="{{exe ? exe.type : ''}}" name="" disabled>
+              </td>
+            </tr>
+            <tr>
+              <td>Calorie:</td>
+              <td>
+                <input type="text" placeholder="" class="form-control" value="{{exe ? exe.calorie : ''}}" name="" disabled>
+              </td>
+            </tr>
+            <tr>
+              <td>Point:</td>
+              <td>
+                <input type="text" placeholder="" class="form-control" value="{{exe ? exe.point : ''}}" name="" disabled>
+              </td>
+            </tr>
+            <tr>
+              <td>Frequency:</td>
+              <td>
+                <input type="text" placeholder="" class="form-control" value="{{exe ? exe.frequency : ''}}" name="" disabled>
+              </td>
+            </tr>
+            <tr>
+              <td>Benefit:</td>
+              <td>
+                <input type="text" placeholder="" class="form-control" value="{{exe ? exe.benefit : ''}}" name="" disabled>
+              </td>
+            </tr>
+
+          </table>
+          <!-- Modal footer -->
+          <div class="modal-footer">
+            <!--button type="button" class="btn btn-success" (click)="sendModal()">Yes</button-->
+            <button type="button" class="btn btn-danger" (click)="hideView()">Close</button>
+
+            <!-- this button is hidden, used to close from typescript -->
+            <button type="button" id="close-modal" data-dismiss="modal" style="display: none">Close</button>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!--Confirm delete dialog-->
+<div class="modal fade" id="confirmDeleteModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+
+        <h4 class="modal-title">
+          <i class="material-icons text-center text-warning" style="vertical-align: middle">warning</i>
+          Warning</h4>
+        <button type="button" class="close" (click)="hideConfirmDelete()">&times;</button>
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body w-100">
+        <div class="col-md-12">
+
+          <h4> Are you sure delete Exercise <b>{{ exerciseInfo }}</b> ?</h4>
+        </div>
+      </div>
+
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-success" (click)="deleteExercise()">Yes</button>
+        <button type="button" class="btn btn-danger" (click)="hideConfirmDelete()">No</button>
+
+        <!-- this button is hidden, used to close from typescript -->
+        <button type="button" id="close-confirm-delete" data-dismiss="modal" style="display: none">Close</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!--Alert warning dialog-->
+<div class="modal fade" id="alertModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+
+        <h4 class="modal-title">
+          <i class="material-icons text-center text-warning" style="vertical-align: middle">warning</i>
+          Warning</h4>
+        <button type="button" class="close" (click)="hideAlert()">&times;</button>
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body w-100">
+        <div class="col-md-12">
+
+          <h4> {{ alertContent }}</h4>
+        </div>
+      </div>
+
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <!--button type="button" class="btn btn-success" (click)="sendModal()">Yes</button-->
+        <button type="button" class="btn btn-danger" (click)="hideAlert()">Close</button>
+
+        <!-- this button is hidden, used to close from typescript -->
+        <button type="button" id="close-alert" data-dismiss="modal" style="display: none">Close</button>
+      </div>
+
+    </div>
+  </div>
+</div>

@@ -5,7 +5,7 @@ import { Session, Exercise } from '../../gym.model';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ScrollDispatchModule } from '@angular/cdk/scrolling';
-
+//@ViewChildren("checkboxes") checkboxes: QueryList<ElementRef>;
 declare var $: any;
 
 @Component({
@@ -32,11 +32,19 @@ export class CoachSessionComponent implements OnInit {
 
   /* view session */
   sess: Session;
+  /* add session */
+  newSess: Session;
 
   //list select exercise for a session
   lstSelectedExercise: string[];
 
   alertContent: string;
+  icon: string;
+  iconText: string;
+  sessionInfo: string;
+  sessionId: string; //use for delete session
+  coachId: string;
+  slevel: string;
 
   constructor(private sessionService: SessionService,
               private fb: FormBuilder,
@@ -46,7 +54,13 @@ export class CoachSessionComponent implements OnInit {
 
   ngOnInit() {
     this.alertContent = '';
+    this.icon = '';
+    this.iconText = '';
     this.lstSelectedExercise = [];
+    this.sessionInfo = '';
+    this.sessionId = '';
+    this.coachId = '';
+    this.slevel = 'Easy';
 
     //load session grid
     this.loadSession();
@@ -80,11 +94,7 @@ export class CoachSessionComponent implements OnInit {
   /******** SESSION *********/
   getAllSession()
   {
-    return this.sessionService.getAllSession(); //.subscribe(data =>
-    //{
-    //  this.listSession = data;
-      //console.log(data);
-    //});
+    return this.sessionService.getAllSession();
   }
 
   applyAllFilters = () => {
@@ -96,6 +106,7 @@ export class CoachSessionComponent implements OnInit {
     this.rows = rows;
   }
 
+  //view session
   view(session){
     this.sess = session;
 
@@ -107,22 +118,20 @@ export class CoachSessionComponent implements OnInit {
       this.exrows = [...this.listExercise];
     });
 
-
     $("#viewModal").modal('show');
-
   }
-
   hideView() {
     document.getElementById('close-modal').click();
   }
+  //end view session
 
-  edit(session){
-  }
-
-  delete(session){
-  }
-
+  //add session
   add(){
+    this.sess = new Session();
+    this.newSess = new Session();
+    this.sess.level = 'Easy';
+
+    this.lstSelectedExercise = [];
     this.getAllExercise().subscribe(data => {
       this.listAllExercise = data;
 
@@ -131,33 +140,173 @@ export class CoachSessionComponent implements OnInit {
 
     $("#addModal").modal('show');
   }
-
-  hideAdd(){
-    document.getElementById('close-modal-add').click();
+  onLevelChange(val){
+    if(val == 2){
+      this.slevel = 'Medium';
+    }
+    else if(val == 3){
+      this.slevel = 'Difficult';
+    }
+    else{
+      this.slevel = 'Easy';
+    }
   }
 
-  onSubmit(data){
-    if (data.name == null || data.name == ''){
-      alert ("Please input session name!");
-    }
-    else {
-      this.sessionService.saveSession(data, this.lstSelectedExercise, 1)
+  onSubmit(form){
+    if(form.value.focusSession == true)
+      form.value.focusSession = 1;
+    else
+      form.value.focusSession = 0;
+
+    this.coachId = '1';
+    this.alertContent = '';
+
+    //alert(this.sess.id);
+
+    if (this.sess.id != undefined){
+      //update session
+      //alert('u');
+      //console.log('form value: ' + form.value.name + '-' + form.value.description + '-' + form.value.duration + form.value.focusSession);
+      console.log(this.sess.focusSession + '-' + form.value.focusSession);
+
+      //if(form.value.name != '') /* if don't check that condition, when edit but dont change any value -> it'll be fail */
+      /*  this.sess.name = form.value.name;
+      if(form.value.description != '')
+        this.sess.description = form.value.description;
+      if(form.value.duration != '')
+        this.sess.duration = form.value.duration;
+      this.sess.level = this.slevel;
+
+      this.sess.focusSession = form.value.focusSession;
+      console.log(this.sess);
+
+      this.sessionService.updateSession(this.sess, this.lstSelectedExercise, this.coachId)
         .subscribe(data => {
           console.log("result: " + data);
           if(data == 1){
             this.hideAdd();
             //reload session grid
             this.loadSession();
-            //rows = rows.push(data);
-            //alert("Save successful!");
+
+            //reset form after finish
+
+            //this.alertContent = 'Update session successful!';
+            //this.icon = 'priority_high';
+            //this.iconText = '';
+            //this.viewAlert();
+
+            //this.reset(form);
+            this.coachId = '';
           }
           else{
             this.alertContent = 'This session name existed!';
+            //this.icon = 'warning';
+            //this.iconText = 'Warning';
             this.viewAlert();
+
           }
-        });
+        });*/
     }
+    else{
+      //insert new session
+      if (form.value.name == null || form.value.name == ''){
+          alert ("Please input session name!");
+      }
+      else {
+        console.log(form.value);
+
+        this.newSess = form.value;
+        this.newSess.level = this.slevel;
+        console.log(this.newSess);
+
+        this.sessionService.saveSession(this.newSess, this.lstSelectedExercise, this.coachId)
+          .subscribe(data => {
+            console.log("result: " + data);
+            if(data == 1){
+              this.hideAdd();
+              //reload session grid
+              this.loadSession();
+
+              //reset form after finish
+              this.reset(form);
+              this.coachId = '';
+
+              //this.alertContent = 'Create new session successful!';
+              //this.icon = '';
+              //this.iconText = '';
+              //this.viewAlert();
+            }
+            else{
+              this.alertContent = 'This session name existed!';
+              //this.icon = 'warning';
+              //this.iconText = 'Warning';
+              this.viewAlert();
+            }
+          });
+
+      }
+    }
+
   }
+  hideAdd(){
+    document.getElementById('close-modal-add').click();
+  }
+
+  //end add session
+
+  reset(form){
+    form.reset();
+  }
+  //edit session
+  edit(session){
+    this.sess = session;
+    this.lstSelectedExercise = [];
+    this.getAllExercise().subscribe(data => {
+      this.listAllExercise = data;
+
+      this.exAllrows = [...this.listAllExercise];
+    });
+
+    $("#addModal").modal('show');
+  }
+  //end edit session
+
+  //delete session
+  delete(session){
+    this.sessionInfo = session.id + ' - ' + session.name;
+    this.sessionId = session.id;
+
+    $("#confirmDeleteModal").modal('show');
+  }
+
+  deleteSession(){
+    //process delete session
+    this.hideConfirmDelete();
+    //alert('start delete' + this.sessionId);
+    this.sessionService.deleteSession(this.sessionId)
+      .subscribe(data => {
+        console.log("deleted: " + data);
+        if(data == 1){
+          this.alertContent = 'Delete successful!';
+          this.icon = 'warning';
+          this.iconText = 'Warning';
+          this.viewAlert();
+          this.loadSession();
+        }
+        else{
+          this.alertContent = 'Error! Cannot delete this session!';
+          this.icon = 'warning';
+          this.iconText = 'Warning';
+          this.viewAlert();
+        }
+    });
+  }
+  hideConfirmDelete(){
+    document.getElementById('close-confirm-delete').click();
+  }
+  //end delete session
+
+
 
   /******** end - SESSION *********/
 

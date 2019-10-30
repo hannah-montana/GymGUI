@@ -103,31 +103,32 @@
             <tr>
               <td style="width: 20%">Name: &nbsp;</td>
               <td>
-                <input type="text" placeholder="" class="form-control" value="{{sess ? sess.name : ''}}" name="">
+                <input type="text" placeholder="" class="form-control w-75" value="{{sess ? sess.name : ''}}" name="" disabled>
               </td>
             </tr>
             <tr>
               <td>Description:</td>
               <td>
-                <input type="text" placeholder="" class="form-control" value="{{sess ? sess.description : ''}}" name="">
+                <input type="text" placeholder="" class="form-control w-75" value="{{sess ? sess.description : ''}}" name="" disabled>
               </td>
             </tr>
             <tr>
               <td>Duration:</td>
               <td>
-                <input type="text" placeholder="" class="form-control" value="{{sess ? sess.duration : ''}}" name="">
+                <input type="text" placeholder="" class="form-control w-75" value="{{sess ? sess.duration : ''}}" name="" disabled>
               </td>
             </tr>
             <tr>
               <td>Level:</td>
               <td>
-                <input type="text" placeholder="" class="form-control" value="{{sess ? sess.level : ''}}" name="">
+                <input type="text" placeholder="" class="form-control w-75" value="{{sess ? sess.level : ''}}" name="" disabled>
               </td>
             </tr>
             <tr>
               <td>Focus session:</td>
               <td>
-                {{ sess ? sess.focusSession : '' }}
+                <input type="text" placeholder="" class="form-control w-75" value="{{ sess ? (sess.focusSession == 1 ? 'Yes' : 'No') : '' }}" name="" disabled>
+
                 <!--input class="form-check-input" type="checkbox" value="" {{sFocusSession == 1 ? checked : null}}-->
               </td>
             </tr>
@@ -215,7 +216,7 @@
         <button type="button" class="close" (click)="hideAdd()">&times;</button>
       </div>
 
-      <form (ngSubmit)="onSubmit(addForm.value)" #addForm="ngForm">
+      <form (ngSubmit)="onSubmit(addForm)" #addForm="ngForm">
 
       <!-- Modal body -->
       <div class="modal-body w-100">
@@ -225,42 +226,68 @@
               <tr>
                 <td style="width: 20%">Name:</td>
                 <td>
-                  <input type="text" placeholder="" class="form-control w-75" ngModel name="name" required>
+                  <input type="text" placeholder="" class="form-control w-75" ngModel name="name" value="{{sess ? sess.name : ''}}" required>
                 </td>
               </tr>
               <tr>
                 <td>Description:</td>
                 <td>
-                  <textarea type="text" placeholder="" class="form-control w-75" ngModel name="description" rows="3"></textarea>
+                  <textarea type="text" placeholder="" class="form-control w-75" ngModel name="description" value="{{sess ? sess.description : ''}}" rows="3"></textarea>
                 </td>
               </tr>
               <tr>
                 <td>Duration:</td>
                 <td>
-                  <input type="number" placeholder="" class="form-control w-25" ngModel name="duration">
+                  <input type="number" placeholder="" class="form-control w-25" ngModel name="duration" value="{{sess ? sess.duration : ''}}">
                 </td>
               </tr>
-              <tr style="margin-top: 3px;">
+              <tr style="padding-top: 15px">
                 <td>Level:</td>
-                <td>
-                  <select class="browser-default custom-select w-25" ngModel name="level" style="margin-top: 10px;">
-                    <option value="1" selected>Easy</option>
+                <td style="padding-top: 15px">
+                  <!--select class="browser-default custom-select w-25" ngModel name="level" style="margin-top: 10px;">
+
+                    <option selected>Easy</option>
                     <option value="2">Medium</option>
                     <option value="3">Difficult</option>
-                  </select>
-                  <!--input type="text" placeholder="" class="form-control" value="" name=""-->
-                </td>
-              </tr>
-              <tr>
-                <td>Focus session:</td>
-                <td>
-                  <input type="checkbox" ngModel name="focusSession">
-                  <!--input class="form-check-input" type="checkbox" value="" {{sFocusSession == 1 ? checked : null}}-->
+                  </select-->
+
+                  <div class="container">
+                    <div class="row">
+                      <div class="custom-control custom-radio">
+                        <input type="radio" id="easy" name="level" class="custom-control-input"
+                               [checked]="sess ? (sess.level === 'Easy') : '' "
+                               (change)="onLevelChange(1)">
+                        <label class="custom-control-label" for="easy">Easy</label>
+                      </div>
+                      <div class="custom-control custom-radio">
+                        <input type="radio" id="medium" name="level" class="custom-control-input"
+                               [checked]="sess ? (sess.level === 'Medium') : '' "
+                               (change)="onLevelChange(2)">
+                        <label class="custom-control-label" for="medium">Medium</label>
+                      </div>
+                      <div class="custom-control custom-radio">
+                        <input type="radio" id="difficult" name="level" class="custom-control-input"
+                               [checked]="sess ? (sess.level === 'Difficult') : '' "
+                               (change)="onLevelChange(3)">
+                        <label class="custom-control-label" for="difficult">Difficult</label>
+                      </div>
+                    </div>
+                  </div>
+
                 </td>
               </tr>
               <tr>
                 <td></td>
-                <td>
+                <td style="padding-top: 15px">
+                  <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="defaultUnchecked" ngModel name="focusSession" [checked]="sess ? (sess.focusSession === 1) : '' ">
+                    <label class="custom-control-label" for="defaultUnchecked">Focus session</label>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td></td>
+                <td style="padding-top: 15px">
                   <div>
                     <form class="form-inline w-100">
                       <i class="material-icons text-center text-primary">search</i>
@@ -296,7 +323,7 @@
                   <tr>
                     <td>{{ex.id}}</td>
                     <td style="text-align: center">
-                      <input class="form-check-input" type="checkbox" (change)="onSelect($event, ex.id)">
+                      <input class="form-check-input" type="checkbox" ngModel name="lstCheckbox" (change)="onSelect($event, ex.id)">
                     </td>
                     <td>{{ex.name}}</td>
                     <td>{{ex.duration}}</td>
@@ -314,17 +341,13 @@
             </cdk-virtual-scroll-viewport>
             <!--end exercise table-->
 
-
-
-
         </div>
       </div>
-
 
       <!-- Modal footer -->
       <div class="modal-footer">
         <button type="submit" class="btn btn-success" >Save</button>
-        <button type="button" class="btn btn-info">Reset</button>
+        <button type="button" class="btn btn-info" (click)="reset(addForm)">Reset</button>
         <!--button type="button" class="btn btn-success" (click)="sendModal()">Yes</button-->
         <button type="button" class="btn btn-warning" (click)="hideAdd()">Close</button>
 
@@ -339,10 +362,7 @@
 <!-- end Add dialog -->
 
 
-
-
-
-<!--Alert dialog-->
+<!--Alert warning dialog-->
 <div class="modal fade" id="alertModal">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -378,7 +398,40 @@
 </div>
 
 
+<!--Confirm delete dialog-->
+<div class="modal fade" id="confirmDeleteModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
 
+      <!-- Modal Header -->
+      <div class="modal-header">
+
+        <h4 class="modal-title">
+          <i class="material-icons text-center text-warning" style="vertical-align: middle">warning</i>
+          Warning</h4>
+        <button type="button" class="close" (click)="hideConfirmDelete()">&times;</button>
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body w-100">
+        <div class="col-md-12">
+
+          <h4> Are you sure delete session <b>{{ sessionInfo }}</b> ?</h4>
+        </div>
+      </div>
+
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-success" (click)="deleteSession()">Yes</button>
+        <button type="button" class="btn btn-danger" (click)="hideConfirmDelete()">No</button>
+
+        <!-- this button is hidden, used to close from typescript -->
+        <button type="button" id="close-confirm-delete" data-dismiss="modal" style="display: none">Close</button>
+      </div>
+
+    </div>
+  </div>
+</div>
 
 
 
