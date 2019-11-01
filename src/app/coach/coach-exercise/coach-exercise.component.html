@@ -51,7 +51,7 @@
             <tr>
               <td> {{ row.id }}</td>
               <td> {{ row.name }}</td>
-              <td> {{ row.description }}</td>
+              <td style="width: 40%"> {{ row.description }}</td>
               <td> {{ row.level }}</td>
               <td> {{ row.type }} </td>
               <td>
@@ -97,56 +97,59 @@
           <table style="width: 100%">
             <tr>
               <td rowspan="10" class="w-50">
-                <img src="{{exe ? exe.photo : ''}}" style="width: 90%">
+                <img src="{{exe ? (exe.photo == '' ? 'assets/images/no-image.png' : exe.photo) : ''}}" style="width: 90%">
               </td>
               <td style="width: 10%">Name: &nbsp;</td>
-              <td>
+              <td colspan="3">
                 <input type="text" placeholder="" class="form-control" value="{{exe ? exe.name : ''}}" name="" disabled>
               </td>
             </tr>
             <tr>
               <td>Target:</td>
-              <td>
+              <td colspan="3">
                 <input type="text" placeholder="" class="form-control" value="{{exe ? exe.target : ''}}" name="" disabled>
               </td>
             </tr>
             <tr>
               <td>Description:</td>
-              <td>
-                <input type="text" placeholder="" class="form-control" value="{{exe ? exe.description : ''}}" name="" disabled>
+              <td colspan="3">
+                <textarea type="text" rows="3" placeholder="" class="form-control" value="{{exe ? exe.description : ''}}" name="" disabled></textarea>
+              </td>
+            </tr>
+            <tr>
+              <td>Instruction:</td>
+              <td colspan="3">
+                <textarea type="text" rows="3" placeholder="" class="form-control" value="{{exe ? exe.instruction : ''}}" name="" disabled></textarea>
               </td>
             </tr>
             <tr>
               <td>Duration:</td>
               <td>
                 <input type="text" placeholder="" class="form-control" value="{{exe ? exe.duration : ''}}" name="" disabled>
+
               </td>
-            </tr>
-            <tr>
               <td>Level:</td>
               <td>
                 <input type="text" placeholder="" class="form-control" value="{{exe ? exe.level : ''}}" name="" disabled>
               </td>
             </tr>
+
             <tr>
               <td>Type:</td>
               <td>
                 <input type="text" placeholder="" class="form-control" value="{{exe ? exe.type : ''}}" name="" disabled>
               </td>
-            </tr>
-            <tr>
               <td>Calorie:</td>
               <td>
                 <input type="text" placeholder="" class="form-control" value="{{exe ? exe.calorie : ''}}" name="" disabled>
               </td>
             </tr>
+
             <tr>
               <td>Point:</td>
               <td>
                 <input type="text" placeholder="" class="form-control" value="{{exe ? exe.point : ''}}" name="" disabled>
               </td>
-            </tr>
-            <tr>
               <td>Frequency:</td>
               <td>
                 <input type="text" placeholder="" class="form-control" value="{{exe ? exe.frequency : ''}}" name="" disabled>
@@ -154,7 +157,7 @@
             </tr>
             <tr>
               <td>Benefit:</td>
-              <td>
+              <td colspan="3">
                 <input type="text" placeholder="" class="form-control" value="{{exe ? exe.benefit : ''}}" name="" disabled>
               </td>
             </tr>
@@ -175,6 +178,174 @@
   </div>
 </div>
 
+<!-- Add dialog -->
+<div class="modal fade" id="addModal">
+  <div class="modal-dialog" style="min-width:70%">
+    <div class="modal-content">
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">Add new exercise</h4>
+        <button type="button" class="close" (click)="hideAdd()">&times;</button>
+      </div>
+
+      <form (ngSubmit)="onSubmit(addForm)" #addForm="ngForm">
+
+        <!-- Modal body -->
+        <div class="modal-body w-100">
+          <div class="col-md-12">
+
+            <table style="width: 100%">
+              <tr>
+                <td rowspan="8" class="w-50" >
+                  <img src="{{exe ? ((exe.photo == null || exe.photo == '') ? 'assets/images/no-image.png' : exe.photo) : 'assets/images/no-image.png'}}" style="width: 90%">
+                </td>
+                <td style="width: 10%">Name: &nbsp;</td>
+                <td colspan="3">
+                  <input type="text" placeholder="" class="form-control" value="{{exe ? exe.name : ''}}" ngModel name="name" >
+                </td>
+              </tr>
+              <tr>
+                <td>Target:</td>
+                <td colspan="3">
+
+                  <select (change)="onTargetChange($event.target.value)" class="browser-default custom-select w-50" name="target" style="margin-top: 10px;">
+                    <option value="Neck" [selected]="exe ? (exe.target === 'Neck') : '' ">Neck</option>
+                    <option value="Shoulder" [selected]="exe ? (exe.target === 'Shoulder') : '' ">Shoulder</option>
+                    <option value="Chest" [selected]="exe ? (exe.target === 'Chest') : '' ">Chest</option>
+                    <option value="Back" [selected]="exe ? (exe.target === 'Back') : '' ">Back</option>
+                    <option value="Arm" [selected]="exe ? (exe.target === 'Arm') : '' ">Arm</option>
+                    <option value="Waist" [selected]="exe ? (exe.target === 'Waist') : '' ">Waist</option>
+                    <option value="Thigh" [selected]="exe ? (exe.target === 'Thigh') : '' ">Thigh</option>
+                    <option value="Calf" [selected]="exe ? (exe.target === 'Calf') : '' ">Calf</option>
+                    <option value="Calf" [selected]="exe ? (exe.target === 'Ass') : '' ">Ass</option>
+                  </select>
+
+                </td>
+              </tr>
+              <tr>
+                <td>Description:</td>
+                <td colspan="3">
+                  <textarea type="text" placeholder="" class="form-control" value="{{exe ? exe.description : ''}}" ngModel name="description" ></textarea>
+                </td>
+              </tr>
+              <tr>
+                <td>Instruction:</td>
+                <td colspan="3">
+                  <textarea type="text" placeholder="" class="form-control" value="{{exe ? exe.instruction : ''}}" ngModel name="instruction" ></textarea>
+                </td>
+              </tr>
+              <tr>
+                <td>Duration:</td>
+                <td>
+                  <input type="number" placeholder="" class="form-control" value="{{exe ? exe.duration : ''}}" ngModel name="duration" min="0" >
+
+                </td>
+                <td>Calorie:</td>
+                <td>
+                  <input type="number" placeholder="" class="form-control" value="{{exe ? exe.calorie : ''}}" ngModel name="calorie" min="0" >
+                </td>
+              </tr>
+
+              <tr>
+                <td>Type:</td>
+                <td colspan="3" style="padding-top:7px">
+                  <div class="container">
+                    <div class="row">
+                      <div class="custom-control custom-radio">
+                        <input type="radio" id="keepFit" name="type1" class="custom-control-input"
+                               [checked]="exe ? (exe.type === 'Keep Fit') : '' "
+                               (change)="onTypeChange(1)">
+                        <label class="custom-control-label" for="keepFit">Keep Fit</label>
+                      </div>
+                      <div class="custom-control custom-radio">
+                        <input type="radio" id="loseWeight" name="type1" class="custom-control-input"
+                               [checked]="exe ? (exe.type === 'Lose Weight') : '' "
+                               (change)="onTypeChange(2)">
+                        <label class="custom-control-label" for="loseWeight">Lose Weight</label>
+                      </div>
+                      <div class="custom-control custom-radio">
+                        <input type="radio" id="increaseMuscle" name="type1" class="custom-control-input"
+                               [checked]="exe ? (exe.type === 'Increase Muscle') : '' "
+                               (change)="onTypeChange(3)">
+                        <label class="custom-control-label" for="increaseMuscle">Increase Muscle</label>
+                      </div>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+
+              <tr>
+                <td>Level:</td>
+                <td colspan="3" style="padding-top:5px">
+                  <div class="container">
+                    <div class="row">
+                      <div class="custom-control custom-radio">
+                        <input type="radio" id="easy" name="level" class="custom-control-input"
+                               [checked]="exe ? (exe.level === 'Easy') : '' "
+                               (change)="onLevelChange(1)">
+                        <label class="custom-control-label" for="easy">Easy</label>
+                      </div>
+                      <div class="custom-control custom-radio">
+                        <input type="radio" id="medium" name="level" class="custom-control-input"
+                               [checked]="exe ? (exe.level === 'Medium') : '' "
+                               (change)="onLevelChange(2)">
+                        <label class="custom-control-label" for="medium">Medium</label>
+                      </div>
+                      <div class="custom-control custom-radio">
+                        <input type="radio" id="difficult" name="level" class="custom-control-input"
+                               [checked]="exe ? (exe.level === 'Difficult') : '' "
+                               (change)="onLevelChange(3)">
+                        <label class="custom-control-label" for="difficult">Difficult</label>
+                      </div>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+
+              <tr>
+                <td>Point:</td>
+                <td>
+                  <input type="number" placeholder="" class="form-control" value="{{exe ? exe.point : ''}}" ngModel name="point" min="0">
+                </td>
+                <td>Frequency:</td>
+                <td>
+                  <input type="number" placeholder="" class="form-control" value="{{exe ? exe.frequency : ''}}" ngModel name="frequency" min="0">
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <label class="btn btn-outline-secondary">
+                    Choose Photo&hellip;
+                    <input type="file" (change)="getBase64($event)" style="display: none;">
+                  </label>
+                </td>
+                <td>Benefit:</td>
+                <td colspan="3">
+                  <input type="text" placeholder="" class="form-control" value="{{exe ? exe.benefit : ''}}" ngModel name="benefit" >
+                </td>
+              </tr>
+
+            </table>
+
+          </div>
+        </div>
+
+        <!-- Modal footer -->
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-success" >Save</button>
+          <button type="button" class="btn btn-info" (click)="reset(addForm)">Reset</button>
+          <!--button type="button" class="btn btn-success" (click)="sendModal()">Yes</button-->
+          <button type="button" class="btn btn-warning" (click)="hideAdd()">Close</button>
+
+          <!-- this button is hidden, used to close from typescript -->
+          <button type="button" id="close-modal-add" data-dismiss="modal" style="display: none">Close</button>
+        </div>
+
+      </form>
+    </div>
+  </div>
+</div>
+<!-- end Add dialog -->
 
 <!--Confirm delete dialog-->
 <div class="modal fade" id="confirmDeleteModal">
@@ -220,8 +391,8 @@
       <div class="modal-header">
 
         <h4 class="modal-title">
-          <i class="material-icons text-center text-warning" style="vertical-align: middle">warning</i>
-          Warning</h4>
+          <i class="material-icons text-center text-warning" style="vertical-align: middle">{{icon}}</i>
+          {{iconText}}</h4>
         <button type="button" class="close" (click)="hideAlert()">&times;</button>
       </div>
 
@@ -245,3 +416,5 @@
     </div>
   </div>
 </div>
+
+

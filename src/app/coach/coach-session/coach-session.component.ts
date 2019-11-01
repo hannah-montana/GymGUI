@@ -5,7 +5,7 @@ import { Session, Exercise } from '../../gym.model';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ScrollDispatchModule } from '@angular/cdk/scrolling';
-//@ViewChildren("checkboxes") checkboxes: QueryList<ElementRef>;
+
 declare var $: any;
 
 @Component({
@@ -37,6 +37,7 @@ export class CoachSessionComponent implements OnInit {
 
   //list select exercise for a session
   lstSelectedExercise: string[];
+  listExIdBySessId: string[];
 
   alertContent: string;
   icon: string;
@@ -61,6 +62,7 @@ export class CoachSessionComponent implements OnInit {
     this.sessionId = '';
     this.coachId = '';
     this.slevel = 'Easy';
+    this.listAllExercise = new Array<Exercise>();
 
     //load session grid
     this.loadSession();
@@ -111,7 +113,6 @@ export class CoachSessionComponent implements OnInit {
     this.sess = session;
 
     this.getExercisesBySessId(this.sess.id).subscribe(data => {
-      //this.listExercise = [...data];
 
       this.listExercise = data;
 
@@ -188,14 +189,11 @@ export class CoachSessionComponent implements OnInit {
             //reload session grid
             this.loadSession();
 
-            //reset form after finish
-
             //this.alertContent = 'Update session successful!';
             //this.icon = 'priority_high';
             //this.iconText = '';
             //this.viewAlert();
 
-            //this.reset(form);
             this.coachId = '';
           }
           else{
@@ -213,13 +211,15 @@ export class CoachSessionComponent implements OnInit {
           alert ("Please input session name!");
       }
       else {
-        console.log(form.value);
+        //console.log(form.value);
 
         this.newSess = form.value;
         this.newSess.level = this.slevel;
-        console.log(this.newSess);
 
-        this.sessionService.saveSession(this.newSess, this.lstSelectedExercise, this.coachId)
+        //console.log(this.newSess);
+        console.log(this.lstSelectedExercise);
+
+        /*this.sessionService.saveSession(this.newSess, this.lstSelectedExercise, this.coachId)
           .subscribe(data => {
             console.log("result: " + data);
             if(data == 1){
@@ -227,8 +227,6 @@ export class CoachSessionComponent implements OnInit {
               //reload session grid
               this.loadSession();
 
-              //reset form after finish
-              this.reset(form);
               this.coachId = '';
 
               //this.alertContent = 'Create new session successful!';
@@ -242,8 +240,7 @@ export class CoachSessionComponent implements OnInit {
               //this.iconText = 'Warning';
               this.viewAlert();
             }
-          });
-
+          });*/
       }
     }
 
@@ -257,14 +254,45 @@ export class CoachSessionComponent implements OnInit {
   reset(form){
     form.reset();
   }
+
   //edit session
   edit(session){
     this.sess = session;
     this.lstSelectedExercise = [];
+    this.listExIdBySessId = [];
+
+    //get exercises by session id
+    this.getExercisesBySessId(this.sess.id).subscribe(data => {
+      this.listExercise = data;
+      //console.log(this.listExercise);
+      for (var ex of this.listExercise) {
+          //console.log(ex.id);
+          this.listExIdBySessId.push(ex.id);
+      }
+    });
+    console.log(this.listExIdBySessId);
+    //initial assign in case user dont change anything, maybe I can remove later if it work well with grid checkbox
+    this.lstSelectedExercise = this.listExIdBySessId;
+
+    //get all exercises
     this.getAllExercise().subscribe(data => {
       this.listAllExercise = data;
 
       this.exAllrows = [...this.listAllExercise];
+
+      console.log(this.exAllrows);
+
+      //meo ra -> thu lam trong server sau
+      /*for(var aex in this.exAllrows){
+        for (var id in this.listExIdBySessId){
+          if(aex.id == id)
+          {
+            aex.isChecked = '1';
+          }
+        }
+      }*/
+
+      console.log(this.exAllrows);
     });
 
     $("#addModal").modal('show');

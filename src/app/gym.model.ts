@@ -31,7 +31,11 @@ export class Exercise {
   duration: string;
   level: string;
   type: string;
-  calories: string;
+  calorie: string;
   photo: string;
   point: string;
+  frequency: string;
+  benefit: string;
+  isChecked: string;
+  target: string;
 }
