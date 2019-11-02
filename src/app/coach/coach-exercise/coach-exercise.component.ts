@@ -174,7 +174,10 @@ export class CoachExerciseComponent implements OnInit {
     else{
       //add new
       if (form.value.name == null || form.value.name == ''){
-          alert ("Please input exercise name!");
+        this.alertContent = 'Please input exercise name!';
+        this.icon = 'warning';
+        this.iconText = 'Warning';
+        this.viewAlert();
       }
       else{
         //console.log(form.value);

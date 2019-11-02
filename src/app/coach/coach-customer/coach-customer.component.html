@@ -1,1 +1,448 @@
-<p>coach-customer works!</p>
+<div class="col-md-12">
+  <div class="card">
+
+    <div class="card-header card-header-warning">
+      <h4 class="card-title ">List Customers</h4>
+      <p class="card-category"></p>
+    </div>
+
+    <div class="card-body">
+      <div class="container">
+        <div class="row">
+
+          <!--Search-->
+          <div class="col-sm">
+            <form class="form-inline w-100">
+              <i class="material-icons text-center text-primary">search</i>
+              <div [formGroup]="myGroup" style="width: 90%">
+                <input formControlName="nameFC" style="width: 100%" type="text" class="form-control" placeholder="Search First Name..." />
+              </div>
+            </form>
+          </div>
+
+        </div>
+      </div>
+
+      <cdk-virtual-scroll-viewport itemSize="0" style="height: 500px;">
+        <table class="table table-hover">
+
+          <thead class="">
+          <tr>
+            <th>ID</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Level</th>
+            <th>View</th>
+            <th>Assign Program</th>
+            <!--th>Delete</th-->
+
+            <!--<th>Focus Session</th>-->
+          </tr>
+          </thead>
+
+          <tbody>
+          <ng-container *cdkVirtualFor="let row of rows">
+            <tr>
+              <td>{{row.id}}</td>
+              <td>{{row.lastName}}</td>
+              <td>{{row.firstName}}</td>
+              <td>{{row.level}}</td> <!--style = "text-align:center"-->
+              <td>
+                <a (click)="view(row)">
+                  <i class="material-icons text-center text-primary">visibility</i>
+                </a>
+              </td>
+              <td>
+                <a (click)="assign(row)">
+                  <i class="material-icons text-center text-success">assignment_turned_in</i>
+                </a>
+              </td>
+              <!--td>
+                <a (click)="delete(row)">
+                  <i class="material-icons text-center text-warning">delete</i>
+                </a>
+              </td-->
+
+            </tr>
+
+          </ng-container>
+          </tbody>
+
+
+        </table>
+      </cdk-virtual-scroll-viewport>
+
+    </div>
+
+  </div>
+</div>
+
+<!--View dialog-->
+<div class="modal fade" id="viewModal">
+  <div class="modal-dialog" style="min-width:80%">  <!--style="min-width:70%"-->
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title font-weight-bold">Customer Details</h4>
+        <button type="button" class="close" (click)="hideView()">&times;</button>
+      </div>
+
+      <!-- MODAL BODY -->
+      <!--Customer Details-->
+      <div class="modal-body w-100">
+        <div class="col-md-12">
+          <table style="width: 100%">
+            <tr>
+              <td rowspan="7" style="width: 40%">
+                <img src="{{user ? (user.photo == '' ? 'assets/images/no-image.png' : user.photo) : ''}}" style="width: 90%;">
+
+              </td>
+              <td style="width: 10%">First Name: &nbsp;</td>
+              <td>
+                <input type="text" placeholder="" class="form-control" value="{{user ? user.firstName : ''}}" name="">
+              </td>
+            </tr>
+
+            <tr>
+              <td>Last Name:</td>
+              <td>
+                <input type="text" placeholder="" class="form-control" value="{{user ? user.lastName : ''}}"
+                       name="">
+              </td>
+            </tr>
+
+            <tr>
+              <td>Email:</td>
+              <td>
+                <input type="text" placeholder="" class="form-control" value="{{user ? user.email : ''}}" name="">
+              </td>
+            </tr>
+
+            <tr>
+              <td>Birthday:</td>
+              <td>
+                <input type="text" placeholder="" class="form-control" value="{{user ? user.birthDate : ''}}" name="">
+              </td>
+            </tr>
+
+            <tr>
+              <td>Point:</td>
+              <td>
+                <input type="text" placeholder="" class="form-control"  value="{{user ? user.point : ''}}" name="">
+              </td>
+            </tr>
+
+            <tr>
+              <td>Level:</td>
+              <td>
+                <input type="text" placeholder="" class="form-control" value="{{user ? user.level : ''}}" name="">
+              </td>
+            </tr>
+
+            <tr>
+              <td>Note:</td>
+              <td>
+                <textarea type="text" placeholder="" class="form-control" name=""
+                          rows="4">{{user ? user.note  : ''}}</textarea>
+              </td>
+            </tr>
+
+            <!--tr>
+              <td></td>
+              <td colspan="2">
+                <div>
+                  <form class="form-inline w-100">
+                    <i class="material-icons text-center text-primary">search</i>
+                    <div [formGroup]="groupProgram" style="width: 90%">
+                      <input formControlName="progNameFC" style="width: 50%" type="text" class="form-control" placeholder="Search Program..." />
+                    </div>
+                  </form>
+                </div>
+              </td>
+            </tr-->
+
+          </table>
+
+          <!-- program table-->
+          <cdk-virtual-scroll-viewport itemSize="0" style="height: 200px;">
+            <table class="table table-hover">
+              <thead>
+              <tr>
+                <th class="font-weight-bold">ID</th>
+                <th>Program Name</th>
+                <th>Description</th>
+                <th>Point</th>
+                <th>Total Sessions</th>
+                <th>Finished</th>
+              </tr>
+              </thead>
+
+              <tbody>
+              <ng-container *cdkVirtualFor="let progrow of progrows">
+                <tr>
+                  <td>{{progrow.id}}</td>
+                  <td>{{progrow.name}}</td>
+                  <td>{{progrow.description}}</td>
+                  <td>{{"100"}}</td>
+                  <td>{{progrow.numberOfSession}}</td>
+                  <td>{{progrow.isFinished}}</td>
+                </tr>
+              </ng-container>
+              </tbody>
+
+            </table>
+          </cdk-virtual-scroll-viewport>
+          <!--end program table-->
+        </div>
+      </div>
+      <!--End Customer Details-->
+
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <!--button type="button" class="btn btn-success" (click)="sendModal()">Yes</button-->
+        <button type="button" class="btn btn-danger" (click)="hideView()">Close</button>
+
+        <!-- this button is hidden, used to close from typescript -->
+        <button type="button" id="close-modal" data-dismiss="modal" style="display: none">Close</button>
+      </div>
+      <!-- End Modal footer -->
+
+    </div>
+  </div>
+</div>
+<!--end View dialog-->
+
+
+<!-- Assign dialog -->
+<div class="modal fade" id="assignModal">
+  <div class="modal-dialog" style="min-width:70%">  <!--style="min-width:70%"-->
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title font-weight-bold">Customer Details</h4>
+        <button type="button" class="close" (click)="hideView2()">&times;</button>
+      </div>
+
+      <!-- MODAL BODY -->
+
+      <!--Customer Details-->
+      <div class="modal-body w-100">
+        <div class="col-md-12">
+          <table style="width: 100%">
+
+            <tr>
+              <td style="width: 20%">First Name: &nbsp;</td>
+              <td>
+                <input type="text" placeholder="" class="form-control" value="{{user ? user.firstName : ''}}" name="">
+              </td>
+            </tr>
+
+            <tr>
+              <td>Last Name:</td>
+              <td>
+                <input type="text" placeholder="" class="form-control" value="{{user ? user.lastName : ''}}"
+                       name="">
+              </td>
+            </tr>
+
+            <tr>
+              <td>Birthday:</td>
+              <td>
+                <input type="text" placeholder="" class="form-control" value="{{user ? user.birthDate : ''}}" name="">
+              </td>
+            </tr>
+
+            <tr>
+              <td>Point:</td>
+              <td>
+                <input type="text" placeholder="" class="form-control"  value="{{user ? user.point : ''}}" name="">
+              </td>
+            </tr>
+
+            <tr>
+              <td>Level:</td>
+              <td>
+                <input type="text" placeholder="" class="form-control" value="{{user ? user.level : ''}}" name="">
+              </td>
+            </tr>
+
+            <tr>
+              <td>Note:</td>
+              <td>
+                <textarea type="text" placeholder="" class="form-control" name=""
+                          rows="4">{{user ? user.note  : ''}}</textarea>
+              </td>
+            </tr>
+
+            <!--<tr>
+              <td></td>
+              <td>
+                <div style=" text-align:center; padding:12px 0; margin-bottom:24px"
+                     [formGroup]="groupAllProgram">
+                  <input formControlName="allProgNameFC" type="text" class="form-control" placeholder="Search Program..."/>
+                </div>
+              </td>
+            </tr>-->
+
+            <tr>
+              <td></td>
+              <td>
+                <div>
+                  <form class="form-inline w-100">
+                    <i class="material-icons text-center text-primary">search</i>
+                    <div [formGroup]="groupAllProgram" style="width: 90%">
+                      <input formControlName="progAllFnFilter" style="width: 50%" type="text" class="form-control" placeholder="Search Program..." />
+                    </div>
+                  </form>
+                </div>
+              </td>
+            </tr>
+
+          </table>
+        </div>
+      </div>
+      <!--End Customer Details-->
+
+      <!--form (ngSubmit)="onSubmit(addForm)" #addForm="ngForm"-->
+        <!-- Modal body -->
+        <div class="modal-body w-100">
+          <div class="col-md-12">
+
+            <!--Program table-->
+            <cdk-virtual-scroll-viewport itemSize="0" style="height: 300px; width: 100%">
+              <table class="table table-hover">
+
+                <thead class="">
+                <tr>
+                  <th>ID</th>
+                  <th>Choose</th>
+                  <th>Program Name</th>
+                  <th>Description</th>
+                  <!--th>Point</th-->
+                  <th>Total Sessions</th>
+
+                  <!--<th>Focus Session</th>-->
+                </tr>
+                </thead>
+
+                <tbody>
+                <ng-container *cdkVirtualFor="let assignPro of progAllrows">
+                  <tr> <!-- *ngFor="let ex of listExercise"-->
+                    <td>{{assignPro.id}}</td>
+                    <td style="text-align: center">
+                      <input class="form-check-input" id="{{assignPro.id}}" type="radio" name="lstCheckbox"
+                             (change)="onSelect($event, assignPro.id)"
+                             [disabled]="disableAssign">
+                    </td>
+                    <td>{{assignPro.name}}</td>
+                    <td>{{assignPro.description}}</td>
+                    <!--td>{{"100"}}</td-->
+                    <td>{{assignPro.numberOfSession}}</td>
+
+                  </tr>
+
+                </ng-container>
+                </tbody>
+
+              </table>
+            </cdk-virtual-scroll-viewport>
+            <!--end Session table-->
+
+
+          </div>
+        </div>
+
+        <!-- Modal footer -->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-success" (click)="save()">Save</button>
+          <!--button type="button" class="btn btn-info" (click)="reset(addForm)">Reset</button-->
+          <!--button type="button" class="btn btn-success" (click)="sendModal()">Yes</button-->
+          <button type="button" class="btn btn-warning" (click)="hideView2()">Close</button>
+
+          <!-- this button is hidden, used to close from typescript -->
+          <button type="button" id="close-modal-2" data-dismiss="modal" style="display: none">Close</button>
+        </div>
+
+      <!--/form-->
+
+    </div>
+  </div>
+</div>
+
+<!--end Assign dialog-->
+
+<!--Alert dialog-->
+<div class="modal fade" id="alertModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+
+        <h4 class="modal-title">
+          <i class="material-icons text-center text-warning" style="vertical-align: middle">{{icon}}</i>
+          {{iconText}}</h4>
+        <button type="button" class="close" (click)="hideAlert()">&times;</button>
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body w-100">
+        <div class="col-md-12">
+
+          <h4> {{ alertContent }}</h4>
+        </div>
+      </div>
+
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <!--button type="button" class="btn btn-success" (click)="sendModal()">Yes</button-->
+        <button type="button" class="btn btn-danger" (click)="hideAlert()">Close</button>
+
+        <!-- this button is hidden, used to close from typescript -->
+        <button type="button" id="close-alert" data-dismiss="modal" style="display: none">Close</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+<!-- end Alert dialog-->
+
+<!--Confirm delete dialog-->
+<div class="modal fade" id="confirmDeleteModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+
+        <h4 class="modal-title">
+          <i class="material-icons text-center text-warning" style="vertical-align: middle">warning</i>
+          Warning</h4>
+        <button type="button" class="close" (click)="hideConfirmDelete()">&times;</button>
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body w-100">
+        <div class="col-md-12">
+
+          <h4> Are you sure delete this user <b>{{ userInfo }}</b> ?</h4>
+        </div>
+      </div>
+
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-success" (click)="deleteUser()">Yes</button>
+        <button type="button" class="btn btn-danger" (click)="hideConfirmDelete()">No</button>
+
+        <!-- this button is hidden, used to close from typescript -->
+        <button type="button" id="close-confirm-delete" data-dismiss="modal" style="display: none">Close</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+<!-- end Confirm delete dialog-->
+
+

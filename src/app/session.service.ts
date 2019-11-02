@@ -10,6 +10,7 @@ export class SessionService {
   apiSaveSession = '/api/sessions?listEx=';
   apiDelete = '/api/sessions/';
   apiUpdate = '/api/sessions/exercises?listEx=';
+  getSessionsByProgId = '/api/sessionsPrograms/';
 
   constructor(private _http: HttpClient) { }
 
@@ -43,6 +44,10 @@ export class SessionService {
   deleteSession(sessId){
     //alert(sessId);
     return this._http.delete<any>(this.apiDelete + sessId);
+  }
+
+  getSessionsByProgId2(progId){
+    return this._http.get<Session[]>(this.getSessionsByProgId + progId);
   }
 
 }

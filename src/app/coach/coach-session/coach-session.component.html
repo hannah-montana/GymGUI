@@ -289,6 +289,9 @@
                 </td>
               </tr>
               <tr>
+                <td>&nbsp;</td>
+              </tr>
+              <!--tr>
                 <td></td>
                 <td style="padding-top: 15px">
                   <div>
@@ -300,7 +303,7 @@
                     </form>
                   </div>
                 </td>
-              </tr>
+              </tr-->
             </table>
 
             <!--exercise table-->
@@ -326,7 +329,9 @@
                   <tr>
                     <td>{{ex.id}}</td>
                     <td style="text-align: center">
-                      <input class="form-check-input" type="checkbox" ngModel name="lstCheckbox" (change)="onSelect($event, ex.id)">
+                      <input class="form-check-input" type="checkbox" ngModel name="lstCheckbox" checked
+                             [checked]="ex ? (ex.isChecked === '1') : '' "
+                             (change)="onSelect($event, ex.id)">
                     </td>
                     <td>{{ex.name}}</td>
                     <td>{{ex.duration}}</td>
@@ -437,6 +442,8 @@
     </div>
   </div>
 </div>
+
+
 
 
 

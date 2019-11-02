@@ -137,6 +137,9 @@ export class CoachSessionComponent implements OnInit {
       this.listAllExercise = data;
 
       this.exAllrows = [...this.listAllExercise];
+
+      this.exAllrows[0].isChecked="1";
+      console.log(this.exAllrows);
     });
 
     $("#addModal").modal('show');
@@ -166,12 +169,11 @@ export class CoachSessionComponent implements OnInit {
 
     if (this.sess.id != undefined){
       //update session
-      //alert('u');
       //console.log('form value: ' + form.value.name + '-' + form.value.description + '-' + form.value.duration + form.value.focusSession);
       console.log(this.sess.focusSession + '-' + form.value.focusSession);
 
-      //if(form.value.name != '') /* if don't check that condition, when edit but dont change any value -> it'll be fail */
-      /*  this.sess.name = form.value.name;
+      if(form.value.name != '') /* if don't check that condition, when edit but dont change any value -> it'll be fail */
+        this.sess.name = form.value.name;
       if(form.value.description != '')
         this.sess.description = form.value.description;
       if(form.value.duration != '')
@@ -189,26 +191,29 @@ export class CoachSessionComponent implements OnInit {
             //reload session grid
             this.loadSession();
 
-            //this.alertContent = 'Update session successful!';
-            //this.icon = 'priority_high';
-            //this.iconText = '';
-            //this.viewAlert();
+            this.alertContent = 'Update session successful!';
+            this.icon = '';
+            this.iconText = 'Success';
+            this.viewAlert();
 
             this.coachId = '';
           }
           else{
             this.alertContent = 'This session name existed!';
-            //this.icon = 'warning';
-            //this.iconText = 'Warning';
+            this.icon = 'warning';
+            this.iconText = 'Warning';
             this.viewAlert();
 
           }
-        });*/
+        });
     }
     else{
       //insert new session
       if (form.value.name == null || form.value.name == ''){
-          alert ("Please input session name!");
+          this.alertContent = 'Please input session name!';
+          this.icon = 'warning';
+          this.iconText = 'Warning';
+          this.viewAlert();
       }
       else {
         //console.log(form.value);
@@ -219,7 +224,7 @@ export class CoachSessionComponent implements OnInit {
         //console.log(this.newSess);
         console.log(this.lstSelectedExercise);
 
-        /*this.sessionService.saveSession(this.newSess, this.lstSelectedExercise, this.coachId)
+        this.sessionService.saveSession(this.newSess, this.lstSelectedExercise, this.coachId)
           .subscribe(data => {
             console.log("result: " + data);
             if(data == 1){
@@ -229,18 +234,18 @@ export class CoachSessionComponent implements OnInit {
 
               this.coachId = '';
 
-              //this.alertContent = 'Create new session successful!';
-              //this.icon = '';
-              //this.iconText = '';
-              //this.viewAlert();
+              this.alertContent = 'Create new session successful!';
+              this.icon = '';
+              this.iconText = '';
+              this.viewAlert();
             }
             else{
               this.alertContent = 'This session name existed!';
-              //this.icon = 'warning';
-              //this.iconText = 'Warning';
+              this.icon = 'warning';
+              this.iconText = 'Warning';
               this.viewAlert();
             }
-          });*/
+          });
       }
     }
 

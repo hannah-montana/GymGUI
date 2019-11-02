@@ -36,6 +36,29 @@ export class Exercise {
   point: string;
   frequency: string;
   benefit: string;
-  isChecked: string;
   target: string;
+  isChecked: string;
+}
+
+export class Program {
+  id: string;
+  name: string;
+  description: string;
+  numberOfSession: number;
+  exId: string;
+  sessId: string;
+  coachId: string;
+  note: string;
+  point: number;
+  isChecked: string;
+  isFinished: string;
+}
+
+export class ProgramUser {
+  id: string;
+  progId: string;
+  userId: string;
+  coachId: string;
+  point: number;
+  isFinished: string;
 }
