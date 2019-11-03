@@ -138,7 +138,6 @@ export class CoachSessionComponent implements OnInit {
 
       this.exAllrows = [...this.listAllExercise];
 
-      this.exAllrows[0].isChecked="1";
       console.log(this.exAllrows);
     });
 
@@ -183,6 +182,7 @@ export class CoachSessionComponent implements OnInit {
       this.sess.focusSession = form.value.focusSession;
       console.log(this.sess);
 
+      console.log(this.lstSelectedExercise);
       this.sessionService.updateSession(this.sess, this.lstSelectedExercise, this.coachId)
         .subscribe(data => {
           console.log("result: " + data);
@@ -249,6 +249,7 @@ export class CoachSessionComponent implements OnInit {
       }
     }
 
+    this.reset(form);
   }
   hideAdd(){
     document.getElementById('close-modal-add').click();
@@ -275,32 +276,25 @@ export class CoachSessionComponent implements OnInit {
           this.listExIdBySessId.push(ex.id);
       }
     });
-    console.log(this.listExIdBySessId);
+    console.log("list selected exs: ", this.listExIdBySessId);
     //initial assign in case user dont change anything, maybe I can remove later if it work well with grid checkbox
     this.lstSelectedExercise = this.listExIdBySessId;
 
-    //get all exercises
-    this.getAllExercise().subscribe(data => {
+    //get all exercises with check list
+
+    this.loadCheckListExercise(this.sess.id);
+
+    $("#addModal").modal('show');
+  }
+
+  loadCheckListExercise(sessId){
+    this.getCheckListExercise(sessId).subscribe(data => {
       this.listAllExercise = data;
 
       this.exAllrows = [...this.listAllExercise];
 
       console.log(this.exAllrows);
-
-      //meo ra -> thu lam trong server sau
-      /*for(var aex in this.exAllrows){
-        for (var id in this.listExIdBySessId){
-          if(aex.id == id)
-          {
-            aex.isChecked = '1';
-          }
-        }
-      }*/
-
-      console.log(this.exAllrows);
     });
-
-    $("#addModal").modal('show');
   }
   //end edit session
 
@@ -397,6 +391,9 @@ export class CoachSessionComponent implements OnInit {
   }
   getExercisesBySessId(sessId){
     return this.exerciseService.getExercisesBySessId(sessId);
+  }
+  getCheckListExercise(sessId){
+    return this.exerciseService.getCheckListExBySessId(sessId);
   }
 
   //Select exercise (checkbox event) in create new session

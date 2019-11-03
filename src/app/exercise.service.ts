@@ -9,8 +9,8 @@ export class ExerciseService {
   apiExercises = '/api/exercises/';
   apiGetBySessId = '/api/exercisesSessions/';
   apiSaveExercise = '/api/exercises';
-  uploadTarget = 'http://localhost:4200'; //assets/images/exercises
-  //uploadTarget = 'D:/1_MIAGE/Semester_3_2019_2020/Innovation_Software_Method/Project/Startup/Source code/Client/GymGUI/src/assets/images/exercises';
+  apiGetCheckListEx = '/api/checkListExercisesSessions/';
+
   constructor(private _http: HttpClient) { }
 
   getAllExercise(){
@@ -19,6 +19,10 @@ export class ExerciseService {
 
   getExercisesBySessId(sessId){
     return this._http.get<Exercise[]>(this.apiGetBySessId + sessId);
+  }
+
+  getCheckListExBySessId(sessId){
+    return this._http.get<Exercise[]>(this.apiGetCheckListEx + sessId);
   }
 
   getExercisesByExId(exId){

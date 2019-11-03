@@ -246,13 +246,6 @@
               <tr style="padding-top: 15px">
                 <td>Level:</td>
                 <td style="padding-top: 15px">
-                  <!--select class="browser-default custom-select w-25" ngModel name="level" style="margin-top: 10px;">
-
-                    <option selected>Easy</option>
-                    <option value="2">Medium</option>
-                    <option value="3">Difficult</option>
-                  </select-->
-
                   <div class="container">
                     <div class="row">
                       <div class="custom-control custom-radio">
@@ -284,7 +277,7 @@
                   <div class="custom-control custom-checkbox">
                     <input type="checkbox" class="custom-control-input" id="defaultUnchecked" ngModel name="focusSession"
                            [checked]="sess ? (sess.focusSession === 1) : '' ">
-                    <label class="custom-control-label" for="defaultUnchecked">Focus session 2</label>
+                    <label class="custom-control-label" for="defaultUnchecked">Focus session</label>
                   </div>
                 </td>
               </tr>
@@ -329,8 +322,8 @@
                   <tr>
                     <td>{{ex.id}}</td>
                     <td style="text-align: center">
-                      <input class="form-check-input" type="checkbox" ngModel name="lstCheckbox" checked
-                             [checked]="ex ? (ex.isChecked === '1') : '' "
+                      <input class="form-check-input" type="checkbox" ngModel name="ex.id"
+                             [checked]="ex.isChecked == '1'"
                              (change)="onSelect($event, ex.id)">
                     </td>
                     <td>{{ex.name}}</td>
