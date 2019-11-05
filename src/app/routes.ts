@@ -14,6 +14,8 @@ import { CoachExerciseComponent } from './coach/coach-exercise/coach-exercise.co
 import { CoachSessionComponent } from './coach/coach-session/coach-session.component';
 import { CoachProgramComponent } from './coach/coach-program/coach-program.component';
 import { CoachCustomerComponent } from './coach/coach-customer/coach-customer.component';
+import { CoachProfileComponent } from './coach/coach-profile/coach-profile.component';
+import { CoachNotifyComponent } from './coach/coach-notify/coach-notify.component';
 
 export const appRoutes: Routes = [
   { path : 'coach', component : CoachComponent },
@@ -62,5 +64,13 @@ export const appRoutes: Routes = [
   {
     path : 'coach-customer', component : CoachComponent,
     children : [{ path : '', component: CoachCustomerComponent}]
+  },
+  {
+    path : 'coach-profile', component : CoachComponent,
+    children : [{ path : '', component: CoachProfileComponent}]
+  },
+  {
+    path : 'coach-notify', component : CoachComponent,
+    children : [{ path : '', component: CoachNotifyComponent}]
   }
 ];

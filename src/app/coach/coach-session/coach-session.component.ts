@@ -249,7 +249,7 @@ export class CoachSessionComponent implements OnInit {
       }
     }
 
-    this.reset(form);
+    //this.reset(form);
   }
   hideAdd(){
     document.getElementById('close-modal-add').click();
