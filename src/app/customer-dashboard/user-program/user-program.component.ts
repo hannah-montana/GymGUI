@@ -1,15 +1,27 @@
 import { Component, OnInit } from '@angular/core';
+import { UserProgramService } from '../../user-program.service';
+import { Session } from '../../gym.model';
+import { ScrollDispatchModule } from '@angular/cdk/scrolling';
+
+
 declare var $: any;
+
 @Component({
   selector: 'app-user-program',
   templateUrl: './user-program.component.html',
   styleUrls: ['./user-program.component.css']
 })
 export class UserProgramComponent implements OnInit {
+  progId: String = '';
 
-  constructor() { }
+  sessRows: Session[] = null;
+
+  constructor(private userProgramService: UserProgramService) { }
 
   ngOnInit() {
+    //getProgramsByUserId();
+    let userId = localStorage.getItem('id');
+    this.getCurrentListSessionByUserId(userId);
   }
 
   showModal():void {
@@ -48,4 +60,26 @@ export class UserProgramComponent implements OnInit {
     document.getElementById('close-modalReport').click();
   }
   /*end Report modal*/
+
+  /***************************************************/
+
+  getCurrentListSessionByUserId(userId){
+    this.userProgramService.getCurrentListSessionByUserId(userId)
+      .subscribe(data => {
+        console.log(data);
+        this.sessRows = data;
+        //this.listPrograms = data;
+        //this.progrows = [...this.listPrograms];
+
+        //use for assign program list
+        //this.listAllPrograms = data;
+        //this.progAllrows = [...this.listAllPrograms];
+       });
+  }
+
+  showDetail(row){
+    console.log(row);
+  }
 }
+
+

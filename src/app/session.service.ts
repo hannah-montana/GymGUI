@@ -11,6 +11,7 @@ export class SessionService {
   apiDelete = '/api/sessions/';
   apiUpdate = '/api/sessions/exercises?listEx=';
   getSessionsByProgId = '/api/sessionsPrograms/';
+  apiDuplicate = '/api/duplicate';
 
   constructor(private _http: HttpClient) { }
 
@@ -50,4 +51,7 @@ export class SessionService {
     return this._http.get<Session[]>(this.getSessionsByProgId + progId);
   }
 
+  duplicateSession(sess){
+    return this._http.post<any>(this.apiDuplicate, sess);
+  }
 }

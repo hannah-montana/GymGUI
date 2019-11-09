@@ -40,16 +40,27 @@ export class SignInComponent implements OnInit {
       .subscribe(
         data  => {
           console.log("POST Request is successful ", data);
+          this.setLocalStorage(data);
+
           if (data.role == 1)
             this.router.navigate(['/coach']);
             //this.router.navigate(['/coach', data.id]);
           else if (data.role == 2)
             this.router.navigate(['/profile']);
+
         },
         error  => {
           console.log("Error", error);
         }
       );
+  }
+
+  setLocalStorage(data){
+    localStorage.setItem('id', data.id);
+    localStorage.setItem('firstName', data.firstName);
+    localStorage.setItem('lastName', data.lastName);
+    localStorage.setItem('role', data.role.toString());
+    localStorage.setItem('coachId', data.coachId);
   }
 
   gotoGuestPage()

@@ -5,6 +5,7 @@ import { Session, Exercise } from '../../gym.model';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ScrollDispatchModule } from '@angular/cdk/scrolling';
+import { Router } from '@angular/router';
 
 declare var $: any;
 
@@ -51,27 +52,33 @@ export class CoachSessionComponent implements OnInit {
               private fb: FormBuilder,
               private exerciseService: ExerciseService,
               private fb2: FormBuilder,
-              private fb3: FormBuilder) { }
+              private fb3: FormBuilder,
+              private router: Router) { }
 
   ngOnInit() {
-    this.alertContent = '';
-    this.icon = '';
-    this.iconText = '';
-    this.lstSelectedExercise = [];
-    this.sessionInfo = '';
-    this.sessionId = '';
-    this.coachId = '';
-    this.slevel = 'Easy';
-    this.listAllExercise = new Array<Exercise>();
+    if(localStorage.getItem('role') != '1'){
+      this.router.navigate(['/oops']);
+    }
+    else{
+      this.alertContent = '';
+      this.icon = '';
+      this.iconText = '';
+      this.lstSelectedExercise = [];
+      this.sessionInfo = '';
+      this.sessionId = '';
+      this.coachId = '';
+      this.slevel = 'Easy';
+      this.listAllExercise = new Array<Exercise>();
 
-    //load session grid
-    this.loadSession();
+      //load session grid
+      this.loadSession();
 
-    //filter exercise in view session
-    this.exerciseFilter();
+      //filter exercise in view session
+      this.exerciseFilter();
 
-    //all exercise filter
-    this.allExerciseFilter();
+      //all exercise filter
+      this.allExerciseFilter();
+    }
   }
 
   loadSession(){
@@ -220,6 +227,7 @@ export class CoachSessionComponent implements OnInit {
 
         this.newSess = form.value;
         this.newSess.level = this.slevel;
+        this.newSess.coachId = localStorage.getItem('id');
 
         //console.log(this.newSess);
         console.log(this.lstSelectedExercise);
@@ -236,7 +244,7 @@ export class CoachSessionComponent implements OnInit {
 
               this.alertContent = 'Create new session successful!';
               this.icon = '';
-              this.iconText = '';
+              this.iconText = 'Success';
               this.viewAlert();
             }
             else{
@@ -281,7 +289,6 @@ export class CoachSessionComponent implements OnInit {
     this.lstSelectedExercise = this.listExIdBySessId;
 
     //get all exercises with check list
-
     this.loadCheckListExercise(this.sess.id);
 
     $("#addModal").modal('show');
@@ -303,7 +310,14 @@ export class CoachSessionComponent implements OnInit {
     this.sessionInfo = session.id + ' - ' + session.name;
     this.sessionId = session.id;
 
-    $("#confirmDeleteModal").modal('show');
+    if(session.focusSession == '1'){
+      this.alertContent = 'You CANNOT delete Focus Session!';
+      this.icon = 'warning';
+      this.iconText = 'Warning';
+      this.viewAlert();
+    }
+    else
+      $("#confirmDeleteModal").modal('show');
   }
 
   deleteSession(){
@@ -333,10 +347,37 @@ export class CoachSessionComponent implements OnInit {
   }
   //end delete session
 
+  duplicate(session){
+    console.log(session);
+    session.coachId = localStorage.getItem('id'); //assign coachId again
 
-
+    if(session.focusSession == '1'){
+      this.loadSession();
+      this.alertContent = 'You CANNOT duplicate Focus Session!';
+      this.icon = 'warning';
+      this.iconText = 'Warning';
+      this.viewAlert();
+    }
+    else{
+      this.sessionService.duplicateSession(session)
+        .subscribe(data => {
+          if(data == 1){
+            this.alertContent = 'Duplicate successful!';
+            this.icon = '';
+            this.iconText = 'Success';
+            this.viewAlert();
+            this.loadSession();
+          }
+          else{
+            this.alertContent = 'Error! Cannot duplicate this session!';
+            this.icon = 'warning';
+            this.iconText = 'Warning';
+            this.viewAlert();
+          }
+        });
+    }
+  }
   /******** end - SESSION *********/
-
 
   /******** EXERCISE *********/
 

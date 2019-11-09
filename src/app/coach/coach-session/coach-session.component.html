@@ -42,6 +42,7 @@
             <th>Level</th>
             <th>Focus Session</th>
             <th>View</th>
+            <th>Copy</th>
             <th>Edit</th>
             <th>Delete</th>
           </tr>
@@ -60,6 +61,11 @@
               <td>
                 <a (click)="view(row)">
                   <i class="material-icons text-center text-primary">visibility</i>
+                </a>
+              </td>
+              <td>
+                <a (click)="duplicate(row)">
+                  <i class="material-icons text-center text-info">file_copy</i>
                 </a>
               </td>
               <td>
@@ -271,7 +277,7 @@
 
                 </td>
               </tr>
-              <tr>
+              <!--tr>
                 <td></td>
                 <td style="padding-top: 15px">
                   <div class="custom-control custom-checkbox">
@@ -280,7 +286,7 @@
                     <label class="custom-control-label" for="defaultUnchecked">Focus session</label>
                   </div>
                 </td>
-              </tr>
+              </tr-->
               <tr>
                 <td>&nbsp;</td>
               </tr>
@@ -374,8 +380,8 @@
       <div class="modal-header">
 
         <h4 class="modal-title">
-          <i class="material-icons text-center text-warning" style="vertical-align: middle">warning</i>
-          Warning</h4>
+          <i class="material-icons text-center text-warning" style="vertical-align: middle">{{icon}}</i>
+          {{iconText}}</h4>
         <button type="button" class="close" (click)="hideAlert()">&times;</button>
       </div>
 
@@ -426,7 +432,7 @@
       <!-- Modal footer -->
       <div class="modal-footer">
         <button type="button" class="btn btn-success" (click)="deleteSession()">Yes</button>
-        <button type="button" class="btn btn-danger" (click)="hideConfirmDelete()">Close</button>
+        <button type="button" class="btn btn-danger" (click)="hideConfirmDelete()">No</button>
 
         <!-- this button is hidden, used to close from typescript -->
         <button type="button" id="close-confirm-delete" data-dismiss="modal" style="display: none">Close</button>

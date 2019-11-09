@@ -21,6 +21,7 @@ export class Session {
   focusSession: number;
   validated: number;
   sendReported: number;
+  coachId: string;
 }
 
 export class Exercise {
@@ -38,6 +39,7 @@ export class Exercise {
   benefit: string;
   target: string;
   isChecked: string;
+  coachId: string;
 }
 
 export class Program {

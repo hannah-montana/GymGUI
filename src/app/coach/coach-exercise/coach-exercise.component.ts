@@ -3,6 +3,7 @@ import { ExerciseService } from '../../exercise.service';
 import { Exercise } from '../../gym.model';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 
 declare var $: any;
 
@@ -38,20 +39,27 @@ export class CoachExerciseComponent implements OnInit {
   /*File input*/
   selectedFile: File = null;
   sPhoto: string = '';
-  constructor(private exerciseService: ExerciseService, private fb: FormBuilder) {
+  constructor(private exerciseService: ExerciseService,
+              private fb: FormBuilder,
+              private router: Router) {
   }
 
   ngOnInit() {
-    this.exerciseInfo = '';
-    this.exerciseId = '';
-    this.alertContent = '';
-    this.icon = '';
-    this.iconText = '';
-    this.slevel = 'Easy';
-    this.sType = 'Keep Fit';
-    this.sTarget = 'Neck';
+    if(localStorage.getItem('role') != '1'){
+      this.router.navigate(['/oops']);
+    }
+    else{
+      this.exerciseInfo = '';
+      this.exerciseId = '';
+      this.alertContent = '';
+      this.icon = '';
+      this.iconText = '';
+      this.slevel = 'Easy';
+      this.sType = 'Keep Fit';
+      this.sTarget = 'Neck';
 
-    this.loadExercises();
+      this.loadExercises();
+    }
   }
 
   loadExercises(){
@@ -188,6 +196,7 @@ export class CoachExerciseComponent implements OnInit {
         this.newExe.photo = this.sPhoto;
         this.exe.photo = this.sPhoto; //use for view photo when changing
         this.newExe.isChecked = '';
+        this.newExe.coachId = localStorage.getItem("id");
         //console.log(this.newExe);
         this.exerciseService.saveExercise(this.newExe)
           .subscribe(data => {

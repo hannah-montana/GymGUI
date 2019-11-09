@@ -2,9 +2,10 @@ import { Component, OnInit, Input } from '@angular/core';
 import { CustomerService } from '../../customer.service';
 import { ProgramService } from '../../program.service';
 import { User, Program, ProgramUser } from '../../gym.model';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ScrollDispatchModule } from '@angular/cdk/scrolling';
+import { Router } from '@angular/router';
 
 declare var $: any;
 
@@ -55,20 +56,29 @@ export class CoachCustomerComponent implements OnInit {
               private fb: FormBuilder,
               private programService: ProgramService,
               private fb2: FormBuilder,
-              private fb3: FormBuilder) { }
+              private fb3: FormBuilder,
+              private router: Router) { }
 
   ngOnInit() {
+     this.myGroup = new FormGroup({
+       nameFC: new FormControl()
+    });
 
-     this.alertContent = '';
+    if(localStorage.getItem('role') != '1'){
+      this.router.navigate(['/oops']);
+    }
+    else{
+      this.alertContent = '';
 
-     //load customer grid
-     this.loadCustomer();
+      //load customer grid
+      this.loadCustomer();
 
-     //filter session in view program
-     this.programFilter();
+      //filter session in view program
+      this.programFilter();
 
-     //all session filter
-     this.allProgramFilter();
+      //all session filter
+      this.allProgramFilter();
+    }
   }
 
   loadCustomer(){
@@ -80,13 +90,13 @@ export class CoachCustomerComponent implements OnInit {
 
       this.userFnFilter();
     });
-  } //ok
+  }
 
 
   getAllCustomers()
   {
     return this.customerService.getAllCustomers2();
-  } //ok
+  }
 
   //customer filter in main component
   userFnFilter(){
@@ -100,7 +110,7 @@ export class CoachCustomerComponent implements OnInit {
       this.fnFilter = val;
       this.applyFnFilter();
     });
-    }//ok
+  }
 
   applyFnFilter = () => {
     let rows2 = this.listUsers;
@@ -110,8 +120,7 @@ export class CoachCustomerComponent implements OnInit {
       rows2 = rows2.filter(r => r.lastName.toLowerCase().startsWith(this.fnFilter.toLowerCase()));
     }
     this.rows = rows2;
-    //this.rows = rows3;
-  }; //ok
+  };
 
   /******* VIEW *******/
   view(user){
@@ -122,15 +131,15 @@ export class CoachCustomerComponent implements OnInit {
     this.getProgramsByUserId(this.user.id);
 
     $("#viewModal").modal('show');
-  }//ok
+  }
 
   hideView() {
     document.getElementById('close-modal').click();
-  }//ok
+  }
 
   //get assigned program
   getProgramsByUserId(userId){
-    this.programService.getProgramsByUserId2(userId)
+    this.programService.getProgramsByUserId(userId)
       .subscribe(data => {
         this.listPrograms = data;
         this.progrows = [...this.listPrograms];
@@ -236,7 +245,7 @@ export class CoachCustomerComponent implements OnInit {
       this.progFnFilter = val;
       this.applyFiltersProgram();
     });
-  }//ok
+  }
 
   applyFiltersProgram = () => {
     let rows = this.listPrograms;
@@ -245,7 +254,7 @@ export class CoachCustomerComponent implements OnInit {
       rows = rows.filter(r => r.name.toLowerCase().startsWith(this.progFnFilter.toLowerCase())); //startsWith
     }
     this.progrows = rows;
-  }/*ok*/
+  }
 
   //program filter in assign user
   allProgramFilter(){
@@ -259,7 +268,7 @@ export class CoachCustomerComponent implements OnInit {
       this.progAllFnFilter = val;
       this.applyAllFiltersProgram();
     });
-  } //ok
+  }
 
   applyAllFiltersProgram = () => {
     let rows = this.listAllPrograms;
@@ -268,7 +277,7 @@ export class CoachCustomerComponent implements OnInit {
       rows = rows.filter(r => r.name.toLowerCase().startsWith(this.progAllFnFilter.toLowerCase())); //startsWith
     }
     this.progAllrows = rows;
-  }//ok
+  }
 
   /*View All program*/
   getAllPrograms()
@@ -280,7 +289,6 @@ export class CoachCustomerComponent implements OnInit {
          this.progAllrows = [...this.listAllPrograms];
        });
   }
-
 
   /*END PROGRAM*/
 

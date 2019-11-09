@@ -34,6 +34,9 @@ import { CoachNavComponent } from './coach/coach-nav/coach-nav.component';
 import { CoachProfileComponent } from './coach/coach-profile/coach-profile.component';
 import { CoachNotifyComponent } from './coach/coach-notify/coach-notify.component';
 
+import { StorageServiceModule } from 'angular-webstorage-service';
+import { OopsComponent } from './oops/oops.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -58,7 +61,8 @@ import { CoachNotifyComponent } from './coach/coach-notify/coach-notify.componen
     CoachCustomerComponent,
     CoachNavComponent,
     CoachProfileComponent,
-    CoachNotifyComponent
+    CoachNotifyComponent,
+    OopsComponent
   ],
   imports: [
     BrowserModule,
@@ -67,7 +71,8 @@ import { CoachNotifyComponent } from './coach/coach-notify/coach-notify.componen
     RouterModule.forRoot(appRoutes),
     ReactiveFormsModule,
     FormsModule,
-    ScrollDispatchModule
+    ScrollDispatchModule,
+    StorageServiceModule
   ],
   providers: [],
   bootstrap: [AppComponent]

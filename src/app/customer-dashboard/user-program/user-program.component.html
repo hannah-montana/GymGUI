@@ -6,68 +6,68 @@
     </div>
     <div class="card-body">
       <div class="table-responsive">
-        <table class="table table-hover">
-          <thead class="">
-            <th>ID</th>
-            <th>Session name</th>
-            <th>Description</th>
-            <th>Duration</th>
-            <th>Focus Session</th>
-          </thead>
-          <tbody>
-          <tr class="accordion-toggle">
-            <td data-toggle="collapse" data-target="#collapseTwo">1</td>
-            <td data-toggle="collapse" data-target="#collapseTwo">Focus Session</td>
-            <td data-toggle="collapse" data-target="#collapseTwo">To validate the capacity</td>
-            <td data-toggle="collapse" data-target="#collapseTwo">1 Week</td>
-            <td>
-              <a data-target="#excerciseModal" (click)="showModal()">
-                <i class="material-icons">notifications</i>
-              </a>
-            </td>
-          </tr>
-          <tr>
-            <td></td>
-            <td colspan="4">
-              <div id="collapseTwo" class="collapse in">
-                <table class="table table-bordered">
-                  <thead>
-                  <tr>
-                  <tr class="bg-success text-white">
-                    <th> Id</th>
-                    <th class="w-25"> Name <!--i class="fa fa-sort"></i--></th>
-                    <th class="w-25"> Instruction</th>
-                    <th> Level </th>
-                    <th class="w-25"> Image </th>
-                  </tr>
-                  </thead>
-                  <tr>
-                    <td> 1</td>
-                    <td> Squats</td>
-                    <td> Do 50 squats in one week</td>
-                    <td> Medium</td>
-                    <td><img src="../assets/images/squats.jpg" class="w-50"></td>
-                  </tr>
-                  <tr>
-                    <td> 2</td>
-                    <td> Streching</td>
-                    <td> Do 30 left and right strechs in one week</td>
-                    <td> Medium</td>
-                    <td><img src="../assets/images/stretch.PNG" class="w-50"></td>
-                  </tr>
-                  <tr>
-                    <td> 3</td>
-                    <td> Pushup</td>
-                    <td> Do 25 Pushups in one week</td>
-                    <td> Medium</td>
-                    <td><img src="../assets/images/push-up_1.jpg" class="w-50"></td>
-                  </tr>
-                </table>
-              </div>
-            </td>
-          </tr>
-          </tbody>
-        </table>
+
+        <cdk-virtual-scroll-viewport itemSize="0" style="height: 500px;">
+          <table class="table table-hover">
+            <thead class="">
+              <th>ID</th>
+              <th>Session name</th>
+              <th>Description</th>
+              <th>Duration</th>
+              <th>Focus Session</th>
+            </thead>
+            <tbody>
+              <ng-container *cdkVirtualFor="let row of sessRows">
+                <tr class="accordion-toggle">
+                  <td data-toggle="collapse" attr.data-target="#collapseTwo-{{row.id}}" id="{{row.id}}">{{row.id}}</td>
+                  <td data-toggle="collapse" attr.data-target="#collapseTwo-{{row.id}}">{{row.name}}</td>
+                  <td data-toggle="collapse" attr.data-target="#collapseTwo-{{row.id}}">{{row.description}}</td>
+                  <td data-toggle="collapse" attr.data-target="#collapseTwo-{{row.id}}">{{row.duration}}</td>
+                  <td>
+                    <a data-target="#excerciseModal" (click)="showModal()">
+                      <i class="material-icons">
+                        {{row.focusSession == '1'? 'notifications': ''}}
+                      </i>
+                    </a>
+                  </td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td colspan="4">
+                    <div id="collapseTwo-{{row.id}}" class="collapse in">
+                      <table class="table table-bordered">
+                        <thead>
+                        <tr>
+                        <tr class="bg-success text-white">
+                          <th> Id</th>
+                          <th class="w-25"> Name </th>
+                          <th class="w-25"> Instruction</th>
+                          <th> Level </th>
+                          <th class="w-25"> Image </th>
+                        </tr>
+                        </thead>
+                        <tr>
+                          <td> 1</td>
+                          <td> Squats</td>
+                          <td> Do 50 squats in one week</td>
+                          <td> Medium</td>
+                          <td><img src="../assets/images/squats.jpg" class="w-50"></td>
+                        </tr>
+                        <tr>
+                          <td> 2</td>
+                          <td> Streching</td>
+                          <td> Do 30 left and right strechs in one week</td>
+                          <td> Medium</td>
+                          <td><img src="../assets/images/stretch.PNG" class="w-50"></td>
+                        </tr>
+                      </table>
+                    </div>
+                  </td>
+                </tr>
+              </ng-container>
+            </tbody>
+          </table>
+        </cdk-virtual-scroll-viewport>
       </div>
     </div>
 

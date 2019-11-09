@@ -24,6 +24,7 @@
     "@angular/router": "~8.2.10",
     "@ng-bootstrap/ng-bootstrap": "^5.1.1",
     "@types/jquery": "^3.3.31",
+    "angular-webstorage-service": "^1.0.2",
     "core-js": "^2.5.4",
     "mdbootstrap": "^4.8.11",
     "owl.carousel": "^2.3.4",

@@ -10,7 +10,7 @@ export class ProgramService {
   apiGetAll = '/api/programs';
   apiSaveProgram = '/api/programs?listSes=';
   apiDelete = '/api/programs/';
-  getProgramsByUserId = '/api/programsUsers/';
+  apiGetProgramsByUserId = '/api/programsUsers/';
   apiAssign = '/api/programsUsers';
   apiCheckAssigned = '/api/checkAssign/';
 
@@ -41,8 +41,8 @@ export class ProgramService {
     return this._http.delete<any>(this.apiDelete + progId);
   }
 
-  getProgramsByUserId2(userId){
-    return this._http.get<Program[]>(this.getProgramsByUserId + userId);
+  getProgramsByUserId(userId){
+    return this._http.get<Program[]>(this.apiGetProgramsByUserId + userId);
   }
 
   assignProgramToCustomer(proUser){

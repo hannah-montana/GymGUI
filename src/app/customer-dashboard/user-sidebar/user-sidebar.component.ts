@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-user-sidebar',
@@ -10,7 +11,7 @@ export class UserSidebarComponent implements OnInit {
   list:any;
   selected :any;
 
-  constructor() {
+  constructor(private router: Router) {
     this.list = [
                'Read about Angular',
                'Read about knockout',
@@ -32,4 +33,9 @@ export class UserSidebarComponent implements OnInit {
       //deActive("Profile");
       return this.selected === item;
   };
+
+  logOut(){
+    localStorage.clear();
+    this.router.navigate(['/login']);
+  }
 }

@@ -5,6 +5,7 @@ import { Program , Session} from '../../gym.model';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ScrollDispatchModule } from '@angular/cdk/scrolling';
+import { Router } from '@angular/router';
 
 declare var $: any;
 
@@ -55,20 +56,26 @@ export class CoachProgramComponent implements OnInit {
                 private fb: FormBuilder,
                 private sessionService: SessionService,
                 private fb2: FormBuilder,
-                private fb3: FormBuilder) { }
+                private fb3: FormBuilder,
+                private router: Router) { }
 
   ngOnInit() {
-    this.alertContent = '';
-    this.lstSelectedSession = [];
+    if(localStorage.getItem('role') != '1'){
+      this.router.navigate(['/oops']);
+    }
+    else{
+      this.alertContent = '';
+      this.lstSelectedSession = [];
 
-    //load program grid
-    this.loadProgram();
+      //load program grid
+      this.loadProgram();
 
-    //filter session in view program
-    this.sessionFilter();
+      //filter session in view program
+      this.sessionFilter();
 
-    //all session filter
-    this.allSessionFilter();
+      //all session filter
+      this.allSessionFilter();
+    }
   }
 
 

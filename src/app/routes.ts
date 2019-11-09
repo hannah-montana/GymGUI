@@ -16,6 +16,7 @@ import { CoachProgramComponent } from './coach/coach-program/coach-program.compo
 import { CoachCustomerComponent } from './coach/coach-customer/coach-customer.component';
 import { CoachProfileComponent } from './coach/coach-profile/coach-profile.component';
 import { CoachNotifyComponent } from './coach/coach-notify/coach-notify.component';
+import { OopsComponent } from './oops/oops.component';
 
 export const appRoutes: Routes = [
   { path : 'coach', component : CoachComponent },
@@ -72,5 +73,6 @@ export const appRoutes: Routes = [
   {
     path : 'coach-notify', component : CoachComponent,
     children : [{ path : '', component: CoachNotifyComponent}]
-  }
+  },
+  { path : 'oops', component : OopsComponent }
 ];
