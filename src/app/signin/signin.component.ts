@@ -19,7 +19,7 @@ export class SignInComponent implements OnInit {
   invalidLogin = false;
   user: User;
   userBody: User;
-
+  errorMess: string = '';
 
   constructor(private router: Router,
               //private loginservice: AuthenticationService,
@@ -29,30 +29,34 @@ export class SignInComponent implements OnInit {
   }
 
   checkLogin(userName, password){
+    this.errorMess = '';
 
-    //User userbody;
-    this.userBody = new User();
-    this.userBody.userName = userName;
-    this.userBody.password = password;
-    //alert(userName);
+    if(userName == '')
+      this.errorMess = 'Please input username';
+    else if(password == '')
+      this.errorMess = 'Please input password';
+    else{
+      this.userBody = new User();
+      this.userBody.userName = userName;
+      this.userBody.password = password;
 
-    this.dataService.registerUser(this.userBody)
-      .subscribe(
-        data  => {
-          console.log("POST Request is successful ", data);
-          this.setLocalStorage(data);
+      this.dataService.registerUser(this.userBody)
+        .subscribe(
+          data  => {
+            console.log("POST Request is successful ", data);
+            this.setLocalStorage(data);
 
-          if (data.role == 1)
-            this.router.navigate(['/coach']);
-            //this.router.navigate(['/coach', data.id]);
-          else if (data.role == 2)
-            this.router.navigate(['/profile']);
-
-        },
-        error  => {
-          console.log("Error", error);
-        }
-      );
+            if (data.role == 1)
+              this.router.navigate(['/coach']);
+            else if (data.role == 2)
+              this.router.navigate(['/profile']);
+          },
+          error  => {
+            console.log("Error", error);
+            this.errorMess = "Username or Password does not correct!";
+          }
+        );
+    }
   }
 
   setLocalStorage(data){

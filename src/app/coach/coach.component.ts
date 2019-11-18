@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { User } from '../gym.model';
-//import { Router } from '@angular/router';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-coach',
@@ -12,20 +12,16 @@ export class CoachComponent implements OnInit {
   myParam: User;
   userId: string;
 
-  constructor(private activeRoute: ActivatedRoute) { }
+  constructor(private activeRoute: ActivatedRoute,
+              private router: Router) { }
 
   ngOnInit() {
-    //this.myParam = this.route.params.subscribe(params => {
-    //       this.data = +params['data'];
-    //this.myParam = new User();
-
-    //this.activeRoute.params.subscribe((params) => this.userId = params['id']);
-
-    //console.log(this.userId);
+    if(localStorage.getItem('role') != '1'){
+      this.router.navigate(['/oops']);
+    }
   }
 
   getUserById(id){
-
   }
 
 }

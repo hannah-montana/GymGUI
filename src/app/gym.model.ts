@@ -1,15 +1,17 @@
 export class User {
-    userName: string;
-    password: string;
-    firstName: string;
-    lastName: string;
-
-    id: string;
-    role: number;
-    coin: number;
-    birthDate: Date;
-    level: number;
-    status: string;
+  userName: string;
+  password: string;
+  firstName: string;
+  lastName: string;
+  id: string;
+  role: number;
+  point: number;
+  birthDate: string;
+  level: number;
+  status: string;
+  email: string;
+  note: string;
+  photo: string;
 }
 
 export class Session {
@@ -22,6 +24,7 @@ export class Session {
   validated: number;
   sendReported: number;
   coachId: string;
+  index: number;
 }
 
 export class Exercise {

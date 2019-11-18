@@ -1,3 +1,136 @@
-<p>coach-profile works!</p>
+<div class="row">
+  <div class="col-md-8">
+    <div class="card">
+      <div class="card-header card-header-warning">
+        <div class="logo">
+          <h4 class="simple-text logo-normal">
+            <img src="../assets/images/level_4.png" style="width: 40px">
+            &nbsp; User Profile
+          </h4>
+        </div>
+      </div>
+      <div class="card-body">
 
-{{_key}}
+        <form (ngSubmit) = "onSubmit(addForm)" #addForm= "ngForm">
+          <div class="row">
+            <div class="col-md-3">
+              <div class="form-group">
+                <label class="label">Username</label>
+                <input type="text" class="form-control" ngModel name="username" value="{{profile ? profile.userName: ''}}" disabled>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label class="label">Date Of Birth</label>
+                <input type="text" class="form-control" ngModel name="birthDate" value="{{profile ? profile.birthDate: ''}}">
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label class="label">Email address</label>
+                <input type="email" class="form-control" ngModel name="email" value="{{profile ? profile.email: ''}}">
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label class="label">Fist Name</label>
+                <input type="text" class="form-control" ngModel name="firstName" value="{{profile ? profile.firstName: ''}}">
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label class="label">Last Name</label>
+                <input type="text" class="form-control" ngModel name="lastName" value="{{profile ? profile.lastName: ''}}">
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label class="label">New password</label>
+                <input type="password" class="form-control" ngModel name="newpass" value="">
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label class="label">Repeat new password</label>
+                <input type="password" class="form-control" ngModel name="repeatnewpass" value="">
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group">
+                <label>About Me</label>
+              </div>
+              <div class="form-group">
+                <textarea class="form-control" ngModel name="note" rows="5" data-value="{{profile ? profile.note: ''}}"></textarea>
+              </div>
+            </div>
+          </div>
+          <button type="submit" class="btn btn-primary pull-right">Update Profile</button>
+          <div class="clearfix"></div>
+
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-4">
+    <div class="card card-profile">
+      <div class="card-avatar">
+        <a>
+          <img class="img" src="{{profile ? profile.photo : ''}}" />
+        </a>
+      </div>
+      <a (click)="changePhoto()">
+        <i class="material-icons text-center text-muted">photo_camera</i>
+      </a>
+      <input type="file" id="change-photo" (change)="getBase64($event)" style="display: none;">
+
+      <div class="card-body">
+        <h6 class="card-category text-gray"></h6>
+        <h4 class="card-title">{{profile ? profile.firstName : ''}} {{profile ? profile.lastName : ''}}</h4>
+        <p class="card-description">
+          {{profile ? profile.note : ''}}
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--Alert warning dialog-->
+<div class="modal fade" id="alertModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+
+        <h4 class="modal-title">
+          <i class="material-icons text-center text-warning" style="vertical-align: middle">{{icon}}</i>
+          {{iconText}}</h4>
+        <button type="button" class="close" (click)="hideAlert()">&times;</button>
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body w-100">
+        <div class="col-md-12">
+
+          <h4> {{ alertContent }}</h4>
+        </div>
+      </div>
+
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" (click)="hideAlert()">Close</button>
+
+        <!-- this button is hidden, used to close from typescript -->
+        <button type="button" id="close-alert" data-dismiss="modal" style="display: none">Close</button>
+      </div>
+
+    </div>
+  </div>
+</div>

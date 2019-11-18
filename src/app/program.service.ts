@@ -13,6 +13,7 @@ export class ProgramService {
   apiGetProgramsByUserId = '/api/programsUsers/';
   apiAssign = '/api/programsUsers';
   apiCheckAssigned = '/api/checkAssign/';
+  apiUpdate = '/api/programs/sessions?listSes=';
 
   params: string;
 
@@ -34,6 +35,12 @@ export class ProgramService {
     console.log(this.apiSaveProgram + this.params);
     console.log(prog);
     return this._http.post<any>(this.apiSaveProgram + this.params, prog);
+  }
+
+  updateProgram(sess, listEx, coachId){
+    this.params = '';
+    this.params = listEx + "&coachId=" + coachId;
+    return this._http.put<any>(this.apiUpdate + this.params, sess);
   }
 
   deleteProgram(progId){

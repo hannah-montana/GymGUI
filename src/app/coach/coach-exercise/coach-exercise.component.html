@@ -28,9 +28,7 @@
             </form>
           </div>
         </div>
-
       </div>
-
 
       <cdk-virtual-scroll-viewport itemSize="0" style="height: 500px;">
         <table class="table table-hover">
@@ -74,7 +72,6 @@
           </tbody>
         </table>
       </cdk-virtual-scroll-viewport>
-
     </div>
   </div>
 </div>
@@ -165,7 +162,6 @@
           </table>
           <!-- Modal footer -->
           <div class="modal-footer">
-            <!--button type="button" class="btn btn-success" (click)="sendModal()">Yes</button-->
             <button type="button" class="btn btn-danger" (click)="hideView()">Close</button>
 
             <!-- this button is hidden, used to close from typescript -->
@@ -305,7 +301,7 @@
               <tr>
                 <td>Point:</td>
                 <td>
-                  <input type="number" placeholder="" class="form-control" value="{{exe ? exe.point : ''}}" ngModel name="point" min="0">
+                  <input type="number" placeholder="" class="form-control" value="{{exe ? exe.point : ''}}" ngModel name="point" min="0" disabled>
                 </td>
                 <td>Frequency:</td>
                 <td>
@@ -324,9 +320,7 @@
                   <input type="text" placeholder="" class="form-control" value="{{exe ? exe.benefit : ''}}" ngModel name="benefit" >
                 </td>
               </tr>
-
             </table>
-
           </div>
         </div>
 
@@ -334,13 +328,11 @@
         <div class="modal-footer">
           <button type="submit" class="btn btn-success" >Save</button>
           <button type="button" class="btn btn-info" (click)="reset(addForm)">Reset</button>
-          <!--button type="button" class="btn btn-success" (click)="sendModal()">Yes</button-->
           <button type="button" class="btn btn-warning" (click)="hideAdd()">Close</button>
 
           <!-- this button is hidden, used to close from typescript -->
           <button type="button" id="close-modal-add" data-dismiss="modal" style="display: none">Close</button>
         </div>
-
       </form>
     </div>
   </div>
@@ -354,7 +346,6 @@
 
       <!-- Modal Header -->
       <div class="modal-header">
-
         <h4 class="modal-title">
           <i class="material-icons text-center text-warning" style="vertical-align: middle">warning</i>
           Warning</h4>
@@ -389,7 +380,6 @@
 
       <!-- Modal Header -->
       <div class="modal-header">
-
         <h4 class="modal-title">
           <i class="material-icons text-center text-warning" style="vertical-align: middle">{{icon}}</i>
           {{iconText}}</h4>
@@ -399,14 +389,12 @@
       <!-- Modal body -->
       <div class="modal-body w-100">
         <div class="col-md-12">
-
           <h4> {{ alertContent }}</h4>
         </div>
       </div>
 
       <!-- Modal footer -->
       <div class="modal-footer">
-        <!--button type="button" class="btn btn-success" (click)="sendModal()">Yes</button-->
         <button type="button" class="btn btn-danger" (click)="hideAlert()">Close</button>
 
         <!-- this button is hidden, used to close from typescript -->

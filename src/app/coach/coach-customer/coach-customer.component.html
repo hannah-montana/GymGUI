@@ -16,7 +16,7 @@
             <form class="form-inline w-75">
               <i class="material-icons text-center text-primary">search</i>
               <div [formGroup]="myGroup" #registerForm="ngForm" style="width: 90%">
-                <input formControlName="nameFC" style="width: 100%" type="text" class="form-control" placeholder="Search exercise..." />
+                <input formControlName="nameFC" style="width: 100%" type="text" class="form-control" placeholder="Search customer..." />
               </div>
             </form>
           </div>
@@ -33,6 +33,7 @@
             <th>Badge</th>
             <th>Name</th>
             <th>Level</th>
+            <th>Point</th>
             <th>View</th>
             <th>Assign Program</th>
             <!--th>Delete</th-->
@@ -46,10 +47,11 @@
             <tr>
               <td>{{row.id}}</td>
               <td>
-                <img class="w-25" src="{{row.level == 'Beginer'? 'assets/images/level_1.png': (row.level == 'Intermediate' ? 'assets/images/level_3.png' : 'assets/images/level_5.png')}}">
+                <img class="w-25" src="{{row.point <= 150? 'assets/images/level_1.png': (row.point <= 300 ? 'assets/images/level_2.png' : (row.point <= 500 ? 'assets/images/level_3.png' : (row.point <= 750 ? 'assets/images/level_4.png': 'assets/images/level_5.png')))}}">
               </td>
-              <td>{{row.lastName}} {{row.firstName}}</td>
-              <td>{{row.level}}</td> <!--style = "text-align:center"-->
+              <td>{{row.firstName}} {{row.lastName}}</td>
+              <td>{{row.level}}</td>
+              <td>{{row.point}}</td>
               <td>
                 <a (click)="view(row)">
                   <i class="material-icons text-center text-primary">visibility</i>

@@ -46,7 +46,7 @@
             <th>ID</th>
             <th>Name</th>
             <th>Description</th>
-            <th>Point</th>
+            <!--th>Point</th-->
             <th>Total Sessions</th>
             <th>View</th>
             <th>Edit</th>
@@ -62,7 +62,7 @@
               <td>{{row.id}}</td>
               <td>{{row.name}}</td>
               <td style="width : 40%">{{row.description}}</td>
-              <td>{{"100"}}</td>
+              <!--td>{{"100"}}</td-->
               <td> {{ row.numberOfSession}}</td> <!--style = "text-align:center"-->
               <td>
                 <a (click)="view(row)">
@@ -84,7 +84,6 @@
 
           </ng-container>
           </tbody>
-
 
         </table>
       </cdk-virtual-scroll-viewport>
@@ -217,7 +216,7 @@
 
 <!-- Add dialog -->
 <div class="modal fade" id="addModal">
-  <div class="modal-dialog" style="min-width:70%">
+  <div class="modal-dialog" style="min-width:99%">
     <div class="modal-content">
 
       <!-- Modal Header -->
@@ -265,47 +264,98 @@
             </table>
             <!--end Program table-->
 
-            <!--Session table-->
-            <cdk-virtual-scroll-viewport itemSize="0" style="height: 300px; width: 100%">
-              <table class="table table-hover">
-                <thead class="">
-                <tr>
-                  <th>ID</th>
-                  <th>Choose</th>
-                  <th>Name</th>
-                  <th>Description</th>
-                  <th>Duration</th>
-                  <th>Level</th>
-                  <th>Focus Session</th>
+            <table class="w-100">
+              <tr>
+                <td>
+                  <h5 class="text-info font-weight-bold">All Sessions:</h5>
+                </td>
+                <td>
+                  <h5 class="text-success font-weight-bold">Selected Sessions:</h5>
+                </td>
+              </tr>
+              <tr>
+                <td class="w-50">
+                  <!--Session table-->
+                  <cdk-virtual-scroll-viewport itemSize="0" style="height: 450px; width: 100%">
+                    <table class="table table-hover">
+                      <thead class="">
+                      <tr class="bg-info">
+                        <th class="font-weight-bold">ID</th>
+                        <th class="font-weight-bold">Choose</th>
+                        <th class="font-weight-bold">Name</th>
+                        <th class="font-weight-bold">Description</th>
+                        <!--th class="font-weight-bold">Duration</th-->
+                        <th class="font-weight-bold">Level</th>
+                        <th class="font-weight-bold">Focus Session</th>
 
-                </tr>
-                </thead>
+                      </tr>
+                      </thead>
 
-                <tbody>
-                <ng-container *cdkVirtualFor="let sess of sessAllrows" >
-                  <tr>
-                    <td>{{sess.id}}</td>
-                    <td style="text-align: center">
-                      <input class="form-check-input" type="checkbox" (change)="onSelect($event, sess.id)">
-                    </td>
-                    <td>{{sess.name}}</td>
-                    <td>{{sess.description}}</td>
-                    <td>{{sess.duration}}</td>
-                    <td>{{sess.level}}</td>
-                    <!--<td>{{sess.focusSession}}</td>-->
-                    <td class="text-justify">
-                      {{ sess.focusSession == 1 ? 'Yes' : '-' }}
-                      <!--i class="material-icons">check</i-->
-                    </td>
-                  </tr>
-                </ng-container>
-                </tbody>
+                      <tbody>
+                      <ng-container *cdkVirtualFor="let sess of sessAllrows" >
+                        <tr>
+                          <td>{{sess.id}}</td>
+                          <!--td style="text-align: center">
+                            <input class="form-check-input" type="checkbox" (change)="onSelect($event, sess.id)">
+                          </td-->
+                          <td>
+                            <button type="button" class="btn btn-primary btn-sm" (click)="selectSession(sess)">Select</button>
+                          </td>
+                          <td>{{sess.name}}</td>
+                          <td>{{sess.description}}</td>
+                          <!--td>{{sess.duration}}</td-->
+                          <td>{{sess.level}}</td>
+                          <!--<td>{{sess.focusSession}}</td>-->
+                          <td class="text-justify">
+                            {{ sess.focusSession == 1 ? 'Yes' : '-' }}
+                            <!--i class="material-icons">check</i-->
+                          </td>
+                        </tr>
+                      </ng-container>
+                      </tbody>
 
-              </table>
-            </cdk-virtual-scroll-viewport>
-            <!--end Session table-->
-
-
+                    </table>
+                  </cdk-virtual-scroll-viewport>
+                  <!--end Session table-->
+                </td>
+                <td class="w-50">
+                  <!--Selected Session-->
+                  <cdk-virtual-scroll-viewport itemSize="0" style="height: 450px; width: 100%">
+                    <table class="table table-hover">
+                      <thead class="">
+                      <tr class="bg-success">
+                        <th class="font-weight-bold">ID</th>
+                        <th class="font-weight-bold">Remove</th>
+                        <th class="font-weight-bold">Name</th>
+                        <th class="font-weight-bold">Description</th>
+                        <!--th class="font-weight-bold">Duration</th-->
+                        <th class="font-weight-bold">Level</th>
+                        <th class="font-weight-bold">Focus Session</th>
+                      </tr>
+                      </thead>
+                      <tbody>
+                      <ng-container *cdkVirtualFor="let sess of selectedSessionRows" >
+                        <tr>
+                          <td>{{sess.id}}</td>
+                          <td>
+                            <button type="button" class="btn btn-danger btn-sm" (click)="removeSession(sess)">Remove</button>
+                          </td>
+                          <td>{{sess.name}}</td>
+                          <td>{{sess.description}}</td>
+                          <!--td>{{sess.duration}}</td-->
+                          <td>{{sess.level}}</td>
+                          <td class="text-justify">
+                            {{ sess.focusSession == 1 ? 'Yes' : '-' }}
+                          </td>
+                        </tr>
+                      </ng-container>
+                      </tbody>
+                    </table>
+                  </cdk-virtual-scroll-viewport>
+                  <!--end Selected Session-->
+                </td>
+              </tr>
+            </table>
           </div>
         </div>
 

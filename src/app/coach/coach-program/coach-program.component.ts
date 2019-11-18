@@ -19,6 +19,8 @@ export class CoachProgramComponent implements OnInit {
   rows: Array<Program>;
   sessrows: Array<Session>;
   sessAllrows: Array<Session>;
+  selectedSession: Array<Session> = [];
+  selectedSessionRows: Array<Session>;
 
   myGroup: FormGroup;
   groupSession: FormGroup;
@@ -52,6 +54,9 @@ export class CoachProgramComponent implements OnInit {
 
   programId: string; //use for delete program
 
+  sessIndex: number = 1;
+  fcSession: Session = null;
+
   constructor(private programService: ProgramService,
                 private fb: FormBuilder,
                 private sessionService: SessionService,
@@ -60,12 +65,14 @@ export class CoachProgramComponent implements OnInit {
                 private router: Router) { }
 
   ngOnInit() {
+    this.sessIndex = 1;
     if(localStorage.getItem('role') != '1'){
       this.router.navigate(['/oops']);
     }
     else{
       this.alertContent = '';
       this.lstSelectedSession = [];
+      this.coachId = localStorage.getItem('id');
 
       //load program grid
       this.loadProgram();
@@ -77,7 +84,6 @@ export class CoachProgramComponent implements OnInit {
       this.allSessionFilter();
     }
   }
-
 
   loadProgram(){
     this.getAllPrograms().subscribe(data => {
@@ -96,15 +102,14 @@ export class CoachProgramComponent implements OnInit {
       this.fnFilter = val;
       this.applyAllFilters();
     });
-  } //ok
-
+  }
 
   /******** PROGRAM *********/
   getAllPrograms()
   {
     //return this.programService.getAllPrograms();
     return this.programService.getAllPrograms();
-  } //ok
+  }
 
   applyAllFilters = () => {
     let rows2 = this.listPrograms;
@@ -115,7 +120,7 @@ export class CoachProgramComponent implements OnInit {
     }
     this.rows = rows2;
     //this.rows = rows3;
-  }; //ok
+  };
 
   view(program){
     //alert(program.id);
@@ -130,51 +135,109 @@ export class CoachProgramComponent implements OnInit {
     });
 
     $("#viewModal").modal('show');
-  }//ok
+  }
 
   hideView() {
     document.getElementById('close-modal').click();
-  }//ok
+  }
 
   /*Add new Program*/
   add(){
     this.prog = new Program();
     this.newProg = new Program();
+    this.listAllSession = [];
+    this.sessAllrows = [];
+    this.lstSelectedSession = [];
+    this.selectedSession = [];
+    this.selectedSessionRows = [];
+
     this.getAllSessions().subscribe(data => {
-    this.listAllSession = data;
+      this.listAllSession = data;
+      this.sessAllrows = [...this.listAllSession];
 
-    this.sessAllrows = [...this.listAllSession];
-  });
+      data[0].index = this.sessIndex;
+      this.fcSession = data[0];
+      this.selectedSession.push(this.fcSession);
 
-  $("#addModal").modal('show');
-  }//ok
+      console.log(this.selectedSession);
+      this.selectedSessionRows = [...this.selectedSession];
+    });
+
+    $("#addModal").modal('show');
+  }
 
   hideAdd(){
   document.getElementById('close-modal-add').click();
-  }//ok
+  }
 
   onSubmit(form){
-    //alert("1");
-    if (form.value.name == null || form.value.name == ''){
-      this.icon = 'warning';
-      this.iconText = 'Warning';
-      this.alertContent = 'Please input program name!';
-      this.viewAlert();
-    }
-    else {
-      if (this.prog.id != undefined){
-        //update
-        if(form.value.name != '') /* if don't check that condition, when edit but dont change any value -> it'll be fail */
-          this.prog.name = form.value.name;
-        if(form.value.description != '')
-          this.prog.description = form.value.description;
+    //alert(this.prog.id);
+    this.lstSelectedSession = [];
+
+    if (this.prog.id != undefined ){
+      //update
+      if(form.value.name != '') /* if don't check that condition, when edit but dont change any value -> it'll be fail */
+        this.prog.name = form.value.name;
+      if(form.value.description != '')
+        this.prog.description = form.value.description;
+
+      console.log(this.selectedSession);
+
+      for(var i = 0; i<this.selectedSession.length; i++){
+        this.lstSelectedSession.push(this.selectedSession[i].id);
       }
-      else{
-        //insert
+      //check if the last item not the focus session -> add fcsession at tail
+      if(this.selectedSession[this.selectedSession.length-1].focusSession != 1)
+        this.lstSelectedSession.push(this.fcSession.id);
+
+      this.prog.numberOfSession = this.lstSelectedSession.length;
+
+      this.programService.updateProgram(this.prog, this.lstSelectedSession, this.coachId)
+        .subscribe(data => {
+          console.log("result: " + data);
+          if(data == 1){
+            this.hideAdd();
+            //reload program grid
+            this.loadProgram();
+            //this.coachId = '';
+
+            this.alertContent = 'Update program successful!';
+            this.icon = '';
+            this.iconText = 'Success';
+            this.viewAlert();
+          }
+          else{
+            this.alertContent = 'This program name existed!';
+            this.viewAlert();
+          }
+        });
+    }
+    else{
+      //insert
+      if (form.value.name == null || form.value.name == ''){
+        this.icon = 'warning';
+        this.iconText = 'Warning';
+        this.alertContent = 'Please input program name!';
+        this.viewAlert();
+      }
+      else
+      {
         this.newProg = form.value;
+
+        console.log(this.selectedSession);
+
+        for(var i = 0; i<this.selectedSession.length; i++){
+          this.lstSelectedSession.push(this.selectedSession[i].id);
+        }
+        //check if the last item not the focus session -> add fcsession at tail
+        if(this.selectedSession[this.selectedSession.length-1].focusSession != 1)
+          this.lstSelectedSession.push(this.fcSession.id);
+
         this.newProg.numberOfSession = this.lstSelectedSession.length;
 
-        this.programService.saveProgram(this.newProg, this.lstSelectedSession, 1)
+        console.log(this.lstSelectedSession);
+
+        this.programService.saveProgram(this.newProg, this.lstSelectedSession, this.coachId)
           .subscribe(data => {
             console.log("result: " + data);
             if(data == 1){
@@ -182,7 +245,7 @@ export class CoachProgramComponent implements OnInit {
               //reload program grid
               this.loadProgram();
 
-              this.coachId = '';
+              //this.coachId = '';
 
               this.alertContent = 'Create new program successful!';
               this.icon = '';
@@ -207,34 +270,33 @@ export class CoachProgramComponent implements OnInit {
   /*EDIT PROGRAM*/
   edit(program){
     this.prog = program;
-    this.lstSelectedSession = [];
     this.listSessIdByProgId = [];
+    this.selectedSession = [];
+    this.selectedSessionRows = [];
 
     //get session by program id
     this.getSessionsByProgId(this.prog.id).subscribe(data => {
-      this.listSessions = data;
-      //console.log(this.listExercise);
-      for (var sess of this.listSessions) {
-          //console.log(ex.id);
-          this.listSessIdByProgId.push(sess.id);
+      this.selectedSession = data;
+      this.fcSession = data[0];
 
+      //generate index properties to prevent user remove all the list of session
+      for(var i = 0; i < this.selectedSession.length; i++)
+      {
+        this.selectedSession[i].index = i+1;
       }
+
+      this.selectedSessionRows = [...this.selectedSession];
+
+      console.log(this.selectedSession);
     });
     console.log(this.listSessIdByProgId);
-    //initial assign in case user dont change anything, maybe I can remove later if it work well with grid checkbox
-    this.lstSelectedSession = this.listSessIdByProgId;
 
     //get all session
     this.getAllSessions().subscribe(data => {
       this.listAllSession = data;
 
       this.sessAllrows = [...this.listAllSession];
-
-      console.log(this.sessAllrows);
-
-      console.log(this.sessAllrows);
     });
-
     $("#addModal").modal('show');
   }
   /*END EDIT PROGRAM*/
@@ -248,31 +310,31 @@ export class CoachProgramComponent implements OnInit {
   }
 
   deleteProgram(){
-      //process delete program
-      this.hideConfirmDelete();
-      //alert('start delete' + this.sessionId);
-      this.programService.deleteProgram(this.programId)
-        .subscribe(data => {
-          console.log("deleted: " + data);
-          if(data == 1){
-            this.alertContent = 'Delete successful!';
-            this.icon = 'warning';
-            this.iconText = 'Warning';
-            this.viewAlert();
-            this.loadProgram();
-          }
-          else{
-            this.alertContent = 'Error! Cannot delete this program!';
-            this.icon = 'warning';
-            this.iconText = 'Warning';
-            this.viewAlert();
-          }
-      });
-    }
+    //process delete program
+    this.hideConfirmDelete();
+    //alert('start delete' + this.sessionId);
+    this.programService.deleteProgram(this.programId)
+      .subscribe(data => {
+        console.log("deleted: " + data);
+        if(data == 1){
+          this.alertContent = 'Delete successful!';
+          this.icon = 'warning';
+          this.iconText = 'Warning';
+          this.viewAlert();
+          this.loadProgram();
+        }
+        else{
+          this.alertContent = 'Error! Cannot delete this program!';
+          this.icon = 'warning';
+          this.iconText = 'Warning';
+          this.viewAlert();
+        }
+    });
+  }
 
   hideConfirmDelete(){
-      document.getElementById('close-confirm-delete').click();
-    }
+    document.getElementById('close-confirm-delete').click();
+  }
   /*End delete program*/
 
   /******** end - PROGRAM *********/
@@ -292,7 +354,7 @@ export class CoachProgramComponent implements OnInit {
       this.sessFnFilter = val;
       this.applyFiltersSession();
     });
-  }//ok
+  }
 
   applyFiltersSession = () => {
     let rows = this.listSessions;
@@ -301,9 +363,9 @@ export class CoachProgramComponent implements OnInit {
       rows = rows.filter(r => r.name.toLowerCase().startsWith(this.sessFnFilter.toLowerCase())); //startsWith
     }
     this.sessrows = rows;
-  }/*ok*/
+  }
 
-   //session filter in create new program
+  //session filter in create new program
 
   allSessionFilter(){
     this.groupAllSession = this.fb3.group({
@@ -316,7 +378,7 @@ export class CoachProgramComponent implements OnInit {
       this.sessAllFnFilter = val;
       this.applyAllFiltersSession();
     });
-  } //ok
+  }
 
   applyAllFiltersSession = () => {
     let rows = this.listAllSession;
@@ -325,8 +387,7 @@ export class CoachProgramComponent implements OnInit {
      rows = rows.filter(r => r.name.toLowerCase().startsWith(this.sessAllFnFilter.toLowerCase())); //startsWith
     }
     this.sessAllrows = rows;
-  }//ok
-
+  }
 
    /*View All Session*/
   getAllSessions()
@@ -338,7 +399,7 @@ export class CoachProgramComponent implements OnInit {
      return this.sessionService.getSessionsByProgId2(progId);
   }
 
-   //Select session (checkbox event) in create new program
+  //Select session (checkbox event) in create new program
   onSelect(e, id){
     if(e.target.checked){
 
@@ -352,7 +413,44 @@ export class CoachProgramComponent implements OnInit {
     }
   }
 
-   /******** end - SESSION *********/
+  selectSession(session){
+    //console.log(session);
+    this.sessIndex ++;
+    let newSession = new Session();
+    newSession.id = session.id;
+    newSession.name = session.name;
+    newSession.description = session.description;
+    newSession.duration = session.duration;
+    newSession.level = session.level;
+    newSession.focusSession = session.focusSession;
+
+    console.log(this.sessIndex);
+    newSession.index = this.sessIndex;
+    this.selectedSession.push(newSession);
+
+    console.log(this.selectedSession);
+
+    this.selectedSessionRows = [...this.selectedSession];
+  }
+
+  removeSession(session){
+    let index = this.selectedSession.findIndex( sess => sess.index === session.index );
+    console.log(index);
+    if(session.index == 1){
+      this.alertContent = 'Cannot remove this Focus Session!';
+      this.icon = 'warning';
+      this.iconText = 'Warning';
+      this.viewAlert();
+    }
+    else{
+      this.selectedSession.splice(index, 1);
+      console.log(this.selectedSession);
+
+      this.selectedSessionRows = [...this.selectedSession];
+    }
+  }
+
+  /******** end - SESSION *********/
 
   /********* ALERT *********/
   viewAlert(){

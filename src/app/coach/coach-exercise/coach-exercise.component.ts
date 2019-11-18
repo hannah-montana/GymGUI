@@ -118,6 +118,7 @@ export class CoachExerciseComponent implements OnInit {
     this.exe = new Exercise();
     this.exe.type = 'Keep Fit';
     this.exe.level = 'Easy';
+    this.exe.point = '20';
     this.newExe = new Exercise();
 
     $("#addModal").modal('show');
@@ -126,8 +127,8 @@ export class CoachExerciseComponent implements OnInit {
   edit(exercise){
 
     this.exe = exercise;
-    console.log(1, exercise);
-    console.log(2, this.exe);
+    //console.log(1, exercise);
+    //console.log(2, this.exe);
     $("#addModal").modal('show');
   }
 
@@ -145,8 +146,6 @@ export class CoachExerciseComponent implements OnInit {
         this.exe.duration = form.value.duration;
       if(form.value.calorie != '')
         this.exe.calorie = form.value.calorie;
-      if(form.value.point != '')
-        this.exe.point = form.value.point;
       if(form.value.frequency != '')
         this.exe.frequency = form.value.frequency;
       if(form.value.benefit != '')
@@ -188,7 +187,6 @@ export class CoachExerciseComponent implements OnInit {
         this.viewAlert();
       }
       else{
-        //console.log(form.value);
         this.newExe = form.value;
         this.newExe.level = this.slevel;
         this.newExe.type = this.sType;
@@ -197,7 +195,9 @@ export class CoachExerciseComponent implements OnInit {
         this.exe.photo = this.sPhoto; //use for view photo when changing
         this.newExe.isChecked = '';
         this.newExe.coachId = localStorage.getItem("id");
+        this.newExe.point = this.exe.point;
         //console.log(this.newExe);
+        console.log(form.value);
         this.exerciseService.saveExercise(this.newExe)
           .subscribe(data => {
           console.log("result: " + data);
@@ -280,12 +280,15 @@ export class CoachExerciseComponent implements OnInit {
   onLevelChange(val){
     if(val == 2){
       this.slevel = 'Medium';
+      this.exe.point = '30';
     }
     else if(val == 3){
       this.slevel = 'Difficult';
+      this.exe.point = '50';
     }
     else{
       this.slevel = 'Easy';
+      this.exe.point = '20';
     }
   }
 

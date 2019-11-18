@@ -66,7 +66,7 @@ export class CoachSessionComponent implements OnInit {
       this.lstSelectedExercise = [];
       this.sessionInfo = '';
       this.sessionId = '';
-      this.coachId = '';
+      this.coachId = localStorage.getItem('id');
       this.slevel = 'Easy';
       this.listAllExercise = new Array<Exercise>();
 
@@ -168,7 +168,7 @@ export class CoachSessionComponent implements OnInit {
     else
       form.value.focusSession = 0;
 
-    this.coachId = '1';
+    //this.coachId = '1';
     this.alertContent = '';
 
     //alert(this.sess.id);
@@ -203,7 +203,7 @@ export class CoachSessionComponent implements OnInit {
             this.iconText = 'Success';
             this.viewAlert();
 
-            this.coachId = '';
+            //this.coachId = '';
           }
           else{
             this.alertContent = 'This session name existed!';
@@ -240,7 +240,7 @@ export class CoachSessionComponent implements OnInit {
               //reload session grid
               this.loadSession();
 
-              this.coachId = '';
+              //this.coachId = '';
 
               this.alertContent = 'Create new session successful!';
               this.icon = '';

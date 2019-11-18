@@ -12,6 +12,7 @@ import { map } from 'rxjs/operators';
 export class DataService {
   apiUser = '/api/users';
   apiCheckUser = '/api/users/checkLogin';
+  apiUpdatePhoto = '/api/updatePhoto';
   body: User;
 
   constructor(private _http: HttpClient) { }
@@ -22,34 +23,15 @@ export class DataService {
       this.body.userName = user.userName;
       this.body.password = user.password;
 
-      //alert(this.apiCheckUser);
-
-      /*const body: User = {
-        userName: user.userName,
-        password: user.password //,
-        //Email: user.Email,
-        //firstName: '',
-        //lastName: ''
-      };*/
-      //alert(body.userName);
-
-      //var reqHeader = new HttpHeaders({'No-Auth':'True'});
-      //return this._http.post<User>(this.apiCheckUser, body, {headers : reqHeader});
-      //return this._http.post<User>(this.apiCheckUser, this.body);
-
       return this._http.post<User>(this.apiCheckUser, this.body);
   }
 
   getAllUsers()
   {
-      //var data = "username=" + userName + "&password=" + password + "&grant_type=password";
-      //var reqHeader = new HttpHeaders({ 'Content-Type': 'application/x-www-urlencoded','No-Auth':'True' });
-      //return this._http.post(this.rootUrl + '/token', data, { headers: reqHeader });
       return this._http.get<User[]>(this.apiUser);
   }
 
-  test()
-  {
-    return 'test';
+  updatePhoto(user){
+    return this._http.put<any>(this.apiUpdatePhoto, user);
   }
 }
