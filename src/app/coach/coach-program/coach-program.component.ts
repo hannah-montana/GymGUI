@@ -323,8 +323,14 @@ export class CoachProgramComponent implements OnInit {
           this.viewAlert();
           this.loadProgram();
         }
+        else if (data == 2){
+          this.alertContent = 'Error! Cannot delete. This program has already assigned to a customer.';
+          this.icon = 'warning';
+          this.iconText = 'Warning';
+          this.viewAlert();
+        }
         else{
-          this.alertContent = 'Error! Cannot delete this program!';
+          this.alertContent = 'System Error!';
           this.icon = 'warning';
           this.iconText = 'Warning';
           this.viewAlert();
