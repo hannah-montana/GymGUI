@@ -1,7 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { CustomerService } from '../../customer.service';
 import { ProgramService } from '../../program.service';
-import { User, Program, ProgramUser } from '../../gym.model';
+import { UserProgramService} from '../../user-program.service';
+import { User, Program, Session, ProgramUser } from '../../gym.model';
 import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ScrollDispatchModule } from '@angular/cdk/scrolling';
@@ -17,26 +18,35 @@ declare var $: any;
 export class CoachCustomerComponent implements OnInit {
 
   rows: Array<User>;
+  sessrows: Array<Session>;// use in view to view sessions
   progrows: Array<Program>; //use in view
   progAllrows: Array<Program>; //use in assign
 
 
   myGroup: FormGroup;
   groupProgram: FormGroup;
+  groupSession: FormGroup;
   groupAllProgram: FormGroup;
 
 
   fnFilter: string; //function filter for program
+  sessFnFilter: string; //fn filter for view session
   progFnFilter: string; //fn filter for view
   progAllFnFilter: string; // fn filter for create new
 
 
   listUsers: User[];
+  listSessions: Session[];
   listPrograms: Program[];
   listAllPrograms: Program[];
 
+  listSessIdByUserId: string[];
+
   /*view user*/
   user: User;
+
+ /* view program */
+  prog: Program;
 
   alertContent: string;
 
@@ -55,12 +65,13 @@ export class CoachCustomerComponent implements OnInit {
   constructor(private customerService: CustomerService,
               private fb: FormBuilder,
               private programService: ProgramService,
+              private userService: UserProgramService,
               private fb2: FormBuilder,
               private fb3: FormBuilder,
               private router: Router) { }
 
   ngOnInit() {
-     this.myGroup = new FormGroup({
+    this.myGroup = new FormGroup({
        nameFC: new FormControl()
     });
 
@@ -75,6 +86,9 @@ export class CoachCustomerComponent implements OnInit {
 
       //filter session in view program
       this.programFilter();
+
+      //filter session in view program
+      this.sessionFilter();
 
       //all session filter
       this.allProgramFilter();
@@ -92,10 +106,16 @@ export class CoachCustomerComponent implements OnInit {
     });
   }
 
-
   getAllCustomers()
   {
     return this.customerService.getAllCustomers2();
+  }
+      // get assigned session
+  getSessionsByUserId(userId){
+    this.userService.getCurrentListSessionByUserId(userId).subscribe(data => {
+      this.listSessions = data;
+        this.sessrows = [...this.listSessions];
+       });
   }
 
   //customer filter in main component
@@ -129,6 +149,9 @@ export class CoachCustomerComponent implements OnInit {
 
     /*Get Program By User Id*/
     this.getProgramsByUserId(this.user.id);
+
+     /*Get Session By user Id*/
+    this.getSessionsByUserId(this.user.id);
 
     $("#viewModal").modal('show');
   }
@@ -231,8 +254,36 @@ export class CoachCustomerComponent implements OnInit {
   }
   /******  End Assign Program******/
 
-  /*PROGRAM*/
+  /*SESSION */
+
+    //session filter in view program
+    sessionFilter(){
+
+      //session filter
+      this.groupSession = this.fb2.group({
+       sessNameFC: ''
+      });
+
+      this.groupSession.get('sessNameFC').valueChanges
+      .subscribe(val => {
+
+        this.sessFnFilter = val;
+        this.applyFiltersSession();
+      });
+    }
+
+    applyFiltersSession = () => {
+      let rows = this.listSessions;
+
+      if (!!this.sessFnFilter) {
+        rows = rows.filter(r => r.name.toLowerCase().startsWith(this.sessFnFilter.toLowerCase())); //startsWith
+      }
+      this.sessrows = rows;
+    }
+
+      /*PROGRAM*/
   //program filter in view user
+
   programFilter(){
     //program filter
     this.groupProgram = this.fb2.group({
@@ -291,7 +342,6 @@ export class CoachCustomerComponent implements OnInit {
   }
 
   /*END PROGRAM*/
-
 
   /********* ALERT *********/
   viewAlert(){

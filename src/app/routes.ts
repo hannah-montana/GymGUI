@@ -19,7 +19,6 @@ import { CoachNotifyComponent } from './coach/coach-notify/coach-notify.componen
 import { OopsComponent } from './oops/oops.component';
 
 export const appRoutes: Routes = [
-  { path : 'coach', component : CoachComponent },
   { path : '', component : SignInComponent },
   { path : 'login', component : SignInComponent },
   { path : 'signup', component : SignUpComponent },

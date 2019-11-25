@@ -17,7 +17,7 @@ export class CustomerService {
 
   getAllCustomers2(){
     return this._http.get<User[]>(this.apiGetAll);
-  }//ok
+  }
 
   deleteUser(userId){
     //alert(sessId);

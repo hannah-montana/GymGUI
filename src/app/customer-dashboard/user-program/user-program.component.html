@@ -2,11 +2,10 @@
   <div class="card card-plain">
     <div class="card-header card-header-primary">
       <h4 class="card-title mt-0"> FITNESS PROGRAM</h4>
-      <p class="card-category"> 4 Months </p>
+      <p class="card-category"> </p>
     </div>
     <div class="card-body">
       <div class="table-responsive">
-
         <cdk-virtual-scroll-viewport itemSize="0" style="height: 500px;">
           <table class="table table-hover">
             <thead class="">
@@ -18,50 +17,17 @@
             </thead>
             <tbody>
               <ng-container *cdkVirtualFor="let row of sessRows">
-                <tr class="accordion-toggle">
-                  <td data-toggle="collapse" attr.data-target="#collapseTwo-{{row.id}}" id="{{row.id}}">{{row.id}}</td>
-                  <td data-toggle="collapse" attr.data-target="#collapseTwo-{{row.id}}">{{row.name}}</td>
-                  <td data-toggle="collapse" attr.data-target="#collapseTwo-{{row.id}}">{{row.description}}</td>
-                  <td data-toggle="collapse" attr.data-target="#collapseTwo-{{row.id}}">{{row.duration}}</td>
+                <tr>
+                  <td (click)="showDetail(row)">{{row.id}}</td>
+                  <td (click)="showDetail(row)">{{row.name}}</td>
+                  <td (click)="showDetail(row)">{{row.description}}</td>
+                  <td (click)="showDetail(row)">{{row.duration}}</td>
                   <td>
-                    <a data-target="#excerciseModal" (click)="showModal()">
+                    <a data-target="#validateFocusSessionModal" (click)="showValidateModal(row)">
                       <i class="material-icons">
                         {{row.focusSession == '1'? 'notifications': ''}}
                       </i>
                     </a>
-                  </td>
-                </tr>
-                <tr>
-                  <td></td>
-                  <td colspan="4">
-                    <div id="collapseTwo-{{row.id}}" class="collapse in">
-                      <table class="table table-bordered">
-                        <thead>
-                        <tr>
-                        <tr class="bg-success text-white">
-                          <th> Id</th>
-                          <th class="w-25"> Name </th>
-                          <th class="w-25"> Instruction</th>
-                          <th> Level </th>
-                          <th class="w-25"> Image </th>
-                        </tr>
-                        </thead>
-                        <tr>
-                          <td> 1</td>
-                          <td> Squats</td>
-                          <td> Do 50 squats in one week</td>
-                          <td> Medium</td>
-                          <td><img src="../assets/images/squats.jpg" class="w-50"></td>
-                        </tr>
-                        <tr>
-                          <td> 2</td>
-                          <td> Streching</td>
-                          <td> Do 30 left and right strechs in one week</td>
-                          <td> Medium</td>
-                          <td><img src="../assets/images/stretch.PNG" class="w-50"></td>
-                        </tr>
-                      </table>
-                    </div>
                   </td>
                 </tr>
               </ng-container>
@@ -70,20 +36,96 @@
         </cdk-virtual-scroll-viewport>
       </div>
     </div>
-
   </div>
-  <button type="button" class="btn btn-info" data-toggle="modal" data-target="#excerciseViewModal" (click)="showViewModal()">
+  <div>
+    <span class="text-danger font-weight-bold">{{lbl_notification}}</span>
+  </div>
+  <button type="button" class="btn btn-info" data-toggle="modal" (click)="showFurtherSession()">
     Show Further Sessions
   </button>
 
-  <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#excerciseReportModal" (click)="showReportModal()" >
+  <button type="button" class="btn btn-warning" data-toggle="modal" (click)="showReportModal()" >
     Report to your coach
   </button>
 </div>
 
+<!--View practical dialog-->
+<div class="modal fade" id="viewModal">
+  <div class="modal-dialog" style="min-width:90%">
+    <div class="modal-content">
+      <form (ngSubmit)="onSubmit(addForm)" #addForm="ngForm">
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">Session Detail</h4>
+          <button type="button" class="close" (click)="hideView()">&times;</button>
+        </div>
 
+        <!-- Modal body -->
+        <div class="modal-body w-100">
+          <div class="col-md-12">
+            <!--exercise table-->
+            <cdk-virtual-scroll-viewport style="height: 550px;" itemSize="10" cloneThead>
+              <table class="table table-hover">
+                <thead >
+                  <tr >
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th style="width: 20%">Instruction</th>
+                    <th>Level</th>
+                    <th>Type</th>
+                    <th>Photo</th>
+                    <th>Point</th>
+                    <th>Target</th>
+                    <th>Duration</th>
+                    <th>Practise</th>
+                  </tr>
+                </thead>
 
-<!-- Add report  Modal -->
+                <tbody>
+
+                <ng-container *cdkVirtualFor="let exrow of hisRows">
+                  <tr>
+                    <td>{{exrow.id}}</td>
+                    <td>{{exrow.name}}</td>
+                    <td>{{exrow.instruction}}</td>
+                    <td>{{exrow.level}}</td>
+                    <td>{{exrow.type}}</td>
+                    <td style="width: 20%">
+                      <img src="{{exrow.photo}}" class="w-100">
+                    </td>
+                    <td>{{exrow.point}}</td>
+                    <td>{{exrow.target}}</td>
+                    <td>{{exrow.duration}}</td>
+                    <td>
+                      <input type="number" min="0" [(ngModel)]="exrow.praticalDuration" name="{{exrow.id}}" class="form-control w-25">
+                    </td>
+                  </tr>
+
+                </ng-container>
+                </tbody>
+
+              </table>
+            </cdk-virtual-scroll-viewport>
+            <!--end exercise table-->
+
+          </div>
+        </div>
+
+        <!-- Modal footer -->
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-success">Save</button>
+          <button type="button" class="btn btn-danger" (click)="hideView()">Close</button>
+
+          <!-- this button is hidden, used to close from typescript -->
+          <button type="button" id="close-modal-view" data-dismiss="modal" style="display: none">Close</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!-- end View dialog -->
+
+<!-- Show report  Modal -->
 <div class="modal fade" id="excerciseReportModal">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -154,7 +196,7 @@
 </div>
 
 <!-- Add validation Modal -->
-<div class="modal fade" id="excerciseModal">
+<div class="modal fade" id="validateFocusSessionModal">
   <div class="modal-dialog">
     <div class="modal-content">
 
@@ -173,7 +215,7 @@
 
       <!-- Modal footer -->
       <div class="modal-footer">
-        <button type="button" class="btn btn-success" (click)="sendModal()">Yes</button>
+        <button type="button" class="btn btn-success" (click)="sendValidateModal()">Yes</button>
         <button type="button" class="btn btn-danger" (click)="hideModal()">No</button>
 
         <!-- this button is hidden, used to close from typescript -->
@@ -185,14 +227,14 @@
 
 </div>
 
-<!-- Add further session  Modal -->
+<!-- Show further session  Modal -->
 <div class="modal fade" id="excerciseViewModal" tabindex="-1" role="dialog" aria-hidden="true">
-  <div class="modal-dialog" display="table" style="min-width:70%">
+  <div class="modal-dialog" display="table" style="min-width:90%">
     <div class="modal-content">
 
       <div class="modal-header">
         <h4 class="modal-title"><strong>Session Details</strong></h4>
-        <button type="button" class="close" (click)="hideViewModal()">&times;</button>
+        <button type="button" class="close" (click)="hideFurtherSession()">&times;</button>
       </div>
 
       <div class="modal-body">
@@ -200,119 +242,101 @@
           <div class="card card-plain">
             <div class="card-body">
               <div class="table-responsive">
+                <cdk-virtual-scroll-viewport itemSize="0" style="height: 550px;">
                 <table class="table table-hover">
                   <thead class="">
                     <th>ID</th>
                     <th>Session name</th>
                     <th>Description</th>
-                    <th>Duration</th>
+                    <th>Focus Session</th>
                   </thead>
                   <tbody>
-                  <tr class="accordion-toggle">
-                    <td data-toggle="collapse" data-target="#collapseTwoo">1</td>
-                    <td data-toggle="collapse" data-target="#collapseTwoo">Session 1</td>
-                    <td data-toggle="collapse" data-target="#collapseTwoo">To validate the capacity</td>
-                    <td data-toggle="collapse" data-target="#collapseTwoo">2 Weeks</td>
-                  </tr>
-                  <tr>
-                    <td></td>
-                    <td colspan="3">
-                      <div id="collapseTwoo" class="collapse in">
-                        <table class="table table-bordered">
-                          <thead>
-                          <tr>
-                          <tr class="bg-success text-white">
-                            <th>Id</th>
-                            <th class="w-25">Name </th>
-                            <th class="w-25">Instruction</th>
-                            <th>Level</th>
-                            <th class="w-25">Image</th>
-                          </tr>
-                          </thead>
-                          <tr>
-                            <td> 1</td>
-                            <td> Lunges</td>
-                            <td> Do 50 Lunges in one week</td>
-                            <td> Medium</td>
-                            <td><img src="../assets/images/lunges.jpg" class="w-50"></td>
-                          </tr>
-                          <tr>
-                            <td> 2</td>
-                            <td> Crunches</td>
-                            <td> Do 30 Crunches in one week</td>
-                            <td> Medium</td>
-                            <td><img src="../assets/images/Crunches.jpg" class="w-50"></td>
-                          </tr>
-                          <tr>
-                            <td> 3</td>
-                            <td> Leg Press</td>
-                            <td> Do 45 Legpress in one week</td>
-                            <td> Medium</td>
-                            <td><img src="../assets/images/Legpress.png" class="w-50"></td>
-                          </tr>
-                        </table>
-                      </div>
-                    </td>
-                  </tr>
-                  <tr class="accordion-toggle">
-                    <td data-toggle="collapse" data-target="#collapseThree">2</td>
-                    <td data-toggle="collapse" data-target="#collapseThree">Session 2</td>
-                    <td data-toggle="collapse" data-target="#collapseThree">To Workout</td>
-                    <td data-toggle="collapse" data-target="#collapseThree">2 Weeks</td>
-                  </tr>
-                  <tr>
-                    <td></td>
-                    <td colspan="3">
-                      <div id="collapseThree" class="collapse in">
-                        <table class="table table-bordered">
-                          <thead>
-                          <tr>
-                          <tr class="bg-success text-white">
-                            <th> Id</th>
-                            <th class="w-25"> Name </th>
-                            <th class="w-25"> Instruction</th>
-                            <th> Level </th>
-                            <th class="w-25">Image</th>
-                          </tr>
-                          </thead>
-                          <tr>
-                            <td> 1</td>
-                            <td> Deadlift</td>
-                            <td> Do Deadlift twice a week</td>
-                            <td> Medium</td>
-                            <td><img src="../assets/images/deadlift.jpg" class="w-50"></td>
-                          </tr>
-                          <tr>
-                            <td> 2</td>
-                            <td> Wall Sit</td>
-                            <td> Do 30 Sets of Wall Sit in one week</td>
-                            <td> Medium</td>
-                            <td><img src="../assets/images/Wall.jpg" class="w-50"></td>
-                          </tr>
-                          <tr>
-                            <td> 3</td>
-                            <td> Bench Press</td>
-                            <td> Do Bench Press 3-4 times in one week</td>
-                            <td> Medium</td>
-                            <td><img src="../assets/images/Bench.jpg" class="w-50"></td>
-                          </tr>
-                        </table>
-                      </div>
-                    </td>
-                  </tr>
+                  <ng-container *cdkVirtualFor="let row of furtherSess">
+                    <tr class="accordion-toggle" (click)="loadListExerciseBySessionId(row.id)">
+                      <td data-toggle="collapse" attr.data-target="#collapse-{{row.id}}-{{row.order}}" id="{{row.id}}">{{row.id}}</td>
+                      <td data-toggle="collapse" attr.data-target="#collapse-{{row.id}}-{{row.order}}">{{row.name}}</td>
+                      <td data-toggle="collapse" attr.data-target="#collapse-{{row.id}}-{{row.order}}">{{row.description}}</td>
+                      <td data-toggle="collapse" attr.data-target="#collapse-{{row.id}}-{{row.order}}">
+                        {{row.focusSession == '1'? 'Yes': ''}}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td></td>
+                      <td colspan="3">
+                        <div id="collapse-{{row.id}}-{{row.order}}" class="collapse in">
+                          <table class="table table-bordered">
+                            <thead>
+                            <tr>
+                            <tr class="bg-success text-white">
+                              <th>Id</th>
+                              <th class="w-25">Name </th>
+                              <th class="w-25">Instruction</th>
+                              <th>Level</th>
+                              <th class="w-25">Image</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                              <tr *ngFor="let further of furtherExercise">
+                                <td> {{further.id}}</td>
+                                <td> {{further.name}}</td>
+                                <td> {{further.instruction}}</td>
+                                <td> {{further.level}}</td>
+                                <td><img src="{{further.photo}}" class="w-50"></td>
+                              </tr>
+                            </tbody>
+
+                          </table>
+                        </div>
+                      </td>
+                    </tr>
+                  </ng-container>
+
                   </tbody>
                 </table>
+                </cdk-virtual-scroll-viewport>
               </div>
             </div>
           </div>
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-danger" (click)="hideViewModal()">Close</button>
+        <button type="button" class="btn btn-danger" (click)="hideFurtherSession()">Close</button>
         <button type="button" id="close-modalView" data-dismiss="modal" style="display: none">Close</button>
       </div>
 
     </div>
 
+  </div>
+</div>
+
+<!--Alert warning dialog-->
+<div class="modal fade" id="alertModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">
+          <i class="material-icons text-center text-warning" style="vertical-align: middle">{{icon}}</i>
+          {{iconText}}</h4>
+        <button type="button" class="close" (click)="hideAlert()">&times;</button>
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body w-100">
+        <div class="col-md-12">
+          <h4> {{ alertContent }}</h4>
+        </div>
+      </div>
+
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" (click)="hideAlert()">Close</button>
+
+        <!-- this button is hidden, used to close from typescript -->
+        <button type="button" id="close-alert" data-dismiss="modal" style="display: none">Close</button>
+      </div>
+
+    </div>
   </div>
 </div>

@@ -55,8 +55,6 @@ export class CoachProfileComponent implements OnInit {
          this.profile.lastName = form.value.lastName;
       if(form.value.email != '')
          this.profile.email = form.value.email;
-      if(form.value.userName != '')
-         this.profile.userName = form.value.userName;
       if(form.value.note != '')
          this.profile.note = form.value.note;
       if(form.value.birthDate != '')

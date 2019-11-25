@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders} from '@angular/common/http';
-import { Exercise } from './gym.model';
+import { Exercise, History } from './gym.model';
 
 @Injectable({
   providedIn: 'root'
@@ -10,6 +10,7 @@ export class ExerciseService {
   apiGetBySessId = '/api/exercisesSessions/';
   apiSaveExercise = '/api/exercises';
   apiGetCheckListEx = '/api/checkListExercisesSessions/';
+  apiGetListExerciseFromHistory = '/api/exercisesSessions/history/';
 
   constructor(private _http: HttpClient) { }
 
@@ -19,6 +20,10 @@ export class ExerciseService {
 
   getExercisesBySessId(sessId){
     return this._http.get<Exercise[]>(this.apiGetBySessId + sessId);
+  }
+
+  getExerciseFromHistory(userId, sessId){
+    return this._http.get<History[]>(this.apiGetListExerciseFromHistory + userId + '/' + sessId);
   }
 
   getCheckListExBySessId(sessId){

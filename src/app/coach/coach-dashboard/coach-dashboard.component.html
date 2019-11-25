@@ -1,21 +1,212 @@
+<!-- Container-fluid -->
 <div class="container-fluid">
-  <div class="row">
-    <div class="col-md-12">
-      <div class="card ">
-        <div class="card-header ">
-          <h5 class="card-title">Users Behavior</h5>
-          <p class="card-category">24 Hours performance</p>
-        </div>
-        <div class="card-body ">
 
-        </div>
-        <div class="card-footer ">
-          <hr>
-          <div class="stats">
-            <i class="fa fa-history"></i> Updated 3 minutes ago
+  <!-- Part 1: Display Statistics-->
+  <div class="row">
+    <div class="col-xl-3 col-sm-6">
+      <div class="card text-white bg-primary o-hidden h-60">
+        <div class="card-body">
+          <div class="card-body-icon">
+            <i class="fas fa-fw fa-user-circle"></i>
           </div>
+          <div class="mr-5"><h4>{{coachDashboard ? coachDashboard.noCustomer :''}} Customers</h4></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-xl-3 col-sm-6">
+      <div class="card text-white bg-warning o-hidden h-60">
+        <div class="card-body">
+          <div class="card-body-icon">
+            <i class="fas fa-fw fa-list"></i>
+          </div>
+          <div class="mr-5"><h4>{{coachDashboard ? coachDashboard.noProgram :''}} Programs!</h4></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-xl-3 col-sm-6">
+      <div class="card text-white bg-success o-hidden h-60">
+        <div class="card-body">
+          <div class="card-body-icon">
+            <i class="fas fa-fw fa-database"></i>
+          </div>
+          <div class="mr-5"><h4>{{coachDashboard ? coachDashboard.noSession :''}} Sessions</h4></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-xl-3 col-sm-6">
+      <div class="card text-white bg-danger o-hidden h-60">
+        <div class="card-body">
+          <div class="card-body-icon">
+            <i class="fas fa-fw fa-heartbeat"></i>
+          </div>
+          <div class="mr-5"><h4>{{coachDashboard ? coachDashboard.noExercise :''}} Exercises</h4></div>
         </div>
       </div>
     </div>
   </div>
+  <!-- End Part 1-->
+
+  <!-- Part 2: Display Pie chart & Area chart-->
+  <div class="row">
+    <!-- Pie Chart Example-->
+    <div class="col-xl-4 col-lg-5">
+      <div class="card">
+        <div class="card-body">
+          <div id="pieChartContainer" style="height: 370px; margin-left:auto;margin-right:auto;"></div>
+        </div>
+        <div class="card-footer small text-muted">Just Updated</div>
+      </div>
+    </div>
+
+    <!-- Area Chart Example-->
+    <div class="col-xl-8 col-lg-15">
+      <div class="card">
+        <div class="card-body">
+          <div id="areaChartContainer" style="height: 370px; width: 100%; margin-left:auto;margin-right:auto;"></div>
+        </div>
+        <div class="card-footer small text-muted">Just Updated</div>
+      </div>
+    </div>
+  </div>
+  <!-- End Part 2: Display Pie chart & Line chart-->
+
+  <!-- Part 3: Display Bar chart & Extra chart-->
+  <div class="row">
+
+    <!-- Project Card Example -->
+    <div class="col-xl-8 col-lg-15">
+      <div class="card shadow mb-4">
+        <div class="card-header py-3">
+          <h6 class="m-0 font-weight-bold text-primary">Customer Level</h6>
+        </div>
+        <div class="card-body">
+          <h4 class="small font-weight-bold">Level 1 <span class="float-right">40 %</span></h4>
+          <div class="progress mb-4">
+            <div class="progress-bar bg-danger" role="progressbar" style="width: 40ng %" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
+          </div>
+          <h4 class="small font-weight-bold">Level 2 <span class="float-right">10 %</span></h4>
+          <div class="progress mb-4">
+            <div class="progress-bar bg-warning" role="progressbar" style="width: 10%" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
+          </div>
+          <h4 class="small font-weight-bold">Level 3 <span class="float-right">15 %</span></h4>
+          <div class="progress mb-4">
+            <div class="progress-bar" role="progressbar" style="width: 15%" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
+          </div>
+          <h4 class="small font-weight-bold">Level 4 <span class="float-right">30 %</span></h4>
+          <div class="progress mb-4">
+            <div class="progress-bar bg-info" role="progressbar" style="width: 30%" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
+          </div>
+          <h4 class="small font-weight-bold">Level 5 <span class="float-right">5 %</span></h4>
+          <div class="progress">
+            <div class="progress-bar bg-success" role="progressbar" style="width: 5%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- Extra Chart -->
+    <div class="col-xl-4 col-lg-5">
+      <!-- Color System -->
+      <div class="row">
+        <div class="col-lg-6 mb-2">
+          <div class="card bg-primary text-white shadow">
+            <div class="card-body">
+              Easy Exercises
+              <div class="text-white-30 small">{{coachDashboard ? coachDashboard.noEasyEx :''}}</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-6 mb-2">
+          <div class="card bg-success text-white shadow">
+            <div class="card-body">
+              Easy Sessions
+              <div class="text-white-50 small">{{coachDashboard ? coachDashboard.noEasySess :''}}</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-6 mb-2">
+          <div class="card bg-info text-white shadow">
+            <div class="card-body">
+              Medium Exercises
+              <div class="text-white-50 small">{{coachDashboard ? coachDashboard.noMedEx :''}}</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-6 mb-2">
+          <div class="card bg-warning text-white shadow">
+            <div class="card-body">
+              Mediumm Sessions
+              <div class="text-white-50 small">{{coachDashboard ? coachDashboard.noMedSess :''}}</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <div class="card bg-danger text-white shadow">
+            <div class="card-body">
+              Difficult Exercises
+              <div class="text-white-50 small">{{coachDashboard ? coachDashboard.noDifEx :''}}</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <div class="card bg-secondary text-white shadow">
+            <div class="card-body">
+              Difficult Sessions
+              <div class="text-white-50 small">{{coachDashboard ? coachDashboard.noDifSess :''}}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <!-- Part 3: Display Bar chart & Extra chart-->
+
+  <!-- Part 4: Display DataTables-->
+  <div class="card mb-3">
+    <div class="card-header">
+      <i class="fas fa-table"></i>
+      Customer Progress</div>
+    <div class="card-body">
+      <cdk-virtual-scroll-viewport itemSize="0" style="height: 500px;">
+        <table class="table table-bordered table-hover" id="dataTable" width="100%" cellspacing="0">
+          <thead class="thead-dark">
+          <tr>
+            <th class="font-weight-bold">#</th>
+            <th class="font-weight-bold">Badge</th>
+            <th class="font-weight-bold">First Name</th>
+            <th class="font-weight-bold">Last Name</th>
+            <th class="font-weight-bold">Total Point</th>
+            <th class="font-weight-bold">Total Duration</th>
+            <th class="font-weight-bold">Total Calorie</th>
+          </tr>
+          </thead>
+          <tbody>
+          <ng-container *cdkVirtualFor="let rank of ranks">
+            <tr>
+              <td>{{rank.rank}}</td>
+              <td class="w-25">
+                <img src="{{rank.badge}}" class="w-25">
+              </td>
+              <td>{{rank.firstName}}</td>
+              <td>{{rank.lastName}}</td>
+              <td>{{rank.point}}</td>
+              <td>{{rank.duration}}</td>
+              <td>{{rank.calorie}}</td>
+            </tr>
+          </ng-container>
+          </tbody>
+        </table>
+      </cdk-virtual-scroll-viewport>
+
+    </div>
+    <div class="card-footer small text-muted">Just Updated</div>
+  </div>
+  <!-- End Part 4: Display DataTables-->
+
 </div>
+<!-- /.Container-fluid -->

@@ -1,0 +1,11 @@
+.img_opacity{
+  opacity: 0.3;
+}
+
+.img_original{
+  opacity: 1;
+}
+
+a {
+  cursor: pointer;
+}

@@ -25,12 +25,13 @@
       </div>
 
       <cdk-virtual-scroll-viewport itemSize="0" style="height: 500px;">
-        <table class="table table-hover">
+        <table width="100%"class="table table-hover">
 
           <thead class="">
           <tr>
             <th>ID</th>
-            <th>Badge</th>
+            <th class = "w-25">Badge</th>
+            <th class="w-25"> Identity </th>
             <th>Name</th>
             <th>Level</th>
             <th>Point</th>
@@ -45,10 +46,14 @@
           <ng-container *cdkVirtualFor="let row of rows">
             <tr>
               <td>{{row.id}}</td>
+
               <td>
-                <img class="w-25" src="{{row.point <= 150? 'assets/images/level_1.png': (row.point <= 300 ? 'assets/images/level_2.png' : (row.point <= 500 ? 'assets/images/level_3.png' : (row.point <= 750 ? 'assets/images/level_4.png': 'assets/images/level_5.png')))}}">
+                <!--img class="w-25px" src="{{row.point <= 150? 'assets/images/level_1.png': (row.point <= 300 ? 'assets/images/level_2.png' : (row.point <= 500 ? 'assets/images/level_3.png' : (row.point <= 750 ? 'assets/images/level_4.png': 'assets/images/level_5.png')))}}"-->
+                <img src="{{row.badge}}" style="width: 25%">
               </td>
-              <td>{{row.firstName}} {{row.lastName}}</td>
+              <td> <img class="w-25" src="{{row.photo}}"> </td>
+
+              <td>{{row.firstName}}{{row.lastName}}</td>
               <td>{{row.level}}</td>
               <td>{{row.point}}</td>
               <td>
@@ -61,23 +66,12 @@
                   <i class="material-icons text-center text-success">assignment_turned_in</i>
                 </a>
               </td>
-              <!--td>
-                <a (click)="delete(row)">
-                  <i class="material-icons text-center text-warning">delete</i>
-                </a>
-              </td-->
-
             </tr>
-
           </ng-container>
           </tbody>
-
-
         </table>
       </cdk-virtual-scroll-viewport>
-
     </div>
-
   </div>
 </div>
 
@@ -147,38 +141,21 @@
             <tr>
               <td>Note:</td>
               <td>
-                <textarea type="text" placeholder="" class="form-control" name=""
-                          rows="4">{{user ? user.note  : ''}}</textarea>
+                <textarea type="text" placeholder="" class="form-control" name="" rows="4">{{user ? user.note  : ''}}</textarea>
               </td>
             </tr>
-
-            <!--tr>
-              <td></td>
-              <td colspan="2">
-                <div>
-                  <form class="form-inline w-100">
-                    <i class="material-icons text-center text-primary">search</i>
-                    <div [formGroup]="groupProgram" style="width: 90%">
-                      <input formControlName="progNameFC" style="width: 50%" type="text" class="form-control" placeholder="Search Program..." />
-                    </div>
-                  </form>
-                </div>
-              </td>
-            </tr-->
-
           </table>
 
           <!-- program table-->
-          <cdk-virtual-scroll-viewport itemSize="0" style="height: 200px;">
+          <cdk-virtual-scroll-viewport itemSize="0" style="height: 100px;">
             <table class="table table-hover">
               <thead>
               <tr>
                 <th class="font-weight-bold">ID</th>
-                <th>Program Name</th>
-                <th>Description</th>
-                <th>Point</th>
-                <th>Total Sessions</th>
-                <th>Finished</th>
+                <th class="font-weight-bold">Program Name</th>
+                <th class="font-weight-bold">Description</th>
+                <th class="font-weight-bold">Total Sessions</th>
+                <th class="font-weight-bold">Finished</th>
               </tr>
               </thead>
 
@@ -188,12 +165,42 @@
                   <td>{{progrow.id}}</td>
                   <td>{{progrow.name}}</td>
                   <td>{{progrow.description}}</td>
-                  <td>{{"100"}}</td>
                   <td>{{progrow.numberOfSession}}</td>
                   <td>{{progrow.isFinished}}</td>
                 </tr>
               </ng-container>
               </tbody>
+            </table>
+          </cdk-virtual-scroll-viewport>
+          <!--Session Table-->
+          <cdk-virtual-scroll-viewport itemSize="0" style="height: 200px;">
+            <table class="table table-hover">
+              <thead>
+              <tr>
+
+                <th class="font-weight-bold"> ID</th>
+                <th class="font-weight-bold"> Session Name </th>
+                <th class="font-weight-bold"> Description </th>
+                <th class="font-weight-bold"> Duration </th>
+                <th class="font-weight-bold"> Type </th>
+                <th class="font-weight-bold"> Focus Session </th>
+              </tr>
+              </thead>
+              <ng-container *cdkVirtualFor="let sessrow of sessrows">
+                <tbody>
+                <tr> <!-- *ngFor="let ex of listExercise"-->
+                  <td >{{sessrow.id}}</td>
+                  <td>{{sessrow.name}}</td>
+                  <td>{{sessrow.description}}</td>
+                  <td>{{sessrow.duration}}</td>
+                  <td>{{sessrow.level}}</td>
+                  <td class="text-justify">
+                    {{ sessrow.focusSession == 1 ? 'Yes' : '-' }}
+                  </td>
+
+                </tr>
+                </tbody>
+              </ng-container>
 
             </table>
           </cdk-virtual-scroll-viewport>
@@ -310,64 +317,64 @@
       <!--End Customer Details-->
 
       <!--form (ngSubmit)="onSubmit(addForm)" #addForm="ngForm"-->
-        <!-- Modal body -->
-        <div class="modal-body w-100">
-          <div class="col-md-12">
+      <!-- Modal body -->
+      <div class="modal-body w-100">
+        <div class="col-md-12">
 
-            <!--Program table-->
-            <cdk-virtual-scroll-viewport itemSize="0" style="height: 300px; width: 100%">
-              <table class="table table-hover">
+          <!--Program table-->
+          <cdk-virtual-scroll-viewport itemSize="0" style="height: 300px; width: 100%">
+            <table class="table table-hover">
 
-                <thead class="">
-                <tr>
-                  <th>ID</th>
-                  <th>Choose</th>
-                  <th>Program Name</th>
-                  <th>Description</th>
-                  <!--th>Point</th-->
-                  <th>Total Sessions</th>
+              <thead class="">
+              <tr>
+                <th>ID</th>
+                <th>Choose</th>
+                <th>Program Name</th>
+                <th>Description</th>
+                <!--th>Point</th-->
+                <th>Total Sessions</th>
 
-                  <!--<th>Focus Session</th>-->
+                <!--<th>Focus Session</th>-->
+              </tr>
+              </thead>
+
+              <tbody>
+              <ng-container *cdkVirtualFor="let assignPro of progAllrows">
+                <tr> <!-- *ngFor="let ex of listExercise"-->
+                  <td>{{assignPro.id}}</td>
+                  <td style="text-align: center">
+                    <input class="form-check-input" id="{{assignPro.id}}" type="radio" name="lstCheckbox"
+                           (change)="onSelect($event, assignPro.id)"
+                           [disabled]="disableAssign">
+                  </td>
+                  <td>{{assignPro.name}}</td>
+                  <td>{{assignPro.description}}</td>
+                  <!--td>{{"100"}}</td-->
+                  <td>{{assignPro.numberOfSession}}</td>
+
                 </tr>
-                </thead>
 
-                <tbody>
-                <ng-container *cdkVirtualFor="let assignPro of progAllrows">
-                  <tr> <!-- *ngFor="let ex of listExercise"-->
-                    <td>{{assignPro.id}}</td>
-                    <td style="text-align: center">
-                      <input class="form-check-input" id="{{assignPro.id}}" type="radio" name="lstCheckbox"
-                             (change)="onSelect($event, assignPro.id)"
-                             [disabled]="disableAssign">
-                    </td>
-                    <td>{{assignPro.name}}</td>
-                    <td>{{assignPro.description}}</td>
-                    <!--td>{{"100"}}</td-->
-                    <td>{{assignPro.numberOfSession}}</td>
+              </ng-container>
+              </tbody>
 
-                  </tr>
-
-                </ng-container>
-                </tbody>
-
-              </table>
-            </cdk-virtual-scroll-viewport>
-            <!--end Session table-->
+            </table>
+          </cdk-virtual-scroll-viewport>
+          <!--end Session table-->
 
 
-          </div>
         </div>
+      </div>
 
-        <!-- Modal footer -->
-        <div class="modal-footer">
-          <button type="button" class="btn btn-success" (click)="save()">Save</button>
-          <!--button type="button" class="btn btn-info" (click)="reset(addForm)">Reset</button-->
-          <!--button type="button" class="btn btn-success" (click)="sendModal()">Yes</button-->
-          <button type="button" class="btn btn-warning" (click)="hideView2()">Close</button>
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-success" (click)="save()">Save</button>
+        <!--button type="button" class="btn btn-info" (click)="reset(addForm)">Reset</button-->
+        <!--button type="button" class="btn btn-success" (click)="sendModal()">Yes</button-->
+        <button type="button" class="btn btn-warning" (click)="hideView2()">Close</button>
 
-          <!-- this button is hidden, used to close from typescript -->
-          <button type="button" id="close-modal-2" data-dismiss="modal" style="display: none">Close</button>
-        </div>
+        <!-- this button is hidden, used to close from typescript -->
+        <button type="button" id="close-modal-2" data-dismiss="modal" style="display: none">Close</button>
+      </div>
 
       <!--/form-->
 

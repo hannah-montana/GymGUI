@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders} from '@angular/common/http';
-import { User } from './gym.model';
+import { User, AreaChart } from './gym.model';
 
 @Injectable({
   providedIn: 'root'

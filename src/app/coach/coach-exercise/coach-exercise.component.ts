@@ -127,6 +127,7 @@ export class CoachExerciseComponent implements OnInit {
   edit(exercise){
 
     this.exe = exercise;
+    this.sPhoto = '';
     //console.log(1, exercise);
     //console.log(2, this.exe);
     $("#addModal").modal('show');
@@ -154,7 +155,8 @@ export class CoachExerciseComponent implements OnInit {
       this.exe.level = this.slevel;
       this.exe.type = this.sType;
       this.exe.target = this.sTarget;
-      this.exe.photo = this.sPhoto;
+      if(this.sPhoto != '')
+        this.exe.photo = this.sPhoto;
       console.log(this.exe);
 
       //process update
