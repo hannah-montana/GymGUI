@@ -19,10 +19,11 @@
 
               <thead class="">
               <tr>
-                <th >ID</th>
+                <th hidden>ID</th>
                 <th> </th>
                 <th>Date</th>
                 <th>Content</th>
+                <th></th>
               </tr>
 
               </thead>
@@ -30,14 +31,16 @@
               <tbody>
 
               <ng-container *cdkVirtualFor="let row of rows">
-                <tr (click)="selectedRow=row" [ngClass]="{ 'selected': row === selectedRow }" > <!-- (click)="change(row)" class="{{row.read=='1'? 'bg-info' : ''}}" -->
-                  <td>{{row.id}}</td>
+                <tr (click)="selectedRow(row)">
+                  <td hidden>{{row.id}}</td>
                   <td>
-                    <i class="material-icons text-center text-primary">{{row.fromUser == userId ? 'arrow_back': 'arrow_forward'}}</i>
+                    <i class="material-icons text-center {{row.fromUser == userId ? 'text-success': 'text-info'}}">{{row.fromUser == userId ? 'arrow_back': 'arrow_forward'}}</i>
                   </td>
                   <td >{{row.dateAction}}</td>
                   <td >{{row.notifyContent}}</td>
-
+                  <td>
+                    <i class="material-icons text-center text-danger">{{(row.read == 0 && row.fromUser != userId) ? 'notifications': ''}}</i>
+                  </td>
                 </tr>
 
               </ng-container>

@@ -7,6 +7,7 @@ import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ScrollDispatchModule } from '@angular/cdk/scrolling';
 import { Router } from '@angular/router';
+import * as CanvasJS from '../../../assets/js/canvasjs.min';
 
 declare var $: any;
 
@@ -61,7 +62,8 @@ export class CoachCustomerComponent implements OnInit {
   coachId: string = '1';
 
   proUser: ProgramUser = null; //use for assign
-
+  chart;
+  fs1;
   constructor(private customerService: CustomerService,
               private fb: FormBuilder,
               private programService: ProgramService,
@@ -93,6 +95,76 @@ export class CoachCustomerComponent implements OnInit {
       //all session filter
       this.allProgramFilter();
     }
+
+    this.fs1 = [{
+        type: "column",
+        name: "FC1",
+        legendText: "FC1",
+        showInLegend: true,
+        dataPoints: [
+           { label: "EX1", y: 8 },
+           { label: "EX2", y: 10 },
+           { label: "Ex3", y: 8 }
+         ]
+      },
+      {
+        type: "column",
+        name: "FC2",
+        legendText: "FC2",
+        axisYType: "secondary",
+        showInLegend: true,
+        dataPoints:[
+          { label: "EX1", y: 9},
+          { label: "EX2", y: 11 },
+          { label: "EX3", y: 12 }
+        ]
+      },
+         {
+        type: "column",
+        name: "FC3",
+        legendText: "FC3",
+        axisYType: "secondary",
+        showInLegend: true,
+        dataPoints:[
+          { label: "EX1", y: 7 },
+          { label: "EX2", y: 5 },
+          { label: "EX3", y: 13 }
+        ]
+      }];
+    /*chart*/
+    this.chart = new CanvasJS.Chart("chartContainer", {
+    	animationEnabled: true,
+    	title:{
+    		text: "Evolution Focus Session"
+    	},
+    	axisY: {
+    		title: "Duration (minutes)",
+    		titleFontColor: "#4F81BC",
+    		lineColor: "#4F81BC",
+    		labelFontColor: "#4F81BC",
+    		tickColor: "#4F81BC"
+    	},
+    	toolTip: {
+    		shared: true
+    	},
+    	legend: {
+    		cursor:"pointer",
+    		itemclick: this.toggleDataSeries
+    	},
+    	data: this.fs1
+    });
+    this.chart.render();
+    /*end chart*/
+  }
+
+  toggleDataSeries(e) {
+  	if (typeof(e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
+  		e.dataSeries.visible = false;
+  	}
+  	else {
+  		e.dataSeries.visible = true;
+  	}
+  	this.chart.render();
   }
 
   loadCustomer(){

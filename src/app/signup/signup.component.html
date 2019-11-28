@@ -1,98 +1,114 @@
-<!--div *ngIf="isLoginError" class="red-text center error-message">
-  <i class="material-icons">error</i> Incorrect username or password
-</div>
-
-<section class="bg-light ftco-counter img ftco-section ftco-no-pt ftco-no-pb" id="login-section">
-  <div class="container">
-    <div class="">
-      <div class="order-md-last">
-        <div class=" p-4 p-md-5 contact-form">
-          <span class="subheading">SIGN UP</span>
-          <div class="form-group input-group-prepend">
-            <span class="input-group-text"> <i class="fa fa-info-circle"></i> </span>
-            <input type="text" class="form-control" placeholder="First name" #firstName ngModel name="firstName" required value="">
-          </div>
-          <div class="form-group input-group-prepend">
-            <span class="input-group-text"> <i class="fa fa-info-circle"></i> </span>
-            <input type="text" class="form-control" placeholder="Last name" #firstName ngModel name="lastName" required value="">
-          </div>
-          <div class="form-group input-group-prepend">
-            <span class="input-group-text"> <i class="fa fa-user"></i> </span>
-            <input type="text" class="form-control " placeholder="User Name" #userName ngModel name="userName" required value="">
-          </div>
-          <div class="form-group input-group-prepend">
-            <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
-            <input type="password" class="form-control" placeholder="Password" #password ngModel name="password" required value="">
-          </div>
-          <div class="form-group input-group-prepend">
-            <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
-            <input type="password" class="form-control" placeholder="Repeat password" #repeatPassword ngModel name="repeatPassword" required value="">
-          </div>
-
-
-
-          <div class="form-group">
-            <button class="btn btn-primary py-2 px-3" (click)="signUp()">
-              Sign Up
-            </button>
-
-          </div>
-
-        </div>
-
-      </div>
-    </div>
-  </div>
-</section>
-
-<router-outlet></router-outlet-->
-
 
 <div class="page-content">
   <div class="form-v6-content">
     <div class="form-left">
       <img src="assets/images/signup-bg.jpg" alt="form">
     </div>
-    <!--form class="form-detail" action="#" method="post"-->
-    <div class="form-detail">
-      <div class="form-row">
-        <img src="../assets/images/logo.png" class="w-25 h-25">
-        <h2>Register Form </h2>
+    <form (ngSubmit) = "onSubmit(addForm)" #addForm = "ngForm">
+      <div class="form-detail">
+        <div class="form-row">
+          <img src="../assets/images/logo.png" class="w-25 h-25">
+          <h2>Register Form </h2>
+        </div>
+        <div class="form-row">
+          <input type="text" class="input-text" placeholder="First name" [(ngModel)]="firstName" name="firstName" required value="">
+        </div>
+        <div class="form-row">
+          <input type="text" class="input-text" placeholder="Last name" [(ngModel)]="lastName" name="lastName" required value="">
+        </div>
+        <div class="form-row">
+          <input type="text" class="input-text " placeholder="User Name" [(ngModel)]="userName" name="userName" required value="">
+        </div>
+        <div class="form-row">
+          <input type="password" class="input-text" placeholder="Password" [(ngModel)]="password" name="password" required value="">
+        </div>
+        <div class="form-row">
+          <input type="password" class="input-text" placeholder="Repeat password" [(ngModel)]="repeatPassword" name="repeatPassword" required value="">
+        </div>
+        <div class="form-row">
+          <select class="browser-default custom-select w-50" [(ngModel)]="purpose" name="purpose">
+            <option [value]="1">Loose Weight</option>
+            <option [value]="2">Increase Muscle</option>
+            <option [value]="3">Keep Fit</option>
+          </select>
+        </div>
+        <div>
+          <p class="text-danger">{{lblNotify}}</p>
+        </div>
+
+        <div class="form-row-last">
+          <input type="submit" name="register" class="register" value="Register">
+        </div>
       </div>
-      <div class="form-row">
-        <input type="text" class="input-text" placeholder="First name" #firstName ngModel name="firstName" required value="">
-        <!--input type="text" name="full-name" id="full-name" class="input-text" placeholder="Your Name" required-->
-      </div>
-      <div class="form-row">
-        <input type="text" class="input-text" placeholder="Last name" #firstName ngModel name="lastName" required value="">
+    </form>
+  </div>
+</div>
+
+<!--Alert warning dialog-->
+<div class="modal fade" id="alertModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+
+        <h4 class="modal-title">
+          <i class="material-icons text-center text-warning" style="vertical-align: middle">{{icon}}</i>
+          {{iconText}}</h4>
+        <button type="button" class="close" (click)="hideAlert()">&times;</button>
       </div>
 
-      <!--div class="form-row">
-        <input type="text" name="your-email" id="your-email" class="input-text" placeholder="Email Address" required pattern="[^@]+@[^@]+.[a-zA-Z]{2,6}">
-      </div-->
+      <!-- Modal body -->
+      <div class="modal-body w-100">
+        <div class="col-md-12">
 
-      <div class="form-row">
-        <input type="text" class="input-text " placeholder="User Name" #userName ngModel name="userName" required value="">
+          <h4> {{ alertContent }}</h4>
+        </div>
       </div>
-      <div class="form-row">
-        <input type="password" class="input-text" placeholder="Password" #password ngModel name="password" required value="">
-      </div>
-      <div class="form-row">
-        <input type="password" class="input-text" placeholder="Repeat password" #repeatPassword ngModel name="repeatPassword" required value="">
-      </div>
-      <div class="form-row">
-        <select class="browser-default custom-select w-50">
-          <option value="1" selected>Loose Weight</option>
-          <option value="2">Increase Muscle</option>
-          <option value="3">Keep Fit</option>
-        </select>
 
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <!--button type="button" class="btn btn-success" (click)="sendModal()">Yes</button-->
+        <button type="button" class="btn btn-danger" (click)="hideAlert()">Close</button>
+
+        <!-- this button is hidden, used to close from typescript -->
+        <button type="button" id="close-alert" data-dismiss="modal" style="display: none">Close</button>
       </div>
-      <br>
-      <div class="form-row-last">
-        <input type="button" name="register" class="register" value="Register" (click)="signUp()">
-      </div>
+
     </div>
-    <!--/form-->
+  </div>
+</div>
+
+<!--Sign up successful dialog-->
+<div class="modal fade" id="signUpModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+
+        <h4 class="modal-title">
+          <i class="material-icons text-center text-warning" style="vertical-align: middle">success</i>
+          Success</h4>
+        <button type="button" class="close" (click)="hideSignUp()">&times;</button>
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body w-100">
+        <div class="col-md-12">
+
+          <h4> Register successful! </h4>
+        </div>
+      </div>
+
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-success" (click)="goToSignIn()">GO TO LOGIN</button>
+
+        <!-- this button is hidden, used to close from typescript -->
+        <button type="button" id="close-signup" data-dismiss="modal" style="display: none">Close</button>
+      </div>
+
+    </div>
   </div>
 </div>

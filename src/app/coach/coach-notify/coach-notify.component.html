@@ -1,1 +1,166 @@
-<p>coach-notify works!</p>
+<!-- Notification-->
+<div class="row">
+  <div class="col-md-12">
+
+    <div class="card card-plain">
+
+      <div class="card-header card-header-warning">
+        <h4 class="card-title mt-0"> Notifications</h4>
+      </div>
+
+      <div class="card-body">
+        <div class="table-responsive">
+
+          <!--Notification content-->
+          <cdk-virtual-scroll-viewport itemSize="0" style="height: 500px;">
+            <table class="table table-hover">
+
+              <thead class="">
+              <tr>
+                <th hidden>ID</th>
+                <th > </th>
+                <th>Date</th>
+                <th>Content</th>
+                <th> Validate</th>
+                <th></th>
+              </tr>
+              </thead>
+
+              <tbody>
+              <ng-container *cdkVirtualFor="let row of rows">
+                <tr (click)="selectedRow(row)">
+                  <td hidden>{{row.id}}</td>
+                  <td >
+                    <i class="material-icons text-center {{row.fromUser == userId ? 'text-success': 'text-info'}}">{{row.fromUser == userId ? 'arrow_back': 'arrow_forward'}}</i>
+                  </td>
+                  <td >{{row.dateAction}}</td>
+                  <td >{{row.notifyContent}}</td>
+                  <td style="text-align: center">
+                    <a data-target="#excerciseModal" (click)="validateFS(row)">
+                      <i class="material-icons">
+                        {{(row.focusSessionId == '1' && row.validatedFromCoach == '0')? 'alarm': ''}}
+                      </i>
+                    </a>
+                  </td>
+                  <td>
+                    <i class="material-icons text-center text-danger">{{(row.read == 0 && row.fromUser != userId) ? 'notifications': ''}}</i>
+                  </td>
+                </tr>
+              </ng-container>
+              </tbody>
+
+            </table>
+          </cdk-virtual-scroll-viewport>
+          <!--End Notification content-->
+
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</div>
+<!-- End Notification-->
+
+<!--Alert dialog-->
+<div class="modal fade" id="alertModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+
+        <h4 class="modal-title">
+          <i class="material-icons text-center text-warning" style="vertical-align: middle">{{icon}}</i>
+          {{iconText}}</h4>
+        <button type="button" class="close" (click)="hideAlert()">&times;</button>
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body w-100">
+        <div class="col-md-12">
+
+          <h4> {{ alertContent }}</h4>
+        </div>
+      </div>
+
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <!--button type="button" class="btn btn-success" (click)="sendModal()">Yes</button-->
+        <button type="button" class="btn btn-danger" (click)="hideAlert()">Close</button>
+
+        <!-- this button is hidden, used to close from typescript -->
+        <button type="button" id="close-alert" data-dismiss="modal" style="display: none">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- end Alert dialog-->
+
+<!--Confirm send notification dialog-->
+<div class="modal fade" id="confirmSendModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+
+        <h4 class="modal-title">
+          <i class="material-icons text-center text-warning" style="vertical-align: middle">warning</i>
+          Warning</h4>
+        <button type="button" class="close" (click)="hideConfirmSend()">&times;</button>
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body w-100">
+        <div class="col-md-12">
+
+          <h4> Are you sure to send this notification ?</h4>
+        </div>
+      </div>
+
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-success" (click)="sendMessage()">Yes</button>
+        <button type="button" class="btn btn-danger" (click)="hideConfirmSend()">No</button>
+
+        <!-- this button is hidden, used to close from typescript -->
+        <button type="button" id="close-confirm-delete" data-dismiss="modal" style="display: none">Close</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+<!-- end Confirm delete dialog-->
+
+<!-- Add validation Modal -->
+<div class="modal fade" id="validateFocusSessionModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">Notification</h4>
+        <button type="button" class="close" (click)="hideModal()">&times;</button>
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body">
+        <div class="col-md-8">
+          <p><b>Are you sure to validate this focus session?</b></p>
+        </div>
+      </div>
+
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-success" (click)="sendValidateModal()">Yes</button>
+        <button type="button" class="btn btn-danger" (click)="hideModal()">No</button>
+
+        <!-- this button is hidden, used to close from typescript -->
+        <button type="button" id="close-modal" data-dismiss="modal" style="display: none">Close</button>
+      </div>
+
+    </div>
+  </div>
+
+</div>

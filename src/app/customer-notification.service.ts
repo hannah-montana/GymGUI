@@ -19,11 +19,11 @@ export class CustomerNotificationService {
   constructor(private _http: HttpClient) { }
 
   getAllNotifications(userId){
-      return this._http.get<Notification[]>(this.apiGetNoti + userId);
-    }
+    return this._http.get<Notification[]>(this.apiGetNoti + userId);
+  }
 
   readNotification(noti){
-      return this._http.put<any>(this.apiReadNoti, noti);  // put or get ???
+    return this._http.put<any>(this.apiReadNoti, noti);  // put or get ???
   }
 
   createNotification(noti){
@@ -33,6 +33,6 @@ export class CustomerNotificationService {
   }
 
   updateNotification(noti){
-      return this._http.put<any>(this.apiValidateNoti, noti);
-    }
+    return this._http.put<any>(this.apiValidateNoti, noti);
+  }
 }

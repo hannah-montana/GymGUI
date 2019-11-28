@@ -23,14 +23,10 @@ export class CustomerServiceService {
   }
 
   addNewUser(obj){
-    return this._http.put<User>(this.apiSignUp, obj)
-
+    return this._http.post<any>(this.apiSignUp, obj);
   }
 
   checkExistingUser(userName){
-    return this._http.get<User>(this.apicheckExistingUser + userName);
-
+    return this._http.get<any>(this.apicheckExistingUser + userName);
   }
-
-
 }

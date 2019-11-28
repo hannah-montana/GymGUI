@@ -13,6 +13,8 @@ export class DataService {
   apiUser = '/api/users';
   apiCheckUser = '/api/users/checkLogin';
   apiUpdatePhoto = '/api/updatePhoto';
+  apiCountNotify = '/api/notification/countNotifications/';
+
   body: User;
 
   constructor(private _http: HttpClient) { }
@@ -33,5 +35,9 @@ export class DataService {
 
   updatePhoto(user){
     return this._http.put<any>(this.apiUpdatePhoto, user);
+  }
+
+  countNotifications(userId){
+    return this._http.get<any>(this.apiCountNotify + userId);
   }
 }

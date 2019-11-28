@@ -90,26 +90,24 @@ export class NotifyComponent implements OnInit {
        }
        this.reset(form);
   }
+  //updateNotification
+  selectedRow(row){
+    console.log(row);
+    if(row.fromUser != this.userId && row.read == 0){
+      this.customerNotificationService.readNotification(row)
+        .subscribe(data => {
+          if(data == 1){
+            console.log(data);
+            this.loadNotification();
+          }
+        });
+    }
+  }
 
   /*RESET*/
   reset(form){
     form.reset();
   }
-
-  // selected: '';
-
- /*change(row){
-   if(this.selected === weekday) {
-     this.selected = '';
-   } else {
-     this.selected = weekday;
-   }
- }*/
- /*change(row){
-  this.customerNotificationService.readNotification(row).subscribe(data => {
-       this.loadNotification();
-      });
- }*/
 
  /********* ALERT *********/
    viewAlert(){

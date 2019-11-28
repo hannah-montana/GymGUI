@@ -65,6 +65,11 @@ export class SignInComponent implements OnInit {
     localStorage.setItem('lastName', data.lastName);
     localStorage.setItem('role', data.role.toString());
     localStorage.setItem('coachId', data.coachId);
+
+    this.dataService.countNotifications(data.id)
+      .subscribe(data => {
+        localStorage.setItem('noNotify', data);
+    });
   }
 
   gotoGuestPage()

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders} from '@angular/common/http';
-import { Session } from './gym.model';
+import { Session, Report } from './gym.model';
 
 @Injectable({
   providedIn: 'root'
@@ -12,6 +12,7 @@ export class UserProgramService {
   apiCheckSendValidateFS = '/api/notification/checkValidated/';
   apiUpdatePractical = '/api/history/updatePractical';
   apiCheckFinishedSession = '/api/sessions/checkFinish/';
+  apiCustomerSendReport = '/api/notification/customerSendReport';
 
   constructor(private _http: HttpClient) { }
 
@@ -37,5 +38,9 @@ export class UserProgramService {
 
   checkFinishedSession(userId, sessId){
     return this._http.get<any>(this.apiCheckFinishedSession + userId + '/' + sessId);
+  }
+
+  customerSendReport(report){
+    return this._http.post<any>(this.apiCustomerSendReport, report);
   }
 }

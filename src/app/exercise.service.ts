@@ -22,8 +22,8 @@ export class ExerciseService {
     return this._http.get<Exercise[]>(this.apiGetBySessId + sessId);
   }
 
-  getExerciseFromHistory(userId, sessId){
-    return this._http.get<History[]>(this.apiGetListExerciseFromHistory + userId + '/' + sessId);
+  getExerciseFromHistory(userId, sessId, parentId){
+    return this._http.get<History[]>(this.apiGetListExerciseFromHistory + userId + '/' + sessId + '/' + parentId);
   }
 
   getCheckListExBySessId(sessId){

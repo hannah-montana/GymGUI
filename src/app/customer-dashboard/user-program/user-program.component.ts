@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UserProgramService } from '../../user-program.service';
-import { Session, Exercise, Notification, History } from '../../gym.model';
+import { Session, Exercise, Notification, History, Report } from '../../gym.model';
 import { ScrollDispatchModule } from '@angular/cdk/scrolling';
 import { ExerciseService } from '../../exercise.service';
 import { FormsModule } from '@angular/forms';
@@ -29,10 +29,16 @@ export class UserProgramComponent implements OnInit {
 
   hisPractical: History[] = null;
   history: History;
+  report: Report;
 
   icon: string;
   iconText: string;
   alertContent: string;
+
+  /* use for report */
+  completedWeeklyDeadline: number;
+  readyNextSession: number;
+  thinkAboutSession: number;
 
   constructor(private userProgramService: UserProgramService,
               private exerciseService: ExerciseService) { }
@@ -45,6 +51,10 @@ export class UserProgramComponent implements OnInit {
 
     let userId = localStorage.getItem('id');
     this.getCurrentListSessionByUserId(this.userId);
+
+    this.completedWeeklyDeadline = 1;
+    this.readyNextSession = 1;
+    this.thinkAboutSession = 1;
   }
 
   /* Validate focus session */
@@ -73,7 +83,7 @@ export class UserProgramComponent implements OnInit {
     console.log(this.session);
     this.notification = new Notification();
     this.notification.id = '0';
-    this.notification.notifyContent = "Warning! Validate FOCUS SESSION: " + this.session.id;
+    this.notification.notifyContent = "Warning! Validate FOCUS SESSION for customer " + localStorage.getItem("firstName") + ' ' + localStorage.getItem("lastName");
     this.notification.fromUser = localStorage.getItem('id');
     this.notification.toUser = localStorage.getItem('coachId');
     this.notification.focusSessionId = this.session.id;
@@ -109,7 +119,7 @@ export class UserProgramComponent implements OnInit {
   viewPractiseExcercise(session){
     this.session = session;
 
-    this.getExerciseFromHistory(this.session.id).subscribe(data => {
+    this.getExerciseFromHistory(this.session.id, this.session.parentId).subscribe(data => {
       //this.exrows = data;
       console.log(data);
       this.hisRows = data;
@@ -124,8 +134,8 @@ export class UserProgramComponent implements OnInit {
     return this.exerciseService.getExercisesBySessId(sessId);
   }
 
-  getExerciseFromHistory(sessId){
-    return this.exerciseService.getExerciseFromHistory(this.userId, sessId);
+  getExerciseFromHistory(sessId, parentId){
+    return this.exerciseService.getExerciseFromHistory(this.userId, sessId, parentId);
   }
 
   showDetail(row){
@@ -159,6 +169,14 @@ export class UserProgramComponent implements OnInit {
           this.hideView();
           this.getCurrentListSessionByUserId(this.userId);
 
+          this.alertContent = 'Updated practical successful!';
+          this.icon = '';
+          this.iconText = 'Success';
+          this.viewAlert();
+        }
+        else if(data == 2){
+          this.hideView();
+          this.lbl_notification = 'You have just finish a FOCUS SESSION, please validate!';
           this.alertContent = 'Updated practical successful!';
           this.icon = '';
           this.iconText = 'Success';
@@ -214,8 +232,45 @@ export class UserProgramComponent implements OnInit {
     });
   }
 
-  sendReportModal(): void {
-    this.hideReportModal();
+  sendReportModal(form) {
+    console.log(form.value);
+    this.report = new Report();
+    this.report.id = '0';
+    this.report.completedWeeklyDeadline = form.value.completedWeeklyDeadline;
+    if(form.value.thinkAboutSession == 1)
+      this.report.thinkAboutSession = 'Easy';
+    else if(form.value.thinkAboutSession == 2)
+      this.report.thinkAboutSession = 'Medium';
+    else
+      this.report.thinkAboutSession = 'Difficult';
+    this.report.readyNextSession = form.value.readyNextSession;
+    this.report.comment = form.value.comment;
+    //this.report.sessionId1
+    this.report.custId = localStorage.getItem('id');
+    this.report.coachId = localStorage.getItem('coachId');
+
+    console.log(this.report);
+
+    this.userProgramService.customerSendReport(this.report)
+      .subscribe(data => {
+        if(data == 1){
+          this.hideReportModal();
+          this.getCurrentListSessionByUserId(this.userId);
+
+          this.alertContent = 'Your report has been sent!';
+          this.icon = '';
+          this.iconText = 'Success';
+          this.viewAlert();
+        }
+        else{
+          this.hideReportModal();
+
+          this.alertContent = 'Server Error!';
+          this.icon = 'warning';
+          this.iconText = 'Warning';
+          this.viewAlert();
+        }
+    });
   }
   hideReportModal():void {
     document.getElementById('close-modalReport').click();

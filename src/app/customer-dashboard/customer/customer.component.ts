@@ -41,9 +41,8 @@ export class CustomerComponent implements OnInit {
   currentPoint: number;
   totalPoints: number;
 
-
   //used for integration
-  userId = '2';
+  userId: string;
 
   customerDashboard: CustomerDashboard;
   currentCustomer: CurrentCustomer;
@@ -52,6 +51,7 @@ export class CustomerComponent implements OnInit {
               private currentCustomerService: CurrentCustomerService) { }
 
   ngOnInit() {
+    this.userId = localStorage.getItem('id');
     this.customerDashboard = new CustomerDashboard();
     this.currentCustomer = new CurrentCustomer();
     this.percentHealth = 0;
@@ -84,9 +84,7 @@ export class CustomerComponent implements OnInit {
 
     //Display Ranking
     this.loadTopRanking();
-
-
-  }//ok
+  }
 
   fillHealthStatus(percent){
     if (percent == 0){}
@@ -125,11 +123,11 @@ export class CustomerComponent implements OnInit {
       (document.querySelector('.head') as HTMLElement).style.fill = '#33cc33';
     }
 
-  }//ok
+  }
 
   gotoUserProfile(){
     this.router.navigate(['/user-profile']);
-  }//ok
+  }
 
    /*Load Dashboard*/
    loadCurrentCustomer(){
@@ -170,9 +168,9 @@ export class CustomerComponent implements OnInit {
 
    loadHealthPercent(){
       this.getHealthPercent(this.userId).subscribe(data => {
-          console.log(data);
-          this.percentHealth = data;
-          this.fillHealthStatus(this.percentHealth);
+        console.log('health: ',data);
+        this.percentHealth = data;
+        this.fillHealthStatus(this.percentHealth);
       });
    }//ok
 

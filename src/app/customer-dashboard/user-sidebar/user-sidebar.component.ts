@@ -10,6 +10,7 @@ export class UserSidebarComponent implements OnInit {
 
   list:any;
   selected :any;
+  countNoti: string;
 
   constructor(private router: Router) {
     this.list = [
@@ -22,6 +23,7 @@ export class UserSidebarComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.countNoti = localStorage.getItem('noNotify');
   }
 
   select(item) {

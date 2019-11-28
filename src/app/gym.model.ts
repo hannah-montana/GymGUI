@@ -17,6 +17,7 @@ export class User {
   coachId: string;
   badge: string;
   gender: string;
+  purpose: string;
 }
 
 export class Session {
@@ -31,6 +32,7 @@ export class Session {
   coachId: string;
   index: number;
   order: number;
+  parentId: string;
 }
 
 export class Exercise {
@@ -112,6 +114,19 @@ export class History{
   photo: string;
   calories: number;
   target: string;
+}
+
+export class Report{
+  id: string;
+  completedWeeklyDeadline: string;
+  thinkAboutSession: string;
+  readyNextSession: string;
+  comment: string;
+  sessId1: string;
+  sessId2: string;
+  custId: string;
+  coachId: string;
+  dateAction: string;
 }
 
 export class CustomerDashboard {

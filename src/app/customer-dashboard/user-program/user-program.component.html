@@ -12,7 +12,7 @@
               <th>ID</th>
               <th>Session name</th>
               <th>Description</th>
-              <th>Duration</th>
+              <!--th>Duration</th-->
               <th>Focus Session</th>
             </thead>
             <tbody>
@@ -21,7 +21,7 @@
                   <td (click)="showDetail(row)">{{row.id}}</td>
                   <td (click)="showDetail(row)">{{row.name}}</td>
                   <td (click)="showDetail(row)">{{row.description}}</td>
-                  <td (click)="showDetail(row)">{{row.duration}}</td>
+                  <!--td (click)="showDetail(row)">{{row.duration}}</td-->
                   <td>
                     <a data-target="#validateFocusSessionModal" (click)="showValidateModal(row)">
                       <i class="material-icons">
@@ -136,61 +136,63 @@
         <button type="button" class="close" (click)="hideReportModal()">&times;</button>
       </div>
 
-      <!-- Modal body -->
-      <div class="modal-body">
-        <div class="col-md-12">
-          <div class="card card-plain">
-            <div class="card-body">
-              <div class="table-responsive">
-                <table class="table table-hover">
-                  <tr>
-                    <td class="w-50">1. Are you able to complete weekely deadlines?</td>
-                    <td>
-                      <label><input type="radio" name="q1" id="q1-y" value="yes" checked/>&nbsp; Yes</label><br>
-                      <label><input type="radio" name="q1" id="q1-n" value="no"/>&nbsp; No</label></td>
-                  </tr>
-                  <tr>
-                    <td>2. What do you think about session?</td>
-                    <td>
-                      <select class="browser-default custom-select">
-                        <option value="1" selected>Easy</option>
-                        <option value="2">Medium</option>
-                        <option value="3">Difficult</option>
-                      </select>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>3. Are you ready to go to next session?</td>
-                    <td>
-                      <label><input type="radio" name="a1" id="a1-c" value="Can't wait to go!" checked/>&nbsp; Can't wait to go!</label>
-                      <br>
-                      <label><input type="radio" name="a1" id="a1-d" value="I need to re-think"/>&nbsp; I need to re-think</label>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>Any Comments:</td>
-                    <td></td>
-                  </tr>
-                  <tr>
-                    <td colspan="2">
-                      <textarea class="form-control" rows="5" id="comment"></textarea>
-                    </td>
-                  </tr>
-                </table>
+      <form (ngSubmit) = "sendReportModal(reportForm)" #reportForm="ngForm">
+        <!-- Modal body -->
+        <div class="modal-body">
+          <div class="col-md-12">
+            <div class="card card-plain">
+              <div class="card-body">
+                <div class="table-responsive">
+                  <table class="table table-hover">
+                    <tr>
+                      <td class="w-50">1. Are you able to complete weekely deadlines?</td>
+                      <td>
+                        <label><input type="radio" [(ngModel)]="completedWeeklyDeadline" name="completedWeeklyDeadline" id="q1-y" [value]="1" [checked]="true"/>&nbsp; Yes</label><br>
+                        <label><input type="radio" [(ngModel)]="completedWeeklyDeadline" name="completedWeeklyDeadline" id="q1-n" [value]="0"/>&nbsp; No</label></td>
+                    </tr>
+                    <tr>
+                      <td>2. What do you think about session?</td>
+                      <td>
+                        <select class="browser-default custom-select" [(ngModel)]="thinkAboutSession" name="thinkAboutSession">
+                          <option [value]="1">Easy</option>
+                          <option [value]="2">Medium</option>
+                          <option [value]="3">Difficult</option>
+                        </select>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>3. Are you ready to go to next session?</td>
+                      <td>
+                        <label><input type="radio" [(ngModel)]="readyNextSession" name="readyNextSession" id="a1-c" [value]="1" [checked]="true"/>&nbsp; Can't wait to go!</label>
+                        <br>
+                        <label><input type="radio" [(ngModel)]="readyNextSession" name="readyNextSession" id="a1-d" [value]="0"/>&nbsp; I need to re-think</label>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>Any Comments:</td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td colspan="2">
+                        <textarea class="form-control" ngModel name="comment" rows="5" id="comment"></textarea>
+                      </td>
+                    </tr>
+                  </table>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
 
-      <!-- Modal footer -->
-      <div class="modal-footer">
-        <button type="button" class="btn btn-success" (click)="sendReportModal()">Send</button>
-        <button type="button" class="btn btn-danger" (click)="hideReportModal()">Close</button>
+        <!-- Modal footer -->
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-success">Send</button>
+          <button type="button" class="btn btn-danger" (click)="hideReportModal()">Close</button>
 
-        <!-- this button is hidden, used to close from typescript -->
-        <button type="button" id="close-modalReport" data-dismiss="modal" style="display: none">Close</button>
-      </div>
+          <!-- this button is hidden, used to close from typescript -->
+          <button type="button" id="close-modalReport" data-dismiss="modal" style="display: none">Close</button>
+        </div>
+      </form>
     </div>
   </div>
 </div>

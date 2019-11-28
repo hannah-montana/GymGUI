@@ -5,3 +5,9 @@ a {
 .cdk-virtual-scroll-content-wrapper{
   width: 100%;
 }
+
+.canvasjs-chart-canvas{
+  width: 300px;
+  height: 200px;
+  position: inherit;
+}

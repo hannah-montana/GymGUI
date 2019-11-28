@@ -31,6 +31,11 @@ export class ProfileComponent implements OnInit {
       this.userName = localStorage.getItem('firstName');
       this.loadProfile();
     }
+
+    this.dataService.countNotifications(localStorage.getItem('id'))
+      .subscribe(data => {
+        localStorage.setItem('noNotify', data);
+    });
   }
 
   loadProfile(){
