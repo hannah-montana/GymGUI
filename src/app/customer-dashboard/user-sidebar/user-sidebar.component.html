@@ -8,7 +8,7 @@
   </div>
   <div class="sidebar-wrapper bg-white">
     <ul class="nav">
-      <li class="nav-item active" routerLink='/profile'> <!--(click)="select('Profile')" [ngClass]="{active: isActive('Profile')}" ngName="cusProfile"-->
+      <li class="nav-item active" routerLink='/profile'>
         <a class="nav-link" routerLink='/profile' routerLinkActive='active'  >
           <i class="material-icons">person</i>
           <p>Profile</p>
@@ -20,25 +20,23 @@
           <p>My Dashboard</p>
         </a>
       </li>
-      <li class="nav-item " > <!--(click)="select('Program')" [ngClass]="{active: isActive('Program')}"-->
+      <li class="nav-item " >
         <a class="nav-link" routerLink='/program' routerLinkActive='active'>
           <i class="material-icons text-success">content_paste</i>
           <p>Program</p>
         </a>
       </li>
 
-      <!--li class="nav-item ">
-        <a class="nav-link" routerLink='/map' routerLinkActive='active'>
-          <i class="material-icons text-dark">location_ons</i>
-          <p>Maps</p>
-        </a>
-      </li-->
-
       <li class="nav-item " >
         <a class="nav-link" routerLink='/notify' routerLinkActive='active'>
           <i class="material-icons text-info">notifications</i>
-          <p>Notifications <!--b class="text-danger">({{countNoti}})</b--></p>
-
+          <p>Notifications
+            <span class="notification bg-danger text-white rounded-circle">
+              <b>
+                &nbsp;{{this.countNoti}}&nbsp;
+              </b>
+            </span>
+          </p>
         </a>
       </li>
 
@@ -48,9 +46,6 @@
           <p>Log Out</p>
         </a>
       </li>
-      <!--li *ngFor="let n of list" (click)="select(n)" [ngClass]="{active: isActive(n)}">
-        <a>{{n}}</a>
-      </li-->
 
       <li class="nav-item active-pro ">
         <a class="nav-link" href="/map">

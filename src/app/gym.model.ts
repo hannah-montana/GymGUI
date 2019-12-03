@@ -157,6 +157,7 @@ export class Ranking {
   calorie: number;
   duration: number;
   badge: string;
+  medal: string;
 }
 
 export class CoachDashboard {
@@ -186,5 +187,19 @@ export class AreaChart {
   point: number;
   calorie: number;
   duration: number;
-
 }
+
+export class Evoluation {
+  type: string;
+  name: string;
+  //legendText: string;
+  showInLegend: boolean;
+  dataPoints: DataPoint[];
+}
+
+export class DataPoint{
+  label: string;
+  y: number;
+  x: number;
+}
+

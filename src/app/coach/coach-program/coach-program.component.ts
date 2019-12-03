@@ -191,12 +191,12 @@ export class CoachProgramComponent implements OnInit {
         this.lstSelectedSession.push(this.fcSession.id);
 
       this.prog.numberOfSession = this.lstSelectedSession.length;
+      this.hideAdd();
 
       this.programService.updateProgram(this.prog, this.lstSelectedSession, this.coachId)
         .subscribe(data => {
           console.log("result: " + data);
           if(data == 1){
-            this.hideAdd();
             //reload program grid
             this.loadProgram();
             //this.coachId = '';
@@ -236,12 +236,12 @@ export class CoachProgramComponent implements OnInit {
         this.newProg.numberOfSession = this.lstSelectedSession.length;
 
         console.log(this.lstSelectedSession);
+        this.hideAdd();
 
         this.programService.saveProgram(this.newProg, this.lstSelectedSession, this.coachId)
           .subscribe(data => {
             console.log("result: " + data);
             if(data == 1){
-              this.hideAdd();
               //reload program grid
               this.loadProgram();
 

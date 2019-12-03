@@ -33,7 +33,7 @@
             <th class = "w-25">Badge</th>
             <th class="w-25"> Identity </th>
             <th>Name</th>
-            <th>Level</th>
+            <!--th>Level</th-->
             <th>Point</th>
             <th>View</th>
             <th>Assign Program</th>
@@ -54,7 +54,7 @@
               <td> <img class="w-25" src="{{row.photo}}"> </td>
 
               <td>{{row.firstName}} {{row.lastName}}</td>
-              <td>{{row.level}}</td>
+              <!--td>{{row.level}}</td-->
               <td>{{row.point}}</td>
               <td>
                 <a (click)="view(row)">
@@ -99,7 +99,7 @@
                     <img src="{{user ? (user.photo == '' ? 'assets/images/no-image.png' : user.photo) : ''}}" style="width: 90%;">
 
                   </td>
-                  <td style="width: 10%">First Name: &nbsp;</td>
+                  <td style="width: 15%">First Name: &nbsp;</td>
                   <td>
                     <input type="text" placeholder="" class="form-control" value="{{user ? user.firstName : ''}}" name="">
                   </td>
@@ -153,7 +153,7 @@
             </div>
 
           </div>
-          <br><br><br>
+          <br><br><br><br>
           <!-- program table-->
           <div>
           <cdk-virtual-scroll-viewport itemSize="0" style="height: 100px;">

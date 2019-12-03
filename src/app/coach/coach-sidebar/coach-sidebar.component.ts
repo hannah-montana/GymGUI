@@ -8,9 +8,13 @@ import { Router } from '@angular/router';
 })
 export class CoachSidebarComponent implements OnInit {
 
+  countNoti: string;
+
   constructor(private router: Router) { }
 
   ngOnInit() {
+    this.countNoti = localStorage.getItem('noNotify');
+    console.log(this.countNoti);
   }
 
   logOut(){

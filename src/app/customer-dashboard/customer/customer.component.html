@@ -13,9 +13,6 @@
         </div>
         <div class="card-footer">
           <div class="stats">
-            <!--i class="material-icons text-danger">warning</i>
-            <a href="#pablo"></a-->
-            <!--<i class="material-icons">date_range</i> Last 3 months-->
             <i class="material-icons">update</i> Just Updated
           </div>
         </div>
@@ -28,7 +25,7 @@
             <i class="material-icons">timeline</i>
           </div>
           <p class="card-category">Total Duration</p>
-          <h3 class="card-title">{{currentCustomer ? currentCustomer.pracDuration : ''}} minutes</h3>
+          <h3 class="card-title">{{currentCustomer ? currentCustomer.pracDuration : ''}} m</h3>
         </div>
         <div class="card-footer">
           <div class="stats">
@@ -140,7 +137,7 @@
       <div class="card">
         <div class="card-header card-header-primary">
           <h4 class="card-title">Health Status</h4>
-          <p class="card-category">Updated Rank on 15th November, 2019</p>
+          <p class="card-category">Just updated for Health status</p>
         </div>
         <div class="card-body table-responsive" style="min-height: 580px">
           <div class="human-body">
@@ -165,13 +162,11 @@
       </div>
     </div>
 
-
-
     <div class="col-lg-6 col-md-12">
       <div class="card">
-        <div class="card-header card-header-warning">
+        <div class="card-header card-header-primary">
           <h4 class="card-title">Customer Ranking</h4>
-          <p class="card-category">Updated Rank on 25th October, 2019</p>
+          <p class="card-category">Just updated Ranking</p>
         </div>
         <div class="card-body table-responsive">
           <cdk-virtual-scroll-viewport itemSize="0" style="height: 550px;">
@@ -179,7 +174,7 @@
               <thead class="text-warning">
                 <tr>
                 <th>ID</th>
-                <th>Badge</th>
+                <th>Medal</th>
                 <th>First Name</th>
                 <th>Last Name</th>
                 <th>Points</th>
@@ -190,7 +185,7 @@
                   <tr>
                     <td>{{rank.rank}}</td>
                     <td class="w-25">
-                      <img src="{{rank.badge}}" class="w-25">
+                      <img src="{{rank.medal}}" class="w-25">
                     </td>
                     <td>{{rank.firstName}}</td>
                     <td>{{rank.lastName}}</td>

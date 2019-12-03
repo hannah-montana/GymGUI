@@ -14,18 +14,18 @@ export class CoachDashboardService {
   constructor(private _http: HttpClient) { }
 
   getAllRanking(){
-      return this._http.get<Ranking[]>(this.apiGetAllRanking);
+    return this._http.get<Ranking[]>(this.apiGetAllRanking);
   }
 
   getCoachDashboard(coachId){
-      return this._http.get<CoachDashboard>(this.apiGetCoachDashboard + coachId);
+    return this._http.get<CoachDashboard>(this.apiGetCoachDashboard + coachId);
   }
 
   getListExerciseOfFocusSession(sessId){
-      return this._http.get<AreaChart[]>(this.aptGetListExerciseOfFocusSession + sessId);
+    return this._http.get<AreaChart[]>(this.aptGetListExerciseOfFocusSession + sessId);
   }
 
   getBarChart(coachId){
-        return this._http.get<BarChart>(this.apiGetBarChart + coachId);
-    }
+    return this._http.get<BarChart>(this.apiGetBarChart + coachId);
+  }
 }

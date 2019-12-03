@@ -13,27 +13,18 @@ export class UserSidebarComponent implements OnInit {
   countNoti: string;
 
   constructor(private router: Router) {
-    this.list = [
-               'Read about Angular',
-               'Read about knockout',
-               'Read about backbone',
-               'Read about jquery',
-               'Read about javascript'
-            ];
   }
 
   ngOnInit() {
     this.countNoti = localStorage.getItem('noNotify');
+    console.log(this.countNoti);
   }
 
   select(item) {
-    //console.log(item);
     this.selected = item;
   };
   isActive(item) {
-      //console.log(this.cusProfile);
-      //deActive("Profile");
-      return this.selected === item;
+    return this.selected === item;
   };
 
   logOut(){

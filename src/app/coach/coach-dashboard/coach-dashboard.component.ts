@@ -16,7 +16,7 @@ import { CoachDashboard, CurrentCustomer, Ranking, BarChart, AreaChart } from '.
 })
 export class CoachDashboardComponent implements OnInit {
   //used for integration
-  coachId = '1';
+  coachId;
 
   //use for areachart
   sessId = '1' //FocusSession
@@ -39,15 +39,20 @@ export class CoachDashboardComponent implements OnInit {
               private currentCustomerService: CurrentCustomerService) { }
 
   ngOnInit() {
-    this.coachDashboard = new CoachDashboard();
-    this.barChart = new BarChart();
+    if(localStorage.getItem('role') != '1'){
+      this.router.navigate(['/oops']);
+    }
+    else{
+      this.coachId = localStorage.getItem('id');
+      this.coachDashboard = new CoachDashboard();
+      this.barChart = new BarChart();
 
-    //Display CoachDashboard Statistics
-    this.loadCoachDashboard();
-    this.loadAllRanking();
-    this.loadListExerciseOfFocusSession();
-    this.loadBarChart();
-
+      //Display CoachDashboard Statistics
+      this.loadCoachDashboard();
+      this.loadAllRanking();
+      this.loadListExerciseOfFocusSession();
+      this.loadBarChart();
+    }
   }
 
   loadCoachDashboard(){
@@ -83,99 +88,90 @@ export class CoachDashboardComponent implements OnInit {
     this.getAllRanking().subscribe(data => {
       this.lstAllRanking = data;
       this.ranks = [...this.lstAllRanking];
-      //alert('ranks');
     });
   }
 
   loadListExerciseOfFocusSession(){
     this.getListExerciseOfFocusSession().subscribe(data => {
       this.lstAreaChart = data;
-      //console.log(data);
-      //this.areaCharts = [...this.lstAreaChart];
+      console.log("areachart");
+      console.log(this.lstAreaChart);
 
       /* Area chart */
-        let areachart = new CanvasJS.Chart("areaChartContainer", {
-          animationEnabled: true,
-            title:{
-              text: "Visualization of Focus Session"
-            },
-            axisY :{
-              valueFormatString: "",
-              //prefix: "$",
-              //suffix: "k",
-              title: "Exercise Attributes"
-            },
-            toolTip: {
-              shared: true
-            },
-            data: [{
-              type: "stackedArea",
-              showInLegend: true,
-              name: "Point",
-              //xValueFormatString: "MMM YYYY",
-              //yValueFormatString: "$#,###",
-              dataPoints: [
-                { x: 1, y: this.lstAreaChart[0].point  },
-                { x: 2, y: this.lstAreaChart[1].point  },
-                { x: 3, y: this.lstAreaChart[2].point  },
-                { x: 4, y: this.lstAreaChart[3].point  },
-                { x: 5, y: this.lstAreaChart[4].point  }
-              ]
-            }, {
-              type: "stackedArea",
-              name: "Calorie",
-              showInLegend: true,
-              //xValueFormatString: "MMM YYYY",
-              //yValueFormatString: "$#,###",
-              dataPoints: [
-                { x: 1, y: this.lstAreaChart[0].calorie  },
-                { x: 2, y: this.lstAreaChart[1].calorie  },
-                { x: 3, y: this.lstAreaChart[2].calorie  },
-                { x: 4, y: this.lstAreaChart[3].calorie  },
-                { x: 5, y: this.lstAreaChart[4].calorie  }
-              ]
-            }, {
-              type: "stackedArea",
-              name: "Duration",
-              showInLegend: true,
-              //yValueFormatString: "$#,###",
-              dataPoints: [
-                { x: 1, y: this.lstAreaChart[0].duration  },
-                { x: 2, y: this.lstAreaChart[1].duration  },
-                { x: 3, y: this.lstAreaChart[2].duration  },
-                { x: 4, y: this.lstAreaChart[3].duration  },
-                { x: 5, y: this.lstAreaChart[4].duration  }
-              ]
-            }]
-        });
-
-        areachart.render();
+      let areachart = new CanvasJS.Chart("areaChartContainer", {
+        animationEnabled: true,
+          title:{
+            text: "Visualization of Focus Session"
+          },
+          axisY :{
+            valueFormatString: "",
+            title: "Exercise Attributes"
+          },
+          toolTip: {
+            shared: true
+          },
+          data: data
+          /*[{
+            type: "stackedArea",
+            showInLegend: true,
+            name: "Point",
+            dataPoints: [
+              { x: 1, y: this.lstAreaChart[0].point  },
+              { x: 2, y: this.lstAreaChart[1].point  },
+              { x: 3, y: this.lstAreaChart[2].point  },
+              { x: 4, y: this.lstAreaChart[3].point  },
+              { x: 5, y: this.lstAreaChart[4].point  }
+            ]
+          }, {
+            type: "stackedArea",
+            name: "Calorie",
+            showInLegend: true,
+            dataPoints: [
+              { x: 1, y: this.lstAreaChart[0].calorie  },
+              { x: 2, y: this.lstAreaChart[1].calorie  },
+              { x: 3, y: this.lstAreaChart[2].calorie  },
+              { x: 4, y: this.lstAreaChart[3].calorie  },
+              { x: 5, y: this.lstAreaChart[4].calorie  }
+            ]
+          }, {
+            type: "stackedArea",
+            name: "Duration",
+            showInLegend: true,
+            dataPoints: [
+              { x: 1, y: this.lstAreaChart[0].duration  },
+              { x: 2, y: this.lstAreaChart[1].duration  },
+              { x: 3, y: this.lstAreaChart[2].duration  },
+              { x: 4, y: this.lstAreaChart[3].duration  },
+              { x: 5, y: this.lstAreaChart[4].duration  }
+            ]
+          }]*/
+      });
+      areachart.render();
     });
-
   }
 
   loadBarChart(){
       this.getBarChart(this.coachId).subscribe(data => {
         this.barChart = data;
+        console.log('bar chart');
         console.log(this.barChart);
       });
   }
 
-
   getCoachDashboard(coachId){
-      return this.coachDashboardService.getCoachDashboard(coachId);
-    }
+    return this.coachDashboardService.getCoachDashboard(coachId);
+  }
   getBarChart(coachId){
-      return this.coachDashboardService.getBarChart(coachId);
-    }
+    return this.coachDashboardService.getBarChart(coachId);
+  }
 
   getAllRanking(){
-      return this.currentCustomerService.getAllRanking();
-    }
+    return this.currentCustomerService.getAllRanking();
+  }
 
   getListExerciseOfFocusSession(){
-      return this.coachDashboardService.getListExerciseOfFocusSession(this.sessId);
-    }
+    return this.coachDashboardService.getListExerciseOfFocusSession(this.sessId);
+  }
 
 }
 

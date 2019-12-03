@@ -7,9 +7,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class UserNavComponent implements OnInit {
 
+  firstName: string = '';
+
   constructor() { }
 
   ngOnInit() {
+    this.firstName = localStorage.getItem('firstName');
   }
 
 }

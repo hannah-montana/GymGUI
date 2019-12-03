@@ -17,8 +17,11 @@ import { CoachCustomerComponent } from './coach/coach-customer/coach-customer.co
 import { CoachProfileComponent } from './coach/coach-profile/coach-profile.component';
 import { CoachNotifyComponent } from './coach/coach-notify/coach-notify.component';
 import { OopsComponent } from './oops/oops.component';
+import { UserSidebarComponent } from './customer-dashboard/user-sidebar/user-sidebar.component';
+import { CoachMapComponent } from './coach/coach-map/coach-map.component';
 
 export const appRoutes: Routes = [
+  { path : 'customerSidebar', component : UserSidebarComponent },
   { path : '', component : SignInComponent },
   { path : 'login', component : SignInComponent },
   { path : 'signup', component : SignUpComponent },
@@ -41,6 +44,10 @@ export const appRoutes: Routes = [
   {
     path : 'map', component : CustomerDashboardComponent,
     children : [{ path : '', component: MapComponent}]
+  },
+  {
+    path : 'coach-map', component : CoachComponent,
+    children : [{ path : '', component: CoachMapComponent}]
   },
   { path : 'customer-dashboard', redirectTo: '/customer', pathMatch : 'full'},
 

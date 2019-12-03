@@ -22,8 +22,8 @@ export class SignInComponent implements OnInit {
   errorMess: string = '';
 
   constructor(private router: Router,
-              //private loginservice: AuthenticationService,
-              private dataService: DataService) { }
+    //private loginservice: AuthenticationService,
+    private dataService: DataService) { }
 
   ngOnInit() {
   }
@@ -76,5 +76,4 @@ export class SignInComponent implements OnInit {
   {
     this.router.navigate(['/guest']);
   }
-
 }

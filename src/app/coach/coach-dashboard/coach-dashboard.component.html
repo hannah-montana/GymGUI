@@ -7,7 +7,7 @@
       <div class="card text-white bg-primary o-hidden h-60">
         <div class="card-body">
           <div class="card-body-icon">
-            <i class="fas fa-fw fa-user-circle"></i>
+            <i class="material-icons">people</i>
           </div>
           <div class="mr-5"><h4>{{coachDashboard ? coachDashboard.noCustomer :''}} Customers</h4></div>
         </div>
@@ -18,7 +18,7 @@
       <div class="card text-white bg-warning o-hidden h-60">
         <div class="card-body">
           <div class="card-body-icon">
-            <i class="fas fa-fw fa-list"></i>
+            <i class="material-icons">content_paste</i>
           </div>
           <div class="mr-5"><h4>{{coachDashboard ? coachDashboard.noProgram :''}} Programs!</h4></div>
         </div>
@@ -29,7 +29,7 @@
       <div class="card text-white bg-success o-hidden h-60">
         <div class="card-body">
           <div class="card-body-icon">
-            <i class="fas fa-fw fa-database"></i>
+            <i class="material-icons">list</i>
           </div>
           <div class="mr-5"><h4>{{coachDashboard ? coachDashboard.noSession :''}} Sessions</h4></div>
         </div>
@@ -40,7 +40,7 @@
       <div class="card text-white bg-danger o-hidden h-60">
         <div class="card-body">
           <div class="card-body-icon">
-            <i class="fas fa-fw fa-heartbeat"></i>
+            <i class="material-icons">directions_run</i>
           </div>
           <div class="mr-5"><h4>{{coachDashboard ? coachDashboard.noExercise :''}} Exercises</h4></div>
         </div>
@@ -83,25 +83,25 @@
           <h6 class="m-0 font-weight-bold text-primary">Customer Level</h6>
         </div>
         <div class="card-body">
-          <h4 class="small font-weight-bold">Level 1 <span class="float-right">40 %</span></h4>
+          <h4 class="small font-weight-bold">Level 1 <span class="float-right">{{ barChart.noLevel1 }} %</span></h4>
           <div class="progress mb-4">
-            <div class="progress-bar bg-danger" role="progressbar" style="width: 40ng %" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
+            <div class="progress-bar bg-danger" role="progressbar" [style.width]="barChart.noLevel1+'%'" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
           </div>
-          <h4 class="small font-weight-bold">Level 2 <span class="float-right">10 %</span></h4>
+          <h4 class="small font-weight-bold">Level 2 <span class="float-right">{{ barChart.noLevel2 }} %</span></h4>
           <div class="progress mb-4">
-            <div class="progress-bar bg-warning" role="progressbar" style="width: 10%" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
+            <div class="progress-bar bg-warning" role="progressbar" [style.width]="barChart.noLevel2+'%'"aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
           </div>
-          <h4 class="small font-weight-bold">Level 3 <span class="float-right">15 %</span></h4>
+          <h4 class="small font-weight-bold">Level 3 <span class="float-right">{{ barChart.noLevel3 }} %</span></h4>
           <div class="progress mb-4">
-            <div class="progress-bar" role="progressbar" style="width: 15%" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
+            <div class="progress-bar" role="progressbar" [style.width]="barChart.noLevel3+'%'" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
           </div>
-          <h4 class="small font-weight-bold">Level 4 <span class="float-right">30 %</span></h4>
+          <h4 class="small font-weight-bold">Level 4 <span class="float-right">{{ barChart.noLevel4 }} %</span></h4>
           <div class="progress mb-4">
-            <div class="progress-bar bg-info" role="progressbar" style="width: 30%" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
+            <div class="progress-bar bg-info" role="progressbar" [style.width]="barChart.noLevel4+'%'" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
           </div>
-          <h4 class="small font-weight-bold">Level 5 <span class="float-right">5 %</span></h4>
+          <h4 class="small font-weight-bold">Level 5 <span class="float-right">{{ barChart.noLevel5 }} %</span></h4>
           <div class="progress">
-            <div class="progress-bar bg-success" role="progressbar" style="width: 5%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+            <div class="progress-bar bg-success" role="progressbar" [style.width]="barChart.noLevel5+'%'" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
           </div>
         </div>
       </div>

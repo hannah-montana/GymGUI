@@ -36,6 +36,7 @@ import { CoachNotifyComponent } from './coach/coach-notify/coach-notify.componen
 
 import { StorageServiceModule } from 'angular-webstorage-service';
 import { OopsComponent } from './oops/oops.component';
+import { CoachMapComponent } from './coach/coach-map/coach-map.component';
 
 
 @NgModule({
@@ -63,13 +64,16 @@ import { OopsComponent } from './oops/oops.component';
     CoachNavComponent,
     CoachProfileComponent,
     CoachNotifyComponent,
-    OopsComponent
+    OopsComponent,
+    CoachMapComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    RouterModule.forRoot(appRoutes),
+    RouterModule.forRoot(appRoutes, {
+      onSameUrlNavigation: 'reload'
+    }),
     ReactiveFormsModule,
     FormsModule,
     ScrollDispatchModule,
@@ -78,4 +82,4 @@ import { OopsComponent } from './oops/oops.component';
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}

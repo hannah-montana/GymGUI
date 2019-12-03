@@ -4,6 +4,8 @@ import { Notification} from '../../gym.model';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ScrollDispatchModule } from '@angular/cdk/scrolling';
+import { DataService } from '../../data.service';
+import { Router } from '@angular/router';
 
 declare var $: any;
 
@@ -32,7 +34,9 @@ export class NotifyComponent implements OnInit {
   /* send new notification */
   newNoti: Notification;
 
-  constructor(private customerNotificationService: CustomerNotificationService) { }
+  constructor(private customerNotificationService: CustomerNotificationService,
+              private dataService: DataService,
+              private router: Router) { }
 
   ngOnInit() {
     this.icon = '';
@@ -102,6 +106,13 @@ export class NotifyComponent implements OnInit {
           }
         });
     }
+    /*this.router.navigateByUrl('/customerSidebar', { skipLocationChange: false }).then(() => {
+        this.router.navigate(['notify']);
+    });*/
+    /*this.dataService.countNotifications(localStorage.getItem('id'))
+      .subscribe(data => {
+        localStorage.setItem('noNotify', data);
+    });*/
   }
 
   /*RESET*/

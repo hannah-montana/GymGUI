@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders} from '@angular/common/http';
-import { Session, Report } from './gym.model';
+import { Session, Report, Evoluation, DataPoint } from './gym.model';
 
 @Injectable({
   providedIn: 'root'
@@ -13,6 +13,7 @@ export class UserProgramService {
   apiUpdatePractical = '/api/history/updatePractical';
   apiCheckFinishedSession = '/api/sessions/checkFinish/';
   apiCustomerSendReport = '/api/notification/customerSendReport';
+  apiEvoluation = '/api/getEvoluation/';
 
   constructor(private _http: HttpClient) { }
 
@@ -42,5 +43,9 @@ export class UserProgramService {
 
   customerSendReport(report){
     return this._http.post<any>(this.apiCustomerSendReport, report);
+  }
+
+  getEvoluation(userId){
+    return this._http.get<Evoluation[]>(this.apiEvoluation + userId);
   }
 }
